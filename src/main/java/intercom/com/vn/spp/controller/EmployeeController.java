@@ -64,5 +64,7 @@ public class EmployeeController {
             employeeRepository.delete(employee);
             Map<String,Boolean> response = new HashMap<>();
             response.put("deleted", Boolean.TRUE);
+
+            return response;
     }
 }
