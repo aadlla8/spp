@@ -1,5 +1,6 @@
 package intercom.com.vn.spp.model;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.Nationalized;
@@ -10,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -73,8 +75,17 @@ public class Job {
     @Column(name="job_of_network_and_td", columnDefinition = "TEXT")
     /* Mo ta cong viec cua network va TD */
     private String jobOfNetworkAndTD;
-
+    @Transient
+    private long doneHours;
+    public long getDoneHours() {
+        if (this.getStartDate() != null && this.getDoneDate() != null)
+            this.setDoneHours(Duration.between(this.getStartDate(), this.getDateEnd()).toHours());
+        return doneHours;
+    }
     public Job(){
         this.setDateCreate(LocalDateTime.now() );
+        if (this.getStartDate() != null && this.getDoneDate() != null)
+            this.setDoneHours(Duration.between(this.getStartDate(), this.getDateEnd()).toHours());
+         
     }
 }

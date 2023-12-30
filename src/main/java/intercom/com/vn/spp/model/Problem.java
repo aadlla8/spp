@@ -1,5 +1,6 @@
 package intercom.com.vn.spp.model;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.Nationalized;
@@ -10,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -23,7 +25,7 @@ public class Problem {
     private String creator;
     private LocalDateTime createDate;
     @Nationalized
-    @Column(name = "sc_code",length=20, unique = true)
+    @Column(name = "sc_code", length = 20, unique = true)
     private String scCode;
     @Column(name = "start_date")
     private LocalDateTime startDate;
@@ -55,7 +57,7 @@ public class Problem {
     private String serviceType;
 
     @Nationalized
-    @Column(name = "inform_method",columnDefinition = "TEXT")
+    @Column(name = "inform_method", columnDefinition = "TEXT")
     private String informMethod;
     @Nationalized
     @Column(name = "root_cause", columnDefinition = "TEXT")
@@ -66,7 +68,18 @@ public class Problem {
     @Column(name = "result_and_solution", columnDefinition = "TEXT")
     @Nationalized
     private String resultAndSolution;
-    public Problem(){
+    @Transient
+    private long doneHours;
+
+    public long getDoneHours() {
+        if (this.getStartDate() != null && this.getDoneDate() != null)
+            this.setDoneHours(Duration.between(this.getStartDate(), this.getEndDate()).toHours());
+        return doneHours;
+    }
+
+    public Problem() {
         this.setCreateDate(LocalDateTime.now());
+        if (this.getStartDate() != null && this.getDoneDate() != null)
+            this.setDoneHours(Duration.between(this.getStartDate(), this.getEndDate()).toHours());
     }
 }
