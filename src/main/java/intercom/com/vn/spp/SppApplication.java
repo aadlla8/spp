@@ -9,5 +9,5 @@ public class SppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SppApplication.class, args);
 	}
-
+	 
 }

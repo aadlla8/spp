@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,17 +23,18 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin()
 public class JobController {
     @Autowired
     private JobRepository jobRepository;
 
     @GetMapping("/jobs")
-    public List<Job> getAllEmployees() {
+    public List<Job> getAll() {
         return jobRepository.findAll();
     }
 
     @GetMapping("/jobs/{id}")
-    public ResponseEntity<Job> getEmployeeById(@PathVariable(value = "id") Long jobId)
+    public ResponseEntity<Job> getById(@PathVariable(value = "id") Long jobId)
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found for this id:: " + jobId));
@@ -40,12 +42,12 @@ public class JobController {
     }
 
     @PostMapping("/jobs")
-    public Job createEmployee(@Valid @RequestBody Job job) {
+    public Job create(@Valid @RequestBody Job job) {
         return jobRepository.save(job);
     }
 
     @PutMapping("/jobs/{id}")
-    public ResponseEntity<Job> updateEmploye(@PathVariable(value = "id") Long jobId,
+    public ResponseEntity<Job> update(@PathVariable(value = "id") Long jobId,
             @Valid @RequestBody Job employeeDetails)
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)
@@ -63,7 +65,7 @@ public class JobController {
     }
 
     @DeleteMapping("/jobs/{id}")
-    public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long jobId)
+    public Map<String, Boolean> delete(@PathVariable(value = "id") Long jobId)
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found for this id:: " + jobId));
