@@ -56,9 +56,16 @@ public class ProblemController {
         problem.setStartDate(problemDetails.getStartDate());
         problem.setEndDate(problemDetails.getEndDate());
         problem.setDoneDate(problemDetails.getDoneDate());
-
-        problem.setInfo(problemDetails.getInfo());
+        problem.setCustomerCode(problemDetails.getCustomerCode());
+        problem.setCustomerContact(problemDetails.getCustomerContact());
         problem.setInformMethod(problemDetails.getInformMethod());
+        problem.setNocAndTechWorks(problemDetails.getNocAndTechWorks());
+        problem.setResultAndSolution(problemDetails.getResultAndSolution());
+        problem.setUnitProcess(problemDetails.getUnitProcess());
+        problem.setRootCause(problemDetails.getRootCause());
+        problem.setInfo(problemDetails.getInfo());
+        problem.setStatus(problemDetails.getStatus());
+        problem.setServiceType(problemDetails.getServiceType());
         problemRepository.save(problem);
 
         return ResponseEntity.ok(problem);

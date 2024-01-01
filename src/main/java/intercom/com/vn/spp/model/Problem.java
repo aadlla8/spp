@@ -77,6 +77,9 @@ public class Problem {
         return doneHours;
     }
 
+    @Transient
+    private String functions;
+
     public Problem() {
         this.setCreateDate(LocalDateTime.now());
         if (this.getStartDate() != null && this.getDoneDate() != null)

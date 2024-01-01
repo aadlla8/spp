@@ -1,11 +1,14 @@
 package intercom.com.vn.spp.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Entity
@@ -22,5 +25,13 @@ public class Employee {
     @Column(name="last_name", nullable =false)
     private String lastName;
     @Column(name ="email_address",nullable = false)
-    private String emailId;    
+    private String emailId;  
+    @Column(name="phone") 
+    private String phoneNumber;
+    @Transient
+    private String functions; 
+    private LocalDateTime createDate;
+    public Employee(){
+        this.setCreateDate(LocalDateTime.now());
+    }
 }

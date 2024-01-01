@@ -48,17 +48,23 @@ public class JobController {
 
     @PutMapping("/jobs/{id}")
     public ResponseEntity<Job> update(@PathVariable(value = "id") Long jobId,
-            @Valid @RequestBody Job employeeDetails)
+            @Valid @RequestBody Job jobDetail)
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found for this id:: " + jobId));
-        job.setScCode(employeeDetails.getScCode());
-        job.setStartDate(employeeDetails.getStartDate());
-        job.setDateEnd(employeeDetails.getDateEnd());
-        job.setDoneDate(employeeDetails.getDoneDate());
-
-        job.setNote(employeeDetails.getNote());
-        job.setDescription(employeeDetails.getDescription());
+        job.setScCode(jobDetail.getScCode());
+        job.setStartDate(jobDetail.getStartDate());
+        job.setDateEnd(jobDetail.getDateEnd());
+        job.setDoneDate(jobDetail.getDoneDate());
+        job.setProblemStatus(jobDetail.getProblemStatus());
+        job.setNote(jobDetail.getNote());
+        job.setDescription(jobDetail.getDescription());
+        job.setServiceType(jobDetail.getServiceType());
+        job.setInformMethod(jobDetail.getInformMethod());
+        job.setJobOfNetworkAndTD(jobDetail.getJobOfNetworkAndTD());
+        job.setEmployeeCode(jobDetail.getEmployeeCode());
+        job.setDateIssued(jobDetail.getDateIssued());
+        job.setRootCause(jobDetail.getRootCause());
         jobRepository.save(job);
 
         return ResponseEntity.ok(job);

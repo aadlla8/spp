@@ -82,6 +82,8 @@ public class Job {
             this.setDoneHours(Duration.between(this.getStartDate(), this.getDateEnd()).toHours());
         return doneHours;
     }
+    @Transient
+    private String functions;
     public Job(){
         this.setDateCreate(LocalDateTime.now() );
         if (this.getStartDate() != null && this.getDoneDate() != null)
