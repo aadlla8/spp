@@ -84,6 +84,7 @@ public class Job {
     }
     @Transient
     private String functions;
+    private String region;
     public Job(){
         this.setDateCreate(LocalDateTime.now() );
         if (this.getStartDate() != null && this.getDoneDate() != null)

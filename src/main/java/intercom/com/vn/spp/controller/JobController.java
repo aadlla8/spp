@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
+import intercom.com.vn.spp.jwtutils.UserInfoDetails;
 import intercom.com.vn.spp.model.Job;
 import intercom.com.vn.spp.repository.JobRepository;
 import jakarta.validation.Valid;
 
 @RestController
-@CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.OPTIONS})
+@CrossOrigin()
 @RequestMapping("/api/v1")
 
 public class JobController {
@@ -44,7 +45,8 @@ public class JobController {
     }
 
     @PostMapping("/jobs")
-    public Job create(@Valid @RequestBody Job job) {
+    public Job create(@Valid @RequestBody Job job, @AuthenticationPrincipal UserInfoDetails uInfo) {
+        job.setCreator(uInfo.getUsername());
         return jobRepository.save(job);
     }
 
@@ -67,6 +69,7 @@ public class JobController {
         job.setEmployeeCode(jobDetail.getEmployeeCode());
         job.setDateIssued(jobDetail.getDateIssued());
         job.setRootCause(jobDetail.getRootCause());
+        job.setRegion(jobDetail.getRegion());
         jobRepository.save(job);
 
         return ResponseEntity.ok(job);

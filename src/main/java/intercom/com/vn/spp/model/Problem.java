@@ -79,7 +79,7 @@ public class Problem {
 
     @Transient
     private String functions;
-
+    private String region;
     public Problem() {
         this.setCreateDate(LocalDateTime.now());
         if (this.getStartDate() != null && this.getDoneDate() != null)

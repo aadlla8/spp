@@ -33,7 +33,7 @@ public class UserController {
 	public String welcome() { 
 		return "Welcome this endpoint is not secure"; 
 	} 
-
+	
 	@PostMapping("/addNewUser") 
 	public String addNewUser(@RequestBody UserInfo userInfo) { 
 		return service.addUser(userInfo); 

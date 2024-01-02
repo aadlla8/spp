@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
+import intercom.com.vn.spp.jwtutils.UserInfoDetails;
 import intercom.com.vn.spp.model.Problem;
 import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
@@ -44,7 +46,8 @@ public class ProblemController {
     }
 
     @PostMapping("/problems")
-    public Problem create(@Valid @RequestBody Problem problem) {
+    public Problem create(@Valid @RequestBody Problem problem,@AuthenticationPrincipal UserInfoDetails uInfo) {
+        problem.setCreator(uInfo.getUsername());
         return problemRepository.save(problem);
     }
 
@@ -68,6 +71,7 @@ public class ProblemController {
         problem.setInfo(problemDetails.getInfo());
         problem.setStatus(problemDetails.getStatus());
         problem.setServiceType(problemDetails.getServiceType());
+        problem.setRegion(problemDetails.getRegion());
         problemRepository.save(problem);
 
         return ResponseEntity.ok(problem);
