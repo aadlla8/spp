@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
+@CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.OPTIONS})
 @RequestMapping("/api/v1")
-@CrossOrigin()
+
 public class EmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;

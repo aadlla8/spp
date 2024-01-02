@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
@@ -22,8 +23,9 @@ import intercom.com.vn.spp.repository.JobRepository;
 import jakarta.validation.Valid;
 
 @RestController
+@CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.OPTIONS})
 @RequestMapping("/api/v1")
-@CrossOrigin()
+
 public class JobController {
     @Autowired
     private JobRepository jobRepository;

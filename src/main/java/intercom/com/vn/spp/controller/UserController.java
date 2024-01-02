@@ -15,8 +15,9 @@ import intercom.com.vn.spp.model.UserInfo;
 import intercom.com.vn.spp.services.UserInfoService; 
 
 @RestController
+@CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.OPTIONS})
 @RequestMapping("/auth") 
-@CrossOrigin
+
 public class UserController { 
 
 	@Autowired

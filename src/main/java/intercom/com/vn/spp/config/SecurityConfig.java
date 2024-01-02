@@ -34,11 +34,12 @@ public class SecurityConfig {
 	public UserDetailsService userDetailsService() { 
 		return new UserInfoService(); 
 	} 
-
+	 
 	// Configuring HttpSecurity 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
-		return http.cors().and().csrf().disable() 
+		 //http.cors(cors->cors.disable());
+		 http.cors().and().csrf().disable() 
 				.authorizeHttpRequests() 
 				.requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll() 
 				.and() 
@@ -52,8 +53,8 @@ public class SecurityConfig {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
 				.and() 
 				.authenticationProvider(authenticationProvider()) 
-				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) 
-				.build(); 
+				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;
+		return http.build(); 
 	} 
 
 	// Password Encoding 

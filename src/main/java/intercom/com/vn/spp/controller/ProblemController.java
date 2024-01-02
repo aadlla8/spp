@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.model.Problem;
@@ -22,8 +23,9 @@ import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
 
 @RestController
+@CrossOrigin(methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.OPTIONS})
 @RequestMapping("/api/v1")
-@CrossOrigin()
+
 public class ProblemController {
     @Autowired
     private ProblemRepository problemRepository;
