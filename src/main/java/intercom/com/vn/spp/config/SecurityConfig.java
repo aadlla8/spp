@@ -39,21 +39,21 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
 		 //http.cors(cors->cors.disable());
-		 http.cors().and().csrf().disable() 
-				.authorizeHttpRequests() 
-				.requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll() 
-				.and() 
+		 http.cors().and().csrf().disable() 	 
+				 
 				.authorizeHttpRequests().requestMatchers("/auth/user/**").authenticated() 
 				.and() 
 				.authorizeHttpRequests().requestMatchers("/auth/admin/**").authenticated() 
 				.and()
                 .authorizeHttpRequests().requestMatchers("api/v1/*").authenticated()
-                .and()
+				.requestMatchers("/**").permitAll() 
+				.and() 
+                
 				.sessionManagement() 
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS) 
 				.and() 
 				.authenticationProvider(authenticationProvider()) 
-				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class) ;
+				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build(); 
 	} 
 
