@@ -79,6 +79,15 @@ var employeeColums = [{
 }, {
   "data": "functions"
 }];
+var userColums = [{
+  "data": "id"
+}, {
+  "data": "name"
+}, {
+  "data": "email"
+}, {
+  "data": "roles"
+}];
 var editModal = new coreui.Modal(document.getElementById('editModalXl'), {
   focus: true
 });
@@ -132,6 +141,12 @@ function fillData(data) {
       document.getElementById("emailId").value = data.emailId;
       document.getElementById("phoneNumber").value = data.phoneNumber;
       break;
+    case 'users':
+      document.getElementById("id").value = data.id;
+      document.getElementById("name").value = data.name;
+      document.getElementById("email").value = data.email;
+      document.getElementById("roles").value = data.roles;
+      break;
     default:
       break;
   }
@@ -152,6 +167,9 @@ function initTable(name, _entity) {
     case 'employees':
       columns = employeeColums;
       addLink = '/forms/add-employee.html';
+    case 'users':
+      columns = userColums;
+      addLink = '/register.html';
     default:
       break;
   }
