@@ -12,6 +12,7 @@ import intercom.com.vn.spp.jwtutils.UserInfoDetails;
 import intercom.com.vn.spp.model.UserInfo;
 import intercom.com.vn.spp.repository.UserInfoRepository;
 
+import java.util.List;
 import java.util.Optional; 
 
 @Service
@@ -36,6 +37,21 @@ public class UserInfoService implements UserDetailsService {
 		repository.save(userInfo); 
 		return "User Added Successfully"; 
 	} 
+	public String updateUser(UserInfo userInfo, Integer id) {
+		UserInfo user = repository.getReferenceById(id);
+		user.setRoles(userInfo.getRoles());
+		user.setEmail(userInfo.getEmail());
+		user.setName(userInfo.getName());
+		if(!userInfo.getPassword().isEmpty()){
+			PasswordEncoder encoder= new BCryptPasswordEncoder();
+			user.setPassword(encoder.encode(userInfo.getPassword()));
+		}
+		repository.save(user); 
+		return "User Updated.";
+	}
+	public List<UserInfo> getAll(){
+		return repository.findAll();
+	}
 
 
 } 
