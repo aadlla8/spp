@@ -1,10 +1,12 @@
-<!DOCTYPE html><!--
+<!DOCTYPE html>
+<!--
 * CoreUI - Free Bootstrap Admin Template
 * @version v5.0.0-rc.0
 * @link https://coreui.io/product/free-bootstrap-admin-template/
 * Copyright (c) 2023 creativeLabs Łukasz Holeczek
 * Licensed under MIT (https://github.com/coreui/coreui-free-bootstrap-admin-template/blob/main/LICENSE)
 -->
+
 <html lang="en">
   <head>
     <base href="./../">
@@ -34,7 +36,7 @@
     <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <!-- Vendors styles-->
-    <link rel="stylesheet" href="vendors/simplebar/css/simplebar.css">
+    <link rel="stylesheet" href="node_modules/simplebar/dist/simplebar.css">
     <link rel="stylesheet" href="css/vendors/simplebar.css">
     <!-- Main styles for this application-->
     <link href="css/style.css" rel="stylesheet">
@@ -70,10 +72,10 @@
         </div>
         <button class="btn-close d-lg-none" type="button" data-coreui-dismiss="offcanvas" data-coreui-theme="dark" aria-label="Close" onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
       </div>
-      <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+      <ul class="sidebar-nav" data-coreui="navigation" data-simplebar>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-notes"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-notes"></use>
             </svg> Forms</a>
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="forms/add-job.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Thêm công việc mới</a></li>
@@ -83,7 +85,7 @@
             <li class="nav-item"><a class="nav-link" href="forms/add-employee.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Thêm nhân viên</a></li>
             <li class="nav-item"><a class="nav-link" href="base/list-employees.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh sách nhân viên</a></li>
             <li class="nav-item"><a class="nav-link" href="base/list-users.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh sách users</a></li>
-            <li class="nav-item"><a class="nav-link" href="forms/form-control.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Form Control </a></li>
+            <li class="nav-item"><a class="nav-link" href="forms/form-control.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Form Control     </a></li>
             <li class="nav-item"><a class="nav-link" href="forms/select.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Select</a></li>
             <li class="nav-item"><a class="nav-link" href="forms/checks-radios.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Checks and radios</a></li>
             <li class="nav-item"><a class="nav-link" href="forms/range.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Range</a></li>
@@ -95,21 +97,21 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="index.html">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-speedometer"></use>
             </svg> Dashboard<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
         <li class="nav-title">Theme</li>
         <li class="nav-item"><a class="nav-link" href="colors.html">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-drop"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-drop"></use>
             </svg> Colors</a></li>
         <li class="nav-item"><a class="nav-link" href="typography.html">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-pencil"></use>
             </svg> Typography</a></li>
         <li class="nav-title">Components</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-puzzle"></use>
             </svg> Base</a>
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="base/accordion.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Accordion</a></li>
@@ -130,7 +132,7 @@
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-cursor"></use>
             </svg> Buttons</a>
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="buttons/buttons.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Buttons</a></li>
@@ -140,11 +142,11 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="charts.html">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-chart-pie"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-chart-pie"></use>
             </svg> Charts</a></li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-star"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-star"></use>
             </svg> Icons</a>
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="icons/coreui-icons-free.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> CoreUI Icons<span class="badge badge-sm bg-success ms-auto">Free</span></a></li>
@@ -154,7 +156,7 @@
         </li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-bell"></use>
             </svg> Notifications</a>
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="notifications/alerts.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Alerts</a></li>
@@ -165,43 +167,43 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="widgets.html">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-calculator"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-calculator"></use>
             </svg> Widgets<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
         <li class="nav-divider"></li>
         <li class="nav-title">Extras</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-star"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-star"></use>
             </svg> Pages</a>
           <ul class="nav-group-items compact">
             <li class="nav-item"><a class="nav-link" href="login.html" target="_top">
                 <svg class="nav-icon">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-account-logout"></use>
                 </svg> Login</a></li>
             <li class="nav-item"><a class="nav-link" href="register.html" target="_top">
                 <svg class="nav-icon">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-account-logout"></use>
                 </svg> Register</a></li>
             <li class="nav-item"><a class="nav-link" href="404.html" target="_top">
                 <svg class="nav-icon">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bug"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-bug"></use>
                 </svg> Error 404</a></li>
             <li class="nav-item"><a class="nav-link" href="500.html" target="_top">
                 <svg class="nav-icon">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bug"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-bug"></use>
                 </svg> Error 500</a></li>
           </ul>
         </li>
         <li class="nav-item mt-auto"><a class="nav-link" href="https://coreui.io/docs/templates/installation/" target="_blank">
             <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-description"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-description"></use>
             </svg> Docs</a></li>
         <li class="nav-item"><a class="nav-link text-primary fw-semibold" href="https://coreui.io/product/bootstrap-dashboard-template/" target="_top">
             <svg class="nav-icon text-primary">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-layers"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-layers"></use>
             </svg> Try CoreUI PRO</a></li>
       </ul>
-      <div class="sidebar-footer border-top d-none d-md-flex">
+      <div class="sidebar-footer border-top d-none d-md-flex">     
         <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
       </div>
     </div>
@@ -210,22 +212,22 @@
         <div class="container-fluid border-bottom px-4">
           <button class="header-toggler" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()" style="margin-inline-start: -14px;">
             <svg class="icon icon-lg">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+              <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-menu"></use>
             </svg>
           </button>
           <ul class="header-nav d-none d-lg-flex"></ul>
           <ul class="header-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#">
                 <svg class="icon icon-lg">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-bell"></use>
                 </svg></a></li>
             <li class="nav-item"><a class="nav-link" href="#">
                 <svg class="icon icon-lg">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-list-rich"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-list-rich"></use>
                 </svg></a></li>
             <li class="nav-item"><a class="nav-link" href="#">
                 <svg class="icon icon-lg">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-envelope-open"></use>
                 </svg></a></li>
           </ul>
           <ul class="header-nav">
@@ -235,28 +237,28 @@
             <li class="nav-item dropdown">
               <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" aria-expanded="false" data-coreui-toggle="dropdown">
                 <svg class="icon icon-lg theme-icon-active">
-                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-contrast"></use>
+                  <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-contrast"></use>
                 </svg>
               </button>
               <ul class="dropdown-menu dropdown-menu-end" style="--cui-dropdown-min-width: 8rem;">
                 <li>
                   <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="light">
                     <svg class="icon icon-lg me-3">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-sun"></use>
+                      <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-sun"></use>
                     </svg>Light
                   </button>
                 </li>
                 <li>
                   <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="dark">
                     <svg class="icon icon-lg me-3">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-moon"></use>
+                      <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-moon"></use>
                     </svg>Dark
                   </button>
                 </li>
                 <li>
                   <button class="dropdown-item d-flex align-items-center active" type="button" data-coreui-theme-value="auto">
                     <svg class="icon icon-lg me-3">
-                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-contrast"></use>
+                      <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-contrast"></use>
                     </svg>Auto
                   </button>
                 </li>
@@ -266,43 +268,42 @@
               <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
             </li>
             <li class="nav-item dropdown"><a class="nav-link py-0 pe-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <div class="avatar avatar-md"><img class="avatar-img" src="assets/img/avatars/8.jpg" alt="user@email.com"></div>
-              </a>
+                <div class="avatar avatar-md"><img class="avatar-img" src="assets/img/avatars/8.jpg" alt="user@email.com"></div></a>
               <div class="dropdown-menu dropdown-menu-end pt-0">
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold rounded-top mb-2">Account</div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-bell"></use>
                   </svg> Updates<span class="badge badge-sm bg-info ms-2">42</span></a><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-envelope-open"></use>
                   </svg> Messages<span class="badge badge-sm bg-success ms-2">42</span></a><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-task"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-task"></use>
                   </svg> Tasks<span class="badge badge-sm bg-danger ms-2">42</span></a><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-comment-square"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-comment-square"></use>
                   </svg> Comments<span class="badge badge-sm bg-warning ms-2">42</span></a>
                 <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2">
                   <div class="fw-semibold">Settings</div>
                 </div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-user"></use>
                   </svg> Profile</a><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-settings"></use>
                   </svg> Settings</a><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-credit-card"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-credit-card"></use>
                   </svg> Payments<span class="badge badge-sm bg-secondary ms-2">42</span></a><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-file"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-file"></use>
                   </svg> Projects<span class="badge badge-sm bg-primary ms-2">42</span></a>
                 <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-lock-locked"></use>
                   </svg> Lock Account</a><a class="dropdown-item" href="#">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                    <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-account-logout"></use>
                   </svg> Logout</a>
               </div>
             </li>
@@ -313,7 +314,7 @@
         <div class="container-fluid px-4">
           <div class="card mb-4">
             <div class="card-header"><strong>Tables</strong><span class="small ms-1">Nhật ký NOC sự cố</span></div>
-            <div class="card-body">
+            <div class="card-body"> 
               <table class="table" id="example" style="width:100%;">
                 <thead>
                   <tr>
@@ -331,7 +332,7 @@
                     <th scope="col">Hình thức báo sự cố</th>
                     <th scope="col">Nguyên nhân sự cố</th>
                     <th scope="col">Công việc của NOC và KT</th>
-                    <th scope="col">Kết quả và giải pháp </th>
+                    <th scope="col">Kết quả và giải pháp     </th>
                     <th scope="col">Thời gian xử lý sự cố(giờ)</th>
                     <th scope="col">Tính năng</th>
                   </tr>
@@ -349,23 +350,23 @@
                 </div>
                 <div class="modal-body">
                   <div class="row">
-                    <div class="col-12">
-                      <form class="row g-3 needs-validation" novalidate="">
+                    <div class="col-12">             
+                      <form class="row g-3 needs-validation" novalidate>
                         <div class="col-md-3">
                           <label class="form-label" for="scCode">Mã sự cố</label>
-                          <input class="form-control" id="scCode" name="scCode" type="text" maxlength="20" value="" required="">
-                          <div class="invalid-feedback">Hãy nhập mã sự cố </div>
-                          <input class="form-control" id="id" type="hidden" name="id" value="" required="">
+                          <input class="form-control" id="scCode" name="scCode" type="text" maxlength="20" value="" required>
+                          <div class="invalid-feedback">Hãy nhập mã sự cố    </div>
+                          <input class="form-control" id="id" type="hidden" name="id" value="" required>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="unitProcess">Đơn vị xl sự cố</label>
                           <input class="form-control" id="unitProcess" name="unitProcess" type="text" maxlength="20" value="">
-                          <div class="invalid-feedback">Hãy nhập mã sự cố </div>
+                          <div class="invalid-feedback">Hãy nhập mã sự cố          </div>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="startDate">Thời gian bắt đầu sự cố</label>
-                          <input class="form-control" id="startDate" name="startDate" type="datetime-local" value="" required="">
-                          <div class="invalid-feedback">Hãy nhập Ngày bắt đầu</div>
+                          <input class="form-control" id="startDate" name="startDate" type="datetime-local" value="" required>
+                          <div class="invalid-feedback">Hãy nhập  Ngày bắt đầu</div>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="endDate">Thời gian kết thúc sự cố</label>
@@ -383,25 +384,25 @@
                         </div>
                         <div class="col-md-9">
                           <label class="form-label" for="info">Mô tả thông tin sự cố</label>
-                          <textarea class="form-control" id="info" name="info" required=""></textarea>
+                          <textarea class="form-control" id="info" name="info" required></textarea>
                           <div class="invalid-feedback">Hãy nhập Mô tả thông tin sự cố</div>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="serviceType">Loại dịch vụ</label>
-                          <select class="form-select" id="serviceType" name="serviceType" required="">
-                            <option selected="" disabled="" value="">Chọn...</option>
+                          <select class="form-select" id="serviceType" name="serviceType" required>
+                            <option selected disabled value>Chọn...</option>
                             <option>P2P</option>
                             <option>Internet</option>
                             <option>KenhBacNam</option>
                             <option>HonHop</option>
                             <option>Khac</option>
-                            Hãy chọn loại dịch vụ
+                            <div class="invalid-feedback">Hãy chọn loại dịch vụ</div>
                           </select>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="status">Trạng thái sự cố</label>
-                          <select class="form-select" id="status" name="status" required="">
-                            <option selected="" disable="" value="">Chọn...</option>
+                          <select class="form-select" id="status" name="status" required>
+                            <option selected disable value>Chọn...</option>
                             <option>DOWN</option>
                             <option>CHECK</option>
                             <option>UP</option>
@@ -411,17 +412,17 @@
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="region">Vùng</label>
-                          <select class="form-select" id="region" name="region" required="">
-                            <option selected="" disable="" value="">Chọn...</option>
+                          <select class="form-select" id="region" name="region" required>
+                            <option selected disable value>Chọn...</option>
                             <option>HANOI</option>
-                            <option>TPHCM </option>
+                            <option>TPHCM              </option>
                           </select>
                           <div class="invalid-feedback">Hãy chọn vùng sự cố</div>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="informMethod">Hình thức báo sự cố</label>
-                          <select class="form-select" id="informMethod" name="informMethod" required="">
-                            <option selected="" disabled="" value="">Chọn...</option>
+                          <select class="form-select" id="informMethod" name="informMethod" required>
+                            <option selected disabled value>Chọn...</option>
                             <option>Quản lý Intercom</option>
                             <option>Trực NOC Intercom</option>
                             <option>Email NOC Khách hàng</option>
@@ -429,7 +430,7 @@
                             <option>Kinh doanh Intercom báo</option>
                             <option>Kỹ thuật Intercom báo</option>
                             <option>Kỹ thuật khách hàng báo</option>
-                            Hãy chọn hình thức báo sự cố
+                            <div class="invalid-feedback">Hãy chọn hình thức báo sự cố </div>
                           </select>
                         </div>
                         <div class="col-md-3">
@@ -437,18 +438,18 @@
                           <div class="input-group has-validation">
                             <input class="form-control" id="customerCode" name="customerCode" type="text" aria-describedby="inputGroupPrepend">
                           </div>
-                          <div class="invalid-feedback">Hãy nhập Mã khách hàng </div>
+                          <div class="invalid-feedback">Hãy nhập Mã khách hàng   </div>
                         </div>
                         <div class="col-md-6">
                           <label class="form-label" for="customerContact">Đầu mối trao đổi khách hàng</label>
                           <textarea class="form-control" id="customerContact" name="customerContact"></textarea>
-                          <div class="invalid-feedback">Hãy nhập liên hệ khách hàng </div>
+                          <div class="invalid-feedback">Hãy nhập liên hệ khách hàng          </div>
                         </div>
                         <div class="col-md-6">
                           <label class="form-label" for="rootCause">Nguyên nhân</label>
                           <div class="input-group has-validation">
                             <select class="form-select" id="rootCause" name="rootCause" type="text" aria-describedby="inputGroupPrepend">
-                              <option selected="" disabled="" value="">Chọn...</option>
+                              <option selected disabled value>Chọn...</option>
                               <option>Kế hoạch từ Intercom</option>
                               <option>Kế hoạch từ phía khách hàng</option>
                               <option>Cáp quang ngoại vi</option>
@@ -465,7 +466,7 @@
                               <option>Thiết bị khách hàng</option>
                               <option>Cáp quang bên trong khách hàng</option>
                               <option>Chưa xác định</option>
-                              Hãy nhập nguyên nhân
+                              <div class="invalid-feedback">Hãy nhập nguyên nhân</div>
                             </select>
                           </div>
                         </div>
@@ -473,14 +474,14 @@
                           <label class="form-label" for="nocAndTechWorks">Mô tả công việc của NOC và TD</label>
                           <div class="input-group has-validation">
                             <textarea class="form-control" id="nocAndTechWorks" name="nocAndTechWorks" aria-describedby="inputGroupPrepend"></textarea>
-                            <div class="invalid-feedback">Hãy nhập Mô tả công việc của NOC và TD </div>
+                            <div class="invalid-feedback">Hãy nhập Mô tả công việc của NOC và TD     </div>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <label class="form-label" for="resultAndSolution">Kết quả và giải pháp</label>
                           <div class="input-group has-validation">
                             <textarea class="form-control" id="resultAndSolution" name="resultAndSolution" aria-describedby="inputGroupPrepend"></textarea>
-                            <div class="invalid-feedback">Hãy nhập ghi chú </div>
+                            <div class="invalid-feedback">Hãy nhập ghi chú    </div>
                           </div>
                         </div>
                         <div class="col-12">
@@ -501,40 +502,41 @@
       </footer>
     </div>
     <!-- CoreUI and necessary plugins-->
-    <script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
-    <script src="vendors/simplebar/js/simplebar.min.js"></script>
+    <script src="node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js"></script>
+    <script src="node_modules/simplebar/dist/simplebar.min.js"></script>
     <script>
       const header = document.querySelector('header.header');
-
+      
       document.addEventListener('scroll', () => {
         if (header) {
           header.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0);
         }
       });
+      
     </script>
     <script src="js/spp.js"></script>
     <script src="js/table.js"></script>
-    <script>
+    <script> 
       jQuery(document).ready(function() {
-        initTable('example', 'problems');
+        initTable('example','problems');
       });
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict'
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms).forEach(function(form) {
-          form.addEventListener('submit', function(event) {
-            event.preventDefault()
-            event.stopPropagation()
-            if (!form.checkValidity()) {}
-            form.classList.add('was-validated')
-            processForm('PUT', form, "problems");
-          }, false)
-        })
-      })()
+       // Example starter JavaScript for disabling form submissions if there are invalid fields
+       (function () {
+           'use strict'
+           // Fetch all the forms we want to apply custom Bootstrap validation styles to
+           var forms = document.querySelectorAll('.needs-validation')
+           // Loop over them and prevent submission
+           Array.prototype.slice.call(forms).forEach(function (form) {
+               form.addEventListener('submit', function (event) {
+                   event.preventDefault()
+                   event.stopPropagation()
+                   if (!form.checkValidity()) {
+                   }
+                   form.classList.add('was-validated')
+                   processForm('PUT', form, "problems");
+               }, false)
+           })
+       })()
     </script>
-
   </body>
 </html>
