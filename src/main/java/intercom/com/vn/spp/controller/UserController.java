@@ -23,7 +23,7 @@ public class UserController {
 	}
 	@PutMapping("/users/{id}") 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')") 
-	public String update(@RequestBody UserInfo userInfo, Integer id) { 	 
+	public String update(@RequestBody UserInfo userInfo, @PathVariable(value = "id")  Integer id) { 	 
 		return service.updateUser(userInfo,id); 
 	}  
 } 
