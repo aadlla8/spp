@@ -225,8 +225,7 @@ function initTable(name, _entity) {
         "url": baseUrl + entity,
         "type": "GET",
         "dataSrc": function (json) {
-          //console.log(json);
-          return json;
+           return json;
         },
         "beforeSend": function (request) {
           request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("accesstoken"));
