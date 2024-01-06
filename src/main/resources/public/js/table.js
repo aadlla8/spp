@@ -77,6 +77,8 @@ var employeeColums = [{
 }, {
   "data": "phoneNumber"
 }, {
+  "data": "department"
+}, {
   "data": "functions"
 }];
 var userColums = [{
@@ -87,6 +89,35 @@ var userColums = [{
   "data": "email"
 }, {
   "data": "roles"
+}];
+var dailyreportColumns = [{
+  "data": "id"
+}, {
+  "data": "department"
+}, {
+  "data": "employeeCode"
+}, {
+  "data": "startDateTime"
+}, {
+  "data": "deployment"
+}, {
+  "data": "otherWork"
+}, {
+  "data": "problem"
+}, {
+  "data": "doneDatetime"
+}, {
+  "data": "comebackofficeDatetime"
+}, {
+  "data": "resultAndApproach"
+}, {
+  "data": "note"
+}, {
+  "data": "status"
+}, {
+  "data": "functions"
+}, {
+  "data": "dateCreate"
 }];
 var editModal = new coreui.Modal(document.getElementById('editModalXl'), {
   focus: true
@@ -140,12 +171,15 @@ function fillData(data) {
       document.getElementById("lastName").value = data.lastName;
       document.getElementById("emailId").value = data.emailId;
       document.getElementById("phoneNumber").value = data.phoneNumber;
+      document.getElementById("department").value = data.department;
       break;
     case 'users':
       document.getElementById("id").value = data.id;
       document.getElementById("name").value = data.name;
       document.getElementById("email").value = data.email;
       document.getElementById("roles").value = data.roles;
+      break;
+    case 'daily_reports':
       break;
     default:
       break;
@@ -167,9 +201,14 @@ function initTable(name, _entity) {
     case 'employees':
       columns = employeeColums;
       addLink = '/forms/add-employee.html';
+      break;
     case 'users':
       columns = userColums;
       addLink = '/register.html';
+      break;
+    case 'daily_reports':
+      columns = dailyreportColumns;
+      addLink = '#';
     default:
       break;
   }
@@ -230,24 +269,28 @@ function initTable(name, _entity) {
         },
         "beforeSend": function (request) {
           request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("accesstoken"));
-          console.log('request');
-          console.log(request);
+          //console.log('request');
+          //console.log(request);
         }
       },
       "columns": columns
     });
+    $.fn.dataTable.ext.errMode = 'none';
     var table = $('#' + name).DataTable();
     table.on('select', function (e, dt, type, indexes) {
       let rowData = table.rows(indexes).data().toArray();
-      console.log(JSON.stringify(rowData));
+      //console.log(JSON.stringify(rowData));
     }).on('deselect', function (e, dt, type, indexes) {
       let rowData = table.rows(indexes).data().toArray();
-      console.log(JSON.stringify(rowData));
+      //console.log(JSON.stringify(rowData));
     }).on('xhr.dt', function (e, settings, json, xhr) {
       if (xhr.status > 299) location.href = "/login.html";
     }).on('preXhr.dt', function (e, settings, data) {
-      console.log("settings");
+      //console.log("settings");
       console.log(settings);
+    }).on('error.dt', function (e, settings, techNote, message) {
+      //console.log('An error has been reported by DataTables: ', message);
+      alert('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại: ' + message);
     });
   }, 0);
 }

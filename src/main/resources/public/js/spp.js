@@ -50,4 +50,7 @@ function processForm(action, form, entity) {
     });
   }
 }
+function logout() {
+  localStorage.setItem("accesstoken", "");
+}
 //# sourceMappingURL=spp.js.map

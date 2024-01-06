@@ -1,5 +1,7 @@
 package intercom.com.vn.spp.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,12 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class UserInfo {
 
     @Id
@@ -25,5 +25,10 @@ public class UserInfo {
     private String email;
     private String password;
     private String roles;
+    @Column(name="create_date")
+    private LocalDateTime createDate;
+    public UserInfo(){
+        this.setCreateDate(LocalDateTime.now());
+    }
 
 }
