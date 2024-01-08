@@ -186,7 +186,7 @@
       <div class="body flex-grow-1">
         <div class="container-fluid px-4">
           <div class="card mb-4">
-            <div class="card-header"><strong>Tables</strong><span class="small ms-1">Tiến độ công việc</span></div>
+            <div class="card-header"><strong>Tables</strong><span class="small ms-1">Danh sách nhân viên</span></div>
             <div class="card-body"> 
               <table class="table" id="example" style="width:100%;">
                 <thead>
@@ -197,6 +197,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Số điện thoại </th>
                     <th scope="col">Bộ phận</th>
+                    <th scope="col">Ghi chú</th>
                     <th scope="col">Tính năng</th>
                   </tr>
                 </thead>
@@ -244,6 +245,10 @@
                             <option value="NW">Network</option>
                             <option value="Khac">Khac</option>
                           </select>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="note">Ghi chú</label>
+                          <input class="form-control" id="note" type="text" name="note" value="">
                         </div>
                         <div class="col-12">
                           <button class="btn btn-primary" type="submit">Lưu nhân viên</button>

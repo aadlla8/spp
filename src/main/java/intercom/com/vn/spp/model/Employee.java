@@ -29,6 +29,7 @@ public class Employee {
     @Column(name = "phone")
     private String phoneNumber;
     private String department;
+    private String note;
     @Transient
     private String functions;
 

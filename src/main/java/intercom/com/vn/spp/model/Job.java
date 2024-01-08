@@ -21,12 +21,12 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     /* Ma su co */
     @Nationalized
-    @Column(name="sc_code",length=20)
+    @Column(name = "sc_code", length = 20)
     private String scCode;
-    /*Người nhập */
+    /* Người nhập */
     private String creator;
     /* ngày nhập liệu */
     @Column(name = "date_create")
@@ -44,7 +44,8 @@ public class Job {
     @Column(length = 10, name = "problem_status")
     /* Trang thai su co Down Check Up Move */
     private String problemStatus;
-
+    @Column(length = 30, name = "job_type")
+    private String jobType;
     /* Dau moi khach hang */
     @Column(name = "customer_contact")
     @Nationalized
@@ -55,10 +56,10 @@ public class Job {
     private String serviceType;
     /* Hinh thuc bao su co */
     @Nationalized
-    @Column(name = "inform_method",columnDefinition = "TEXT")
+    @Column(name = "inform_method", columnDefinition = "TEXT")
     private String informMethod;
     @Nationalized
-    @Column(name = "root_cause",columnDefinition = "TEXT")
+    @Column(name = "root_cause", columnDefinition = "TEXT")
     /* Nguyen nhan */
     private String rootCause;
     @Nationalized
@@ -72,24 +73,33 @@ public class Job {
     @Column(name = "come_back_office_date")
     private LocalDateTime comebackOfficeDate;
     @Nationalized
-    @Column(name="job_of_network_and_td", columnDefinition = "TEXT")
+    @Column(name = "job_of_network_and_td", columnDefinition = "TEXT")
     /* Mo ta cong viec cua network va TD */
     private String jobOfNetworkAndTD;
     @Transient
     private long doneHours;
+    @Transient
+    private long doneMinutes;
+
     public long getDoneHours() {
+        long totalMinutes = 0;
         if (this.getStartDate() != null && this.getDoneDate() != null)
-            this.setDoneHours(Duration.between(this.getStartDate(), this.getDateEnd()).toHours());
+            totalMinutes = (Duration.between(this.getStartDate(), this.getDateEnd()).toMinutes());
+        if (totalMinutes > 0) {
+            this.setDoneHours(Math.floorDiv(totalMinutes, 60));
+            this.setDoneMinutes(Math.floorMod(totalMinutes, 60));
+        }
         return doneHours;
     }
+
     @Transient
     private String functions;
     private String region;
-  
-    public Job(){
-        this.setDateCreate(LocalDateTime.now() );
+
+    public Job() {
+        this.setDateCreate(LocalDateTime.now());
         if (this.getStartDate() != null && this.getDoneDate() != null)
             this.setDoneHours(Duration.between(this.getStartDate(), this.getDateEnd()).toHours());
-         
+
     }
 }

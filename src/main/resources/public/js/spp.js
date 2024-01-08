@@ -4,15 +4,18 @@ var loginUrl = "/auth/generateToken";
 var loginsuccess = false;
 function processForm(action, form, entity) {
   loginsuccess = false;
-  if (form.classList.contains('was-validated') && form.checkValidity()) {
+  if (action == 'GET' || form.classList.contains('was-validated') && form.checkValidity()) {
     let url = baseUrl + entity;
     if (entity == 'register') url = registerUrl;
     if (entity == 'login') url = loginUrl;
     if (action == 'PUT') {
       url += '/' + form.id.value;
     }
-    let fData = new FormData(form);
-    let data = JSON.stringify(Object.fromEntries(fData));
+    let data = '';
+    if (form != null) {
+      let fData = new FormData(form);
+      data = JSON.stringify(Object.fromEntries(fData));
+    }
     let requestHeader = {
       "Content-Type": "application/json"
     };
@@ -24,12 +27,14 @@ function processForm(action, form, entity) {
         "Authorization": "Bearer " + localStorage.getItem("accesstoken")
       };
     }
-    fetch(url, {
+    let options = {
       method: action,
       headers: requestHeader,
       body: data
-    }).then(res => {
-      if (res.ok) alert('Thành công');
+    };
+    if (action == 'GET') delete options.body;
+    fetch(url, options).then(res => {
+      if (res.ok && action != 'GET') alert('Thành công');
       if (res.status > 299) location.href = "/login.html";
       if (res.ok && entity == 'login') {
         loginsuccess = true;
@@ -37,8 +42,7 @@ function processForm(action, form, entity) {
       }
       return res.json();
     }).then(res => {
-      console.log(res);
-      if (entity = 'login' && loginsuccess) {
+      if (entity == 'login' && loginsuccess) {
         localStorage.setItem("accesstoken", res);
         location.href = '/base/list-jobs.html';
       }
@@ -47,7 +51,26 @@ function processForm(action, form, entity) {
         editModal.hide();
         $('#example').DataTable().ajax.reload();
       }
+      return Promise.resolve(res);
+    }).then(res => {
+      if (action == 'GET') {
+        switch (entity) {
+          case 'employees':
+            loadField('employeeCode', res, null);
+            break;
+          default:
+            break;
+        }
+      }
     });
+  }
+}
+function loadField(fieldId, array, value) {
+  $("#" + fieldId + ' option').remove(0);
+  for (i in array) {
+    let selected = '';
+    if (value != null && array[i].code == value) selected = 'selected';
+    $("#" + fieldId).append("<option value='" + array[i].code + "' " + selected + ">" + array[i].code + "</option>");
   }
 }
 function logout() {

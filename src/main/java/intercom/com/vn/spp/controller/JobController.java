@@ -56,6 +56,7 @@ public class JobController {
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found for this id:: " + jobId));
+        job.setJobType(jobDetail.getJobType());
         job.setScCode(jobDetail.getScCode());
         job.setStartDate(jobDetail.getStartDate());
         job.setDateEnd(jobDetail.getDateEnd());

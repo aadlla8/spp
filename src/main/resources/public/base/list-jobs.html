@@ -191,6 +191,7 @@
               <table class="table" id="example" style="width:100%;">
                 <thead>
                   <tr>
+                    <th scope="col">Loại CV</th>
                     <th scope="col">Vùng</th>
                     <th scope="col">Ngày tháng</th>
                     <th scope="col">Mã nhân viên</th>
@@ -221,47 +222,14 @@
                     <div class="col-12">             
                       <form class="row g-3 needs-validation" novalidate>
                         <div class="col-md-3">
-                          <label class="form-label" for="scCode">Mã sự cố</label>
-                          <input class="form-control" id="scCode" type="text" maxlength="20" name="scCode" value="" required>
-                          <div class="invalid-feedback">Hãy nhập mã sự cố </div>
-                          <input class="form-control" id="id" type="hidden" name="id" value="" required>
-                        </div>
-                        <div class="col-md-3">
-                          <label class="form-label" for="dateIssued">Ngày phát sinh</label>
-                          <input class="form-control" id="dateIssued" type="datetime-local" name="dateIssued" value="" required>
-                          <div class="invalid-feedback">Hãy nhập ngày phát sinh</div>
-                        </div>
-                        <div class="col-md-3">
-                          <label class="form-label" for="dateEnd">Ngày kết thúc</label>
-                          <div class="input-group has-validation">
-                            <input class="form-control" id="dateEnd" type="datetime-local" name="dateEnd" aria-describedby="inputGroupPrepend">
-                            <div class="invalid-feedback">Hãy nhập ngày kết thúc</div>
-                          </div>
-                        </div>
-                        <div class="col-md-3">
-                          <label class="form-label" for="problemStatus">Trạng thái sự cố</label>
-                          <select class="form-select" id="problemStatus" name="problemStatus" required>
+                          <label class="form-label" for="jobType">Loại công việc</label>
+                          <select class="form-select" id="jobType" name="jobType" required>
                             <option selected disable value>Chọn...</option>
-                            <option>DOWN</option>
-                            <option>CHECK</option>
-                            <option>UP</option>
-                            <option>MOVE</option>
+                            <option>TK</option>
+                            <option>SC</option>
+                            <option>Khac                 </option>
                           </select>
-                          <div class="invalid-feedback">Hãy chọn trạng thái sự cố            </div>
-                        </div>
-                        <div class="col-md-12">
-                          <label class="form-label" for="description">Mô tả công việc</label>
-                          <textarea class="form-control" id="description" name="description" required></textarea>
-                          <div class="invalid-feedback">Hãy nhập Mô tả công việc</div>
-                        </div>
-                        <div class="col-md-3">
-                          <label class="form-label" for="region">Vùng</label>
-                          <select class="form-select" id="region" name="region" required>
-                            <option selected disable value>Chọn...</option>
-                            <option>HANOI</option>
-                            <option>TPHCM              </option>
-                          </select>
-                          <div class="invalid-feedback">Hãy chọn vùng sự cố</div>
+                          <div class="invalid-feedback">Hãy chọn loại công việc</div>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="serviceType">Loại dịch vụ</label>
@@ -276,8 +244,50 @@
                           </select>
                         </div>
                         <div class="col-md-3">
+                          <label class="form-label" for="dateIssued">Ngày phát sinh</label>
+                          <input class="form-control" id="dateIssued" type="datetime-local" name="dateIssued" value="" required>
+                          <div class="invalid-feedback">Hãy nhập ngày phát sinh</div>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="dateEnd">Ngày kết thúc</label>
+                          <div class="input-group has-validation">
+                            <input class="form-control" id="dateEnd" type="datetime-local" name="dateEnd" aria-describedby="inputGroupPrepend">
+                            <div class="invalid-feedback">Hãy nhập ngày kết thúc                    </div>
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <label class="form-label" for="description">Mô tả công việc</label>
+                          <textarea class="form-control" id="description" name="description" required></textarea>
+                          <div class="invalid-feedback">Hãy nhập Mô tả công việc</div>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="problemStatus">Trạng thái sự cố</label>
+                          <select class="form-select" id="problemStatus" name="problemStatus">
+                            <option selected disable value>Chọn...</option>
+                            <option>DOWN</option>
+                            <option>CHECK</option>
+                            <option>UP</option>
+                            <option>MOVE</option>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="scCode">Mã sự cố</label>
+                          <input class="form-control" id="scCode" type="text" maxlength="20" name="scCode" value="">
+                          <div class="invalid-feedback">Hãy nhập mã sự cố </div>
+                          <input class="form-control" id="id" type="hidden" name="id" value="" required>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="region">Vùng</label>
+                          <select class="form-select" id="region" name="region">
+                            <option selected disable value>Chọn...</option>
+                            <option>HANOI</option>
+                            <option>TPHCM              </option>
+                            <div class="invalid-feedback">Hãy chọn vùng sự cố</div>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
                           <label class="form-label" for="informMethod">Hình thức báo sự cố</label>
-                          <select class="form-select" id="informMethod" name="informMethod" required>
+                          <select class="form-select" id="informMethod" name="informMethod">
                             <option selected disabled value>Chọn...</option>
                             <option>Quản lý Intercom</option>
                             <option>Trực NOC Intercom</option>
@@ -292,13 +302,13 @@
                         <div class="col-md-3">
                           <label class="form-label" for="employeeCode">Mã nhân viên</label>
                           <div class="input-group has-validation">
-                            <select class="form-select" id="employeeCode" name="employeeCode" required>
+                            <select class="form-select" id="employeeCode" name="employeeCode">
                               <option selected disabled value>Chọn nhân viên</option>
                               <option>TUNGKT</option>
                               <option>HANHPV</option>
                               <option>DANNV</option>
+                              <div class="invalid-feedback">Hãy nhập mã nhân viên</div>
                             </select>
-                            <div class="invalid-feedback">Hãy nhập mã nhân viên</div>
                           </div>
                         </div>
                         <div class="col-md-3">

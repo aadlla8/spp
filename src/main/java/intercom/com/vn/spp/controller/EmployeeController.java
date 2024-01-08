@@ -52,6 +52,7 @@ public class EmployeeController {
         employee.setLastName(employeeDetails.getLastName());
         employee.setPhoneNumber(employeeDetails.getPhoneNumber());
         employee.setDepartment(employeeDetails.getDepartment());
+        employee.setNote(employeeDetails.getNote());
         employeeRepository.save(employee);
 
         

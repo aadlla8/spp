@@ -1,6 +1,8 @@
 var baseUrl = "/api/v1/";
 var entity = '';
 var jobColums = [{
+  "data": "jobType"
+}, {
   "data": "region"
 }, {
   "data": "dateCreate"
@@ -21,7 +23,10 @@ var jobColums = [{
 }, {
   "data": "note"
 }, {
-  "data": "doneHours"
+  "data": "doneHours",
+  "render": function (data, type, row, meta) {
+    return row.doneHours + ":" + row.doneMinutes;
+  }
 }, {
   "data": "functions",
   "render": function (data, type, row, meta) {
@@ -79,6 +84,8 @@ var employeeColums = [{
 }, {
   "data": "department"
 }, {
+  "data": "note"
+}, {
   "data": "functions"
 }];
 var userColums = [{
@@ -127,6 +134,7 @@ function fillData(data) {
     case 'jobs':
       columns = jobColums;
       document.getElementById("id").value = data.id;
+      document.getElementById("jobType").value = data.jobType;
       document.getElementById("scCode").value = data.scCode;
       document.getElementById("dateIssued").value = data.dateIssued;
       document.getElementById("dateEnd").value = data.dateEnd;
@@ -134,7 +142,6 @@ function fillData(data) {
       document.getElementById("description").value = data.description;
       document.getElementById("serviceType").value = data.serviceType;
       document.getElementById("informMethod").value = data.informMethod;
-      document.getElementById("employeeCode").value = data.employeeCode;
       document.getElementById("startDate").value = data.startDate;
       document.getElementById("doneDate").value = data.doneDate;
       document.getElementById("comebackOfficeDate").value = data.comebackOfficeDate;
@@ -143,6 +150,10 @@ function fillData(data) {
       document.getElementById("jobOfNetworkAndTD").value = data.jobOfNetworkAndTD;
       document.getElementById("note").value = data.note;
       document.getElementById("region").value = data.region;
+      processForm('GET', null, "employees");
+      setTimeout(function () {
+        document.getElementById("employeeCode").value = data.employeeCode;
+      }, 1000);
       break;
     case 'problems':
       columns = problemmColumns;
@@ -172,6 +183,7 @@ function fillData(data) {
       document.getElementById("emailId").value = data.emailId;
       document.getElementById("phoneNumber").value = data.phoneNumber;
       document.getElementById("department").value = data.department;
+      document.getElementById("note").value = data.note;
       break;
     case 'users':
       document.getElementById("id").value = data.id;
