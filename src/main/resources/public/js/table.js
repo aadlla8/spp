@@ -255,7 +255,7 @@ function initTable(name, _entity) {
   }
   setTimeout(() => {
     $('#' + name).dataTable({
-      "columDefs": clDef,
+      "columnDefs": clDef,
       "dom": 'Bfrtip',
       "select": {
         "style": 'multi'
