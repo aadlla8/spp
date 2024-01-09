@@ -249,7 +249,7 @@ function initTable(name, _entity) {
       break;
     case 'daily_reports':
       columns = dailyreportColumns;
-      addLink = '#';
+      addLink = '/forms/add-job.html';
     default:
       break;
   }

@@ -5,10 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.model.DailyReport;
 import intercom.com.vn.spp.model.Employee;
+import intercom.com.vn.spp.model.Job;
 import intercom.com.vn.spp.repository.DailyReportRepository;
 import intercom.com.vn.spp.repository.EmployeeRepository;
+import intercom.com.vn.spp.repository.JobRepository;
 import jakarta.validation.Valid;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +33,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/api/v1")
 public class DailyReportController {
     @Autowired
+    private JobRepository jobRepository;
+    @Autowired
     private DailyReportRepository repo;
 
     @GetMapping("/daily_reports")
     public List<DailyReport> getAllEmployees() {
+        List<Job> dailyJobs = jobRepository.findAllJobDaily();
         return repo.findAll();
     }
 

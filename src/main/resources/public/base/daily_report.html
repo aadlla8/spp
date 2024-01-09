@@ -233,9 +233,13 @@
     <script src="js/spp.js"></script>
     <script src="js/table.js"></script>
     <script> 
-      jQuery(document).ready(function() {
-        initTable('example','daily_reports');
-      });
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+           'use strict'
+            jQuery(document).ready(function() {
+              setTimeout(function(){initTable('example','daily_reports')},1000);
+            });     
+        })();   
     </script>
   </body>
 </html>
