@@ -200,6 +200,7 @@
                     <th scope="col">Thời gian HT xong</th>
                     <th scope="col">Thời gian KT về VP</th>
                     <th scope="col">Trạng thái tạm thời</th>
+                    <th scope="col">Thông tin sự cố</th>
                     <th scope="col">Công việc của NW và TD</th>
                     <th scope="col">Ghi chú     </th>
                     <th scope="col">Thời gian XL CV(giờ)  </th>
@@ -237,6 +238,7 @@
                             <option selected disabled value>Chọn...</option>
                             <option>P2P</option>
                             <option>Internet</option>
+                            <option>Metro</option>
                             <option>KenhBacNam</option>
                             <option>HonHop</option>
                             <option>Khac</option>
@@ -259,6 +261,10 @@
                           <label class="form-label" for="description">Mô tả công việc</label>
                           <textarea class="form-control" id="description" name="description" required></textarea>
                           <div class="invalid-feedback">Hãy nhập Mô tả công việc</div>
+                        </div>
+                        <div class="col-md-12">
+                          <label class="form-label" for="problemInfo">Thông tin sự cố</label>
+                          <textarea class="form-control" id="problemInfo" name="problemInfo">             </textarea>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="problemStatus">Trạng thái sự cố</label>

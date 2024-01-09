@@ -196,6 +196,9 @@
                     <th scope="col">Tên</th>
                     <th scope="col">Email</th>
                     <th scope="col">Số điện thoại </th>
+                    <th scope="col">Số điện thoại 2</th>
+                    <th scope="col">Số điện thoại 3</th>
+                    <th scope="col">cccd</th>
                     <th scope="col">Bộ phận</th>
                     <th scope="col">Ghi chú</th>
                     <th scope="col">Tính năng</th>
@@ -234,17 +237,31 @@
                           <input class="form-control" id="emailId" type="email" name="emailId" value="" required>
                         </div>
                         <div class="col-md-3">
-                          <label class="form-label" for="phoneNumber">Số điện thoại</label>
+                          <label class="form-label" for="phoneNumber">Số điện thoại 1</label>
                           <input class="form-control" id="phoneNumber" type="number" name="phoneNumber" value="" required>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="phoneNumber1">Số điện thoại 2</label>
+                          <input class="form-control" id="phoneNumber1" type="number" name="phoneNumber1" value="">
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="phoneNumber2">Số điện thoại 3</label>
+                          <input class="form-control" id="phoneNumber2" type="number" name="phoneNumber2" value="">
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="department">Bộ phận</label>
                           <select class="form-select" id="department" name="department" value="" required> 
                             <option selected disable value>Chọn...</option>
-                            <option value="TD">TD</option>
-                            <option value="NW">Network</option>
+                            <option value="TD-HN">TD-HN</option>
+                            <option value="TD-HCM">TD-HCM</option>
+                            <option value="NW-HN">NW-HN</option>
+                            <option value="NW-HCM">NW-HCM</option>
                             <option value="Khac">Khac</option>
                           </select>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="cccd">CCCD</label>
+                          <input class="form-control" id="cccd" type="text" name="cccd" value="">
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="note">Ghi chú</label>

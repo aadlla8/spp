@@ -19,13 +19,18 @@ var jobColums = [{
 }, {
   "data": "problemStatus"
 }, {
+  "data": "problemInfo",
+  "render": function (data, type, row, meta) {
+    return '<textarea>' + data + '</textarea>';
+  }
+}, {
   "data": "jobOfNetworkAndTD"
 }, {
   "data": "note"
 }, {
   "data": "doneHours",
   "render": function (data, type, row, meta) {
-    return row.doneHours + ":" + row.doneMinutes;
+    if (row.doneMinutes > 0) return row.doneHours + ":" + row.doneMinutes;else return row.doneHours;
   }
 }, {
   "data": "functions",
@@ -50,7 +55,10 @@ var problemmColumns = [{
 }, {
   "data": "status"
 }, {
-  "data": "info"
+  "data": "info",
+  "render": function (data, type, row, meta) {
+    return '<textarea>' + data + '</textarea>';
+  }
 }, {
   "data": "customerCode"
 }, {
@@ -64,12 +72,12 @@ var problemmColumns = [{
 }, {
   "data": "resultAndSolution"
 }, {
-  "data": "doneHours"
-}, {
-  "data": "functions",
+  "data": "doneHours",
   "render": function (data, type, row, meta) {
-    return "<button class='btn btn-primary btn-sm'>more</button>";
+    if (row.doneMinutes > 0) return row.doneHours + ":" + row.doneMinutes;else return row.doneHours;
   }
+}, {
+  "data": "functions"
 }];
 var employeeColums = [{
   "data": "code"
@@ -81,6 +89,12 @@ var employeeColums = [{
   "data": "emailId"
 }, {
   "data": "phoneNumber"
+}, {
+  "data": "phoneNumber1"
+}, {
+  "data": "phoneNumber2"
+}, {
+  "data": "cccd"
 }, {
   "data": "department"
 }, {
@@ -96,6 +110,8 @@ var userColums = [{
   "data": "email"
 }, {
   "data": "roles"
+}, {
+  "data": "active"
 }];
 var dailyreportColumns = [{
   "data": "id"
@@ -139,6 +155,7 @@ function fillData(data) {
       document.getElementById("dateIssued").value = data.dateIssued;
       document.getElementById("dateEnd").value = data.dateEnd;
       document.getElementById("problemStatus").value = data.problemStatus;
+      document.getElementById("problemInfo").value = data.problemInfo;
       document.getElementById("description").value = data.description;
       document.getElementById("serviceType").value = data.serviceType;
       document.getElementById("informMethod").value = data.informMethod;
@@ -184,12 +201,15 @@ function fillData(data) {
       document.getElementById("phoneNumber").value = data.phoneNumber;
       document.getElementById("department").value = data.department;
       document.getElementById("note").value = data.note;
+      document.getElementById("phoneNumber1").value = data.phoneNumber1;
+      document.getElementById("phoneNumber2").value = data.phoneNumber2;
       break;
     case 'users':
       document.getElementById("id").value = data.id;
       document.getElementById("name").value = data.name;
       document.getElementById("email").value = data.email;
       document.getElementById("roles").value = data.roles;
+      document.getElementById("active").value = data.active;
       break;
     case 'daily_reports':
       break;
@@ -201,14 +221,23 @@ function initTable(name, _entity) {
   entity = _entity;
   let columns = [];
   let addLink = '';
+  let clDef = [];
   switch (entity) {
     case 'jobs':
       columns = jobColums;
       addLink = '/forms/add-job.html';
+      clDef = [{
+        target: [8, 10, 11],
+        visible: false
+      }];
       break;
     case 'problems':
       columns = problemmColumns;
       addLink = '/forms/add-problem.html';
+      clDef = [{
+        target: [0],
+        visible: false
+      }];
       break;
     case 'employees':
       columns = employeeColums;
@@ -226,6 +255,7 @@ function initTable(name, _entity) {
   }
   setTimeout(() => {
     $('#' + name).dataTable({
+      "columDefs": clDef,
       "dom": 'Bfrtip',
       "select": {
         "style": 'multi'
@@ -255,10 +285,17 @@ function initTable(name, _entity) {
             dt.rows({
               selected: true
             }).data().toArray().forEach(el => {
-              //console.log(el);
-              fetch(baseUrl + entity + "/" + el.id, {
-                method: 'DELETE'
-              });
+              let requestHeader = {
+                'crossorigin': true,
+                'Access-Control-Allow-Origin': '*',
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("accesstoken")
+              };
+              let options = {
+                method: 'DELETE',
+                headers: requestHeader
+              };
+              fetch(baseUrl + entity + "/" + el.id, options);
             });
             setTimeout(() => {
               dt.ajax.reload();
@@ -271,7 +308,7 @@ function initTable(name, _entity) {
           location.href = addLink;
         }
       }],
-      "responsive": true,
+      //"responsive": true,
       "ajax": {
         "url": baseUrl + entity,
         "type": "GET",
@@ -281,8 +318,6 @@ function initTable(name, _entity) {
         },
         "beforeSend": function (request) {
           request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("accesstoken"));
-          //console.log('request');
-          //console.log(request);
         }
       },
       "columns": columns

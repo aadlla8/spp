@@ -69,19 +69,33 @@ public class Problem {
     private String resultAndSolution;
     @Transient
     private long doneHours;
-
+    @Transient
+    private long doneMinutes;
     public long getDoneHours() {
-        if (this.getStartDate() != null && this.getDoneDate() != null)
-            this.setDoneHours(Duration.between(this.getStartDate(), this.getEndDate()).toHours());
-        return doneHours;
+        if (this.getStartDate() != null && this.getDoneDate() != null) {
+            long totalMinutes = (Duration.between(this.getStartDate(), this.getDoneDate()).toMinutes());
+            if (totalMinutes > 0) {
+                return (Math.floorDiv(totalMinutes, 60));
+            }
+        }
+        return 0;
     }
 
+    public long getDoneMinutes() {
+        if (this.getStartDate() != null && this.getDoneDate() != null) {
+            long totalMinutes = (Duration.between(this.getStartDate(), this.getDoneDate()).toMinutes());
+            if (totalMinutes > 0) {
+                return (Math.floorMod(totalMinutes, 60));
+            }
+        }
+        return 0;
+    }
     @Transient
     private String functions;
     private String region;
+
     public Problem() {
         this.setCreateDate(LocalDateTime.now());
-        if (this.getStartDate() != null && this.getDoneDate() != null)
-            this.setDoneHours(Duration.between(this.getStartDate(), this.getEndDate()).toHours());
+         
     }
 }

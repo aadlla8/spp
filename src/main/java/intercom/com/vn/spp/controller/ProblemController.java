@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,13 +44,17 @@ public class ProblemController {
         return ResponseEntity.ok().body(problem);
     }
 
+    
     @PostMapping("/problems")
-    public Problem create(@Valid @RequestBody Problem problem,@AuthenticationPrincipal UserInfoDetails uInfo) {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public Problem create(@Valid @RequestBody Problem problem, @AuthenticationPrincipal UserInfoDetails uInfo) {
         problem.setCreator(uInfo.getUsername());
         return problemRepository.save(problem);
     }
 
+    
     @PutMapping("/problems/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Problem> update(@PathVariable(value = "id") Long problemId,
             @Valid @RequestBody Problem problemDetails)
             throws ResourceNotFoundException {
@@ -75,7 +80,9 @@ public class ProblemController {
         return ResponseEntity.ok(problem);
     }
 
+    
     @DeleteMapping("/problems/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Map<String, Boolean> delete(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Problem problem = problemRepository.findById(id)

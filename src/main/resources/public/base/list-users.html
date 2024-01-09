@@ -195,6 +195,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email </th>
                     <th scope="col">Roles </th>
+                    <th scope="col">Active </th>
                   </tr>
                 </thead>
                 <tbody> </tbody>
@@ -236,6 +237,12 @@
                           <select class="form-select" id="roles" name="roles" placeholder="Roles" required>                
                             <option value="ROLE_ADMIN">Admin </option>
                             <option value="ROLE_USER">Viewer </option>
+                          </select>
+                        </div>
+                        <div class="input-group mb-4"><span class="input-group-text">               </span>
+                          <select class="form-select" id="active" name="active" required>                
+                            <option value="true">Active </option>
+                            <option value="false">DeActive </option>
                           </select>
                         </div>
                         <button class="btn btn-block btn-success" type="submit">Update</button>

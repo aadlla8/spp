@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.jwtutils.UserInfoDetails;
 import intercom.com.vn.spp.model.Job;
@@ -26,7 +26,6 @@ import jakarta.validation.Valid;
 @RestController
 @CrossOrigin()
 @RequestMapping("/api/v1")
-
 public class JobController {
     @Autowired
     private JobRepository jobRepository;
@@ -45,12 +44,14 @@ public class JobController {
     }
 
     @PostMapping("/jobs")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Job create(@Valid @RequestBody Job job, @AuthenticationPrincipal UserInfoDetails uInfo) {
         job.setCreator(uInfo.getUsername());
         return jobRepository.save(job);
     }
 
     @PutMapping("/jobs/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Job> update(@PathVariable(value = "id") Long jobId,
             @Valid @RequestBody Job jobDetail)
             throws ResourceNotFoundException {
@@ -71,12 +72,13 @@ public class JobController {
         job.setDateIssued(jobDetail.getDateIssued());
         job.setRootCause(jobDetail.getRootCause());
         job.setRegion(jobDetail.getRegion());
+        job.setProblemInfo(jobDetail.getProblemInfo());
         jobRepository.save(job);
-
         return ResponseEntity.ok(job);
     }
 
     @DeleteMapping("/jobs/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Map<String, Boolean> delete(@PathVariable(value = "id") Long jobId)
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)
@@ -84,7 +86,6 @@ public class JobController {
         jobRepository.delete(job);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
-
         return response;
     }
 }

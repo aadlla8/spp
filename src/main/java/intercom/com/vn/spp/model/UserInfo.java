@@ -25,10 +25,12 @@ public class UserInfo {
     private String email;
     private String password;
     private String roles;
+    private boolean active;
     @Column(name="create_date")
     private LocalDateTime createDate;
     public UserInfo(){
         this.setCreateDate(LocalDateTime.now());
+        this.setActive(false);
     }
 
 }

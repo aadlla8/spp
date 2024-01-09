@@ -44,6 +44,12 @@ public class Job {
     @Column(length = 10, name = "problem_status")
     /* Trang thai su co Down Check Up Move */
     private String problemStatus;
+
+    /* Thong tin su co */
+    @Nationalized
+    @Column(name = "problem_info", columnDefinition = "TEXT")
+    private String problemInfo;
+
     @Column(length = 30, name = "job_type")
     private String jobType;
     /* Dau moi khach hang */
@@ -82,14 +88,23 @@ public class Job {
     private long doneMinutes;
 
     public long getDoneHours() {
-        long totalMinutes = 0;
-        if (this.getStartDate() != null && this.getDoneDate() != null)
-            totalMinutes = (Duration.between(this.getStartDate(), this.getDateEnd()).toMinutes());
-        if (totalMinutes > 0) {
-            this.setDoneHours(Math.floorDiv(totalMinutes, 60));
-            this.setDoneMinutes(Math.floorMod(totalMinutes, 60));
+        if (this.getStartDate() != null && this.getDoneDate() != null) {
+            long totalMinutes = (Duration.between(this.getStartDate(), this.getDoneDate()).toMinutes());
+            if (totalMinutes > 0) {
+                return (Math.floorDiv(totalMinutes, 60));
+            }
         }
-        return doneHours;
+        return 0;
+    }
+
+    public long getDoneMinutes() {
+        if (this.getStartDate() != null && this.getDoneDate() != null) {
+            long totalMinutes = (Duration.between(this.getStartDate(), this.getDoneDate()).toMinutes());
+            if (totalMinutes > 0) {
+                return (Math.floorMod(totalMinutes, 60));
+            }
+        }
+        return 0;
     }
 
     @Transient
@@ -98,8 +113,5 @@ public class Job {
 
     public Job() {
         this.setDateCreate(LocalDateTime.now());
-        if (this.getStartDate() != null && this.getDoneDate() != null)
-            this.setDoneHours(Duration.between(this.getStartDate(), this.getDateEnd()).toHours());
-
     }
 }

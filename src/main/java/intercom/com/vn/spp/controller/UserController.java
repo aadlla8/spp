@@ -27,4 +27,11 @@ public class UserController {
 	public String update(@RequestBody UserInfo userInfo, @PathVariable(value = "id") Integer id) {
 		return service.updateUser(userInfo, id);
 	}
+
+	@DeleteMapping("/users/{id}")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public String delete(@PathVariable(value = "id") Integer id) {
+		service.delete(id);
+		return "Xóa thành công";
+	}
 }

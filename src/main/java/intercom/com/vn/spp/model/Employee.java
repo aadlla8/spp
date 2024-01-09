@@ -28,8 +28,13 @@ public class Employee {
     private String emailId;
     @Column(name = "phone")
     private String phoneNumber;
+    @Column(name = "phone_number1")
+    private String phoneNumber1;
+    @Column(name = "phone_number2")
+    private String phoneNumber2;
     private String department;
     private String note;
+    private String cccd;
     @Transient
     private String functions;
 
