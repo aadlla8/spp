@@ -44,7 +44,6 @@ public class ProblemController {
         return ResponseEntity.ok().body(problem);
     }
 
-    
     @PostMapping("/problems")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Problem create(@Valid @RequestBody Problem problem, @AuthenticationPrincipal UserInfoDetails uInfo) {
@@ -52,7 +51,6 @@ public class ProblemController {
         return problemRepository.save(problem);
     }
 
-    
     @PutMapping("/problems/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Problem> update(@PathVariable(value = "id") Long problemId,
@@ -75,12 +73,14 @@ public class ProblemController {
         problem.setStatus(problemDetails.getStatus());
         problem.setServiceType(problemDetails.getServiceType());
         problem.setRegion(problemDetails.getRegion());
+        problem.setTechnicalStart(problemDetails.getTechnicalStart());
+        problem.setTechnicalDone(problemDetails.getTechnicalDone());
+
         problemRepository.save(problem);
 
         return ResponseEntity.ok(problem);
     }
 
-    
     @DeleteMapping("/problems/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public Map<String, Boolean> delete(@PathVariable(value = "id") Long id)

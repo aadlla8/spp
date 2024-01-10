@@ -38,6 +38,11 @@ public class Problem {
     /* Ngày kết thúc */
     @Column(name = "end_date")
     private LocalDateTime endDate;
+    /*tg ky thuat xuat phat */
+    @Column(name = "technical_start")
+    private LocalDateTime technicalStart;
+    @Column(name = "technical_done")
+    private LocalDateTime technicalDone;
     /* Trạng thái */
     private String status;
     /* Thông tin sự cố */

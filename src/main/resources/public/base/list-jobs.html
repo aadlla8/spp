@@ -32,6 +32,8 @@
     <link href="datatablenet/jquery.dataTables.min.css" rel="stylesheet">
     <link href="datatablenet/buttons.dataTables.min.css" rel="stylesheet">
     <link href="datatablenet/select.dataTables.min.css" rel="stylesheet">
+    <link href="datatablenet/colReorder.dataTables.min.css" rel="stylesheet">
+    <link href="datatablenet/selectize.css" rel="stylesheet">
     <script src="datatablenet/jquery-3.7.0.js"></script>
     <script src="datatablenet/jquery.dataTables.min.js"></script>
     <script src="datatablenet/dataTables.buttons.min.js"></script>
@@ -41,6 +43,8 @@
     <script src="datatablenet/buttons.html5.min.js"></script>
     <script src="datatablenet/buttons.print.min.js"></script>
     <script src="datatablenet/dataTables.select.min.js"></script>
+    <script src="datatablenet/dataTables.colReorder.min.js"></script>
+    <script src="datatablenet/selectize.js"></script>
     <script src="js/config.js"></script>
     <script src="js/color-modes.js"></script>
     <link rel="canonical" href="https://coreui.io/docs/content/tables/">
@@ -200,7 +204,7 @@
                     <th scope="col">Thời gian HT xong</th>
                     <th scope="col">Thời gian KT về VP</th>
                     <th scope="col">Trạng thái tạm thời</th>
-                    <th scope="col">Thông tin sự cố</th>
+                    <th scope="col">Mô tả CV</th>
                     <th scope="col">Công việc của NW và TD</th>
                     <th scope="col">Ghi chú     </th>
                     <th scope="col">Thời gian XL CV(giờ)  </th>
@@ -228,7 +232,7 @@
                             <option selected disable value>Chọn...</option>
                             <option>TK</option>
                             <option>SC</option>
-                            <option>Khac                 </option>
+                            <option>Khac</option>
                           </select>
                           <div class="invalid-feedback">Hãy chọn loại công việc</div>
                         </div>
@@ -254,33 +258,20 @@
                           <label class="form-label" for="dateEnd">Ngày kết thúc</label>
                           <div class="input-group has-validation">
                             <input class="form-control" id="dateEnd" type="datetime-local" name="dateEnd" aria-describedby="inputGroupPrepend">
-                            <div class="invalid-feedback">Hãy nhập ngày kết thúc                    </div>
+                            <div class="invalid-feedback">Hãy nhập ngày kết thúc </div>
                           </div>
                         </div>
-                        <div class="col-md-12">
-                          <label class="form-label" for="description">Mô tả công việc</label>
-                          <textarea class="form-control" id="description" name="description" required></textarea>
-                          <div class="invalid-feedback">Hãy nhập Mô tả công việc</div>
-                        </div>
-                        <div class="col-md-12">
-                          <label class="form-label" for="problemInfo">Thông tin sự cố</label>
-                          <textarea class="form-control" id="problemInfo" name="problemInfo">             </textarea>
-                        </div>
                         <div class="col-md-3">
-                          <label class="form-label" for="problemStatus">Trạng thái sự cố</label>
-                          <select class="form-select" id="problemStatus" name="problemStatus">
-                            <option selected disable value>Chọn...</option>
-                            <option>DOWN</option>
-                            <option>CHECK</option>
-                            <option>UP</option>
-                            <option>MOVE</option>
-                          </select>
-                        </div>
-                        <div class="col-md-3">
-                          <label class="form-label" for="scCode">Mã sự cố</label>
-                          <input class="form-control" id="scCode" type="text" maxlength="20" name="scCode" value="">
-                          <div class="invalid-feedback">Hãy nhập mã sự cố </div>
-                          <input class="form-control" id="id" type="hidden" name="id" value="" required>
+                          <label class="form-label" for="employeeCode">Mã nhân viên</label>
+                          <div class="input-group has-validation">
+                            <select class="form-select" id="employeeCode" name="employeeCode">
+                              <option selected disabled value>Chọn nhân viên</option>
+                              <option>TUNGKT</option>
+                              <option>HANHPV</option>
+                              <option>DANNV</option>
+                              <div class="invalid-feedback">Hãy nhập mã nhân viên</div>
+                            </select>
+                          </div>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="region">Vùng</label>
@@ -306,16 +297,29 @@
                           </select>
                         </div>
                         <div class="col-md-3">
-                          <label class="form-label" for="employeeCode">Mã nhân viên</label>
-                          <div class="input-group has-validation">
-                            <select class="form-select" id="employeeCode" name="employeeCode">
-                              <option selected disabled value>Chọn nhân viên</option>
-                              <option>TUNGKT</option>
-                              <option>HANHPV</option>
-                              <option>DANNV</option>
-                              <div class="invalid-feedback">Hãy nhập mã nhân viên</div>
-                            </select>
-                          </div>
+                          <label class="form-label" for="scCode">Mã sự cố</label>
+                          <input class="form-control" id="scCode" type="text" maxlength="20" name="scCode" value="">
+                          <div class="invalid-feedback">Hãy nhập mã sự cố </div>
+                          <input class="form-control" id="id" type="hidden" name="id" value="" required>
+                        </div>
+                        <div class="col-md-12">
+                          <label class="form-label" for="description">Mô tả công việc</label>
+                          <textarea class="form-control" id="description" name="description" required></textarea>
+                          <div class="invalid-feedback">Hãy nhập Mô tả công việc</div>
+                        </div>
+                        <div class="col-md-12">
+                          <label class="form-label" for="problemInfo">Thông tin sự cố</label>
+                          <textarea class="form-control" id="problemInfo" name="problemInfo"> </textarea>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="problemStatus">Trạng thái sự cố</label>
+                          <select class="form-select" id="problemStatus" name="problemStatus">
+                            <option selected disable value>Chọn...</option>
+                            <option>DOWN</option>
+                            <option>CHECK</option>
+                            <option>UP</option>
+                            <option>MOVE</option>
+                          </select>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="startDate">Thời gian bắt đầu xử lý</label>

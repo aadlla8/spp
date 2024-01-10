@@ -32,6 +32,8 @@
     <link href="datatablenet/jquery.dataTables.min.css" rel="stylesheet">
     <link href="datatablenet/buttons.dataTables.min.css" rel="stylesheet">
     <link href="datatablenet/select.dataTables.min.css" rel="stylesheet">
+    <link href="datatablenet/colReorder.dataTables.min.css" rel="stylesheet">
+    <link href="datatablenet/selectize.css" rel="stylesheet">
     <script src="datatablenet/jquery-3.7.0.js"></script>
     <script src="datatablenet/jquery.dataTables.min.js"></script>
     <script src="datatablenet/dataTables.buttons.min.js"></script>
@@ -41,6 +43,8 @@
     <script src="datatablenet/buttons.html5.min.js"></script>
     <script src="datatablenet/buttons.print.min.js"></script>
     <script src="datatablenet/dataTables.select.min.js"></script>
+    <script src="datatablenet/dataTables.colReorder.min.js"></script>
+    <script src="datatablenet/selectize.js"></script>
     <script src="js/config.js"></script>
     <script src="js/color-modes.js"></script>
     <link rel="canonical" href="https://coreui.io/docs/content/tables/">
@@ -210,6 +214,21 @@
               </table>
             </div>
           </div>
+          <div class="modal fade" id="editModalXl" tabindex="-1" aria-labelledby="editModalXlLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title h4" id="editModalXlLabel">Thông tin công việc</h5>
+                  <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-12">    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <footer class="footer px-4">
@@ -236,10 +255,9 @@
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function () {
            'use strict'
-            jQuery(document).ready(function() {
-              setTimeout(function(){initTable('example','daily_reports')},1000);
-            });     
+            
         })();   
+        initTable('example','dailyreports');
     </script>
   </body>
 </html>

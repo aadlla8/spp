@@ -19,7 +19,7 @@ var jobColums = [{
 }, {
   "data": "problemStatus"
 }, {
-  "data": "problemInfo",
+  "data": "description",
   "render": function (data, type, row, meta) {
     return '<textarea>' + data + '</textarea>';
   }
@@ -169,7 +169,12 @@ function fillData(data) {
       document.getElementById("region").value = data.region;
       processForm('GET', null, "employees");
       setTimeout(function () {
-        document.getElementById("employeeCode").value = data.employeeCode;
+        //document.getElementById("employeeCode").value = data.employeeCode;
+        let items = [];
+        data.employeeCode.split(',').forEach(emp => {
+          items.push(emp);
+        });
+        employeeSl[0].selectize.setValue(items);
       }, 1000);
       break;
     case 'problems':
@@ -180,6 +185,8 @@ function fillData(data) {
       document.getElementById("startDate").value = data.startDate;
       document.getElementById("endDate").value = data.endDate;
       document.getElementById("doneDate").value = data.doneDate;
+      document.getElementById("technicalStart").value = data.technicalStart;
+      document.getElementById("technicalDone").value = data.technicalDone;
       document.getElementById("info").value = data.info;
       document.getElementById("serviceType").value = data.serviceType;
       document.getElementById("status").value = data.status;
@@ -227,7 +234,7 @@ function initTable(name, _entity) {
       columns = jobColums;
       addLink = '/forms/add-job.html';
       clDef = [{
-        target: [8, 10, 11],
+        target: [2, 4, 8, 10, 11],
         visible: false
       }];
       break;
@@ -255,6 +262,7 @@ function initTable(name, _entity) {
   }
   setTimeout(() => {
     $('#' + name).dataTable({
+      "colReorder": true,
       "columnDefs": clDef,
       "dom": 'Bfrtip',
       "select": {

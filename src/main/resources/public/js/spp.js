@@ -1,6 +1,7 @@
 var baseUrl = "/api/v1/";
 var registerUrl = "/auth/addNewUser";
 var loginUrl = "/auth/generateToken";
+var employeeSl;
 var loginsuccess = false;
 function processForm(action, form, entity) {
   loginsuccess = false;
@@ -14,6 +15,7 @@ function processForm(action, form, entity) {
     let data = '';
     if (form != null) {
       let fData = new FormData(form);
+      if (entity == 'jobs') fData.set('employeeCode', employeeSl[0].selectize.getValue());
       data = JSON.stringify(Object.fromEntries(fData));
     }
     let requestHeader = {
@@ -66,12 +68,20 @@ function processForm(action, form, entity) {
   }
 }
 function loadField(fieldId, array, value) {
-  $("#" + fieldId + ' option').remove(0);
-  for (i in array) {
-    let selected = '';
-    if (value != null && array[i].code == value) selected = 'selected';
-    $("#" + fieldId).append("<option value='" + array[i].code + "' " + selected + ">" + array[i].code + "</option>");
-  }
+  // $("#" + fieldId + ' option').remove(0);
+  // for (i in array) {
+  //     let selected='';
+  //     if(value !=null && array[i].code==value) selected='selected'
+  //     $("#" + fieldId).append("<option value='"+array[i].code+"' "+selected+">" + array[i].code + "</option>");
+  // }
+  employeeSl = $('#employeeCode').selectize({
+    maxItems: null,
+    valueField: 'code',
+    labelField: 'code',
+    searchField: 'code',
+    options: array,
+    create: false
+  });
 }
 function logout() {
   localStorage.setItem("accesstoken", "");

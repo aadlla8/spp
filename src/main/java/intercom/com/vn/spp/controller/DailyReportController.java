@@ -37,13 +37,13 @@ public class DailyReportController {
     @Autowired
     private DailyReportRepository repo;
 
-    @GetMapping("/daily_reports")
+    @GetMapping("/dailyreports")
     public List<DailyReport> getAllEmployees() {
         List<Job> dailyJobs = jobRepository.findAllJobDaily();
         return repo.findAll();
     }
 
-    @GetMapping("/daily_reports/{id}")
+    @GetMapping("/dailyreports/{id}")
     public ResponseEntity<DailyReport> getEmployeeById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         DailyReport report = repo.findById(id)
@@ -51,18 +51,18 @@ public class DailyReportController {
         return ResponseEntity.ok().body(report);
     }
 
-    @PostMapping("/daily_reports")
+    @PostMapping("/dailyreports")
     public Boolean createEmployee(@Valid @RequestBody DailyReport report) {
         return true;
     }
 
-    @PutMapping("/daily_reports/{id}")
+    @PutMapping("/dailyreports/{id}")
     public ResponseEntity<Boolean> updateEmploye(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok(true);
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @DeleteMapping("/daily_reports/{id}")
+    @DeleteMapping("/dailyreports/{id}")
     public Map<String, Boolean> delete(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
