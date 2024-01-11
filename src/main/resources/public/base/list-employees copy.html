@@ -47,7 +47,7 @@
     <script src="datatablenet/selectize.js"></script>
     <script src="js/config.js"></script>
     <script src="js/color-modes.js"></script>
-    <link rel="canonical" href="https://coreui.io/docs/components/breadcrumb/">
+    <link rel="canonical" href="https://coreui.io/docs/content/tables/">
   </head>
   <body>
     <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
@@ -75,8 +75,6 @@
             <li class="nav-item"><a class="nav-link" href="forms/add-employee.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Thêm nhân viên</a></li>
             <li class="nav-item"><a class="nav-link" href="base/list-employees.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh sách nhân viên</a></li>
             <li class="nav-item"><a class="nav-link" href="base/list-users.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh sách users</a></li>
-            <li class="nav-item"><a class="nav-link" href="forms/add-menu.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Thêm Danh mục</a></li>
-            <li class="nav-item"><a class="nav-link" href="base/list-menu.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh mục</a></li>
             <li class="nav-item"><a class="nav-link" href="base/daily_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo ngày   </a></li>
             <li class="nav-item"><a class="nav-link" href="login.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Logout        </a></li>
           </ul>
@@ -188,67 +186,101 @@
             </li>
           </ul>
         </div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb my-0">
-            <li class="breadcrumb-item"><a href="#">Home</a>
-            </li>
-            <li class="breadcrumb-item"><span>Components</span>
-            </li>
-            <li class="breadcrumb-item"><span>Base</span>
-            </li>
-            <li class="breadcrumb-item active"><span>Breadcrumb</span>
-            </li>
-          </ol>
-        </nav>
       </header>
       <div class="body flex-grow-1">
         <div class="container-fluid px-4">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="card mb-4">
-                <div class="card-header"><strong>Breadcrumb</strong></div>
-                <div class="card-body">
-                  <p class="text-body-secondary small">The breadcrumb navigation provides links back to each previous page the user navigated through and shows the current location in a website or an application. You don’t have to add separators, because they automatically added in CSS through <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::before"> <code>::before</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/content"> <code>content</code></a>.</p>
-                  <div class="example">
-                    <ul class="nav nav-underline-border" role="tablist">
-                      <li class="nav-item"><a class="nav-link active" data-coreui-toggle="tab" href="#preview-1000" role="tab">
-                          <svg class="icon me-2">
-                            <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-media-play"></use>
-                          </svg>Preview</a></li>
-                      <li class="nav-item"><a class="nav-link" href="https://coreui.io/docs/components/breadcrumb/#example" target="_blank">
-                          <svg class="icon me-2">
-                            <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-code"></use>
-                          </svg>Code</a></li>
-                    </ul>
-                    <div class="tab-content rounded-bottom">
-                      <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1000">
-                        <nav aria-label="breadcrumb" role="navigation">
-                          <ol class="breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">Home</li>
-                          </ol>
-                        </nav>
-                        <nav aria-label="breadcrumb" role="navigation">
-                          <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Library</li>
-                          </ol>
-                        </nav>
-                        <nav aria-label="breadcrumb" role="navigation">
-                          <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Library</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Data</li>
-                          </ol>
-                        </nav>
-                        <nav class="breadcrumb"><a class="breadcrumb-item" href="#">Home</a><a class="breadcrumb-item" href="#">Library</a><a class="breadcrumb-item" href="#">Data</a><span class="breadcrumb-item active">Bootstrap</span></nav>
-                      </div>
+          <div class="card mb-4">
+            <div class="card-header"><strong>Tables</strong><span class="small ms-1">Danh sách nhân viên</span></div>
+            <div class="card-body"> 
+              <table class="table" id="example" style="width:100%;">
+                <thead>
+                  <tr>
+                    <th scope="col">Mã nhân viên</th>
+                    <th scope="col">Họ</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Số điện thoại </th>
+                    <th scope="col">Số điện thoại 2</th>
+                    <th scope="col">Số điện thoại 3</th>
+                    <th scope="col">cccd</th>
+                    <th scope="col">Bộ phận</th>
+                    <th scope="col">Ghi chú</th>
+                    <th scope="col">Tính năng</th>
+                  </tr>
+                </thead>
+                <tbody> </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal fade" id="editModalXl" tabindex="-1" aria-labelledby="editModalXlLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title h4" id="editModalXlLabel">Chỉnh sửa nhân viên</h5>
+                  <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-12">             
+                      <form class="row g-3 needs-validation" novalidate>
+                        <div class="col-md-3">
+                          <label class="form-label" for="code">Mã nhân viên</label>
+                          <input class="form-control" id="code" type="text" maxlength="20" name="code" value="" required>
+                          <input class="form-control" id="id" name="id" type="hidden" value="">
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="lastName">Họ</label>
+                          <input class="form-control" id="lastName" type="text" name="lastName" value="" required>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="firstName">Tên</label>
+                          <input class="form-control" id="firstName" type="text" name="firstName" value="" required>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="emailId">Email</label>
+                          <input class="form-control" id="emailId" type="email" name="emailId" value="" required>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="phoneNumber">Số điện thoại 1</label>
+                          <input class="form-control" id="phoneNumber" type="number" name="phoneNumber" value="" required>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="phoneNumber1">Số điện thoại 2</label>
+                          <input class="form-control" id="phoneNumber1" type="number" name="phoneNumber1" value="">
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="phoneNumber2">Số điện thoại 3</label>
+                          <input class="form-control" id="phoneNumber2" type="number" name="phoneNumber2" value="">
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="department">Bộ phận</label>
+                          <select class="form-select" id="department" name="department" value="" required> 
+                            <option selected disable value>Chọn...</option>
+                            <option value="TD-HN">TD-HN</option>
+                            <option value="TD-HCM">TD-HCM</option>
+                            <option value="NW-HN">NW-HN</option>
+                            <option value="NW-HCM">NW-HCM</option>
+                            <option value="Khac">Khac</option>
+                          </select>
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="cccd">CCCD</label>
+                          <input class="form-control" id="cccd" type="text" name="cccd" value="">
+                        </div>
+                        <div class="col-md-3">
+                          <label class="form-label" for="note">Ghi chú</label>
+                          <input class="form-control" id="note" type="text" name="note" value="">
+                        </div>
+                        <div class="col-12">
+                          <button class="btn btn-primary" type="submit">Lưu nhân viên</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- /.row-->
         </div>
       </div>
       <footer class="footer px-4">
@@ -269,7 +301,29 @@
       });
       
     </script>
+    <script src="js/spp.js"></script>
+    <script src="js/table.js"></script>
     <script> 
+      jQuery(document).ready(function() {
+        initTable('example','employees');
+      });
+       // Example starter JavaScript for disabling form submissions if there are invalid fields
+       (function () {
+           'use strict'
+           // Fetch all the forms we want to apply custom Bootstrap validation styles to
+           var forms = document.querySelectorAll('.needs-validation')
+           // Loop over them and prevent submission
+           Array.prototype.slice.call(forms).forEach(function (form) {
+               form.addEventListener('submit', function (event) {
+                   event.preventDefault()
+                   event.stopPropagation()
+                   if (!form.checkValidity()) {
+                   }
+                   form.classList.add('was-validated')
+                   processForm('PUT', form, "employees");
+               }, false)
+           })
+       })()
     </script>
   </body>
 </html>

@@ -2,6 +2,7 @@ var baseUrl = "/api/v1/";
 var registerUrl = "/auth/addNewUser";
 var loginUrl = "/auth/generateToken";
 var employeeSl;
+var unitProcSl;
 var loginsuccess = false;
 function processForm(action, form, entity) {
   loginsuccess = false;
@@ -58,7 +59,10 @@ function processForm(action, form, entity) {
       if (action == 'GET') {
         switch (entity) {
           case 'employees':
-            loadField('employeeCode', res, null);
+            employeeSl = loadField('employeeCode', res, null);
+            break;
+          case 'menus':
+            unitProcSl = loadField('unitProcess', res.filter(i => i.categpry = 'DVXL'), null);
             break;
           default:
             break;
@@ -68,13 +72,7 @@ function processForm(action, form, entity) {
   }
 }
 function loadField(fieldId, array, value) {
-  // $("#" + fieldId + ' option').remove(0);
-  // for (i in array) {
-  //     let selected='';
-  //     if(value !=null && array[i].code==value) selected='selected'
-  //     $("#" + fieldId).append("<option value='"+array[i].code+"' "+selected+">" + array[i].code + "</option>");
-  // }
-  employeeSl = $('#employeeCode').selectize({
+  return $('#' + fieldId).selectize({
     maxItems: null,
     valueField: 'code',
     labelField: 'code',

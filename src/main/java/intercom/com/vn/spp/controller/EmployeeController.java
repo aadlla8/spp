@@ -44,14 +44,14 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public Employee createEmployee(@Valid @RequestBody Employee employee) {
         return employeeRepository.save(employee);
     }
 
     
     @PutMapping("/employees/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public ResponseEntity<Employee> updateEmploye(@PathVariable(value = "id") Long employeeId,
             @Valid @RequestBody Employee employeeDetails)
             throws ResourceNotFoundException {
@@ -70,7 +70,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     @DeleteMapping("/employees/{id}")
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {

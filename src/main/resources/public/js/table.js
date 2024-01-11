@@ -142,6 +142,17 @@ var dailyreportColumns = [{
 }, {
   "data": "dateCreate"
 }];
+var menuColumns = [{
+  "data": "id"
+}, {
+  "data": "name"
+}, {
+  "data": "code"
+}, {
+  "data": "category"
+}, {
+  "data": "note"
+}];
 var editModal = new coreui.Modal(document.getElementById('editModalXl'), {
   focus: true
 });
@@ -167,21 +178,22 @@ function fillData(data) {
       document.getElementById("jobOfNetworkAndTD").value = data.jobOfNetworkAndTD;
       document.getElementById("note").value = data.note;
       document.getElementById("region").value = data.region;
-      processForm('GET', null, "employees");
       setTimeout(function () {
-        //document.getElementById("employeeCode").value = data.employeeCode;
-        let items = [];
-        data.employeeCode.split(',').forEach(emp => {
-          items.push(emp);
+        if (data.employeeCode) {
+          let items = [];
+          data.employeeCode.split(',').forEach(emp => {
+            items.push(emp);
+          });
+          employeeSl[0].selectize.setValue(items);
+        } else employeeSl[0].selectize.getValue().forEach(i => {
+          employeeSl[0].selectize.removeItem(i);
         });
-        employeeSl[0].selectize.setValue(items);
-      }, 1000);
+      }, 200);
       break;
     case 'problems':
       columns = problemmColumns;
       document.getElementById("id").value = data.id;
       document.getElementById("scCode").value = data.scCode;
-      document.getElementById("unitProcess").value = data.unitProcess;
       document.getElementById("startDate").value = data.startDate;
       document.getElementById("endDate").value = data.endDate;
       document.getElementById("doneDate").value = data.doneDate;
@@ -198,6 +210,17 @@ function fillData(data) {
       document.getElementById("nocAndTechWorks").value = data.nocAndTechWorks;
       document.getElementById("resultAndSolution").value = data.resultAndSolution;
       document.getElementById("region").value = data.region;
+      setTimeout(function () {
+        if (data.unitProcess) {
+          let items = [];
+          data.unitProcess.split(',').forEach(emp => {
+            items.push(emp);
+          });
+          unitProcSl[0].selectize.setValue(items);
+        } else unitProcSl[0].selectize.getValue().forEach(i => {
+          unitProcSl[0].selectize.removeItem(i);
+        });
+      }, 200);
       break;
     case 'employees':
       document.getElementById("id").value = data.id;
@@ -220,6 +243,13 @@ function fillData(data) {
       break;
     case 'daily_reports':
       break;
+    case 'menus':
+      document.getElementById("id").value = data.id;
+      document.getElementById("name").value = data.name;
+      document.getElementById("code").value = data.code;
+      document.getElementById("note").value = data.note;
+      document.getElementById("category").value = data.category;
+      break;
     default:
       break;
   }
@@ -237,6 +267,7 @@ function initTable(name, _entity) {
         target: [2, 4, 8, 10, 11],
         visible: false
       }];
+      processForm('GET', null, "employees");
       break;
     case 'problems':
       columns = problemmColumns;
@@ -245,6 +276,7 @@ function initTable(name, _entity) {
         target: [0],
         visible: false
       }];
+      processForm('GET', null, "menus");
       break;
     case 'employees':
       columns = employeeColums;
@@ -257,6 +289,9 @@ function initTable(name, _entity) {
     case 'daily_reports':
       columns = dailyreportColumns;
       addLink = '/forms/add-job.html';
+    case 'menus':
+      columns = menuColumns;
+      addLink = '/forms/add-menu.html';
     default:
       break;
   }

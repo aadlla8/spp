@@ -47,7 +47,7 @@
     <script src="datatablenet/selectize.js"></script>
     <script src="js/config.js"></script>
     <script src="js/color-modes.js"></script>
-    <link rel="canonical" href="https://coreui.io/docs/components/breadcrumb/">
+    <link rel="canonical" href="https://coreui.io/docs/forms/validation/">
   </head>
   <body>
     <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
@@ -188,67 +188,36 @@
             </li>
           </ul>
         </div>
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb my-0">
-            <li class="breadcrumb-item"><a href="#">Home</a>
-            </li>
-            <li class="breadcrumb-item"><span>Components</span>
-            </li>
-            <li class="breadcrumb-item"><span>Base</span>
-            </li>
-            <li class="breadcrumb-item active"><span>Breadcrumb</span>
-            </li>
-          </ol>
-        </nav>
       </header>
       <div class="body flex-grow-1">
         <div class="container-fluid px-4">
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-12">
               <div class="card mb-4">
-                <div class="card-header"><strong>Breadcrumb</strong></div>
+                <div class="card-header"><strong>Danh mục</strong><span class="small ms-1">Thêm danh mục</span></div>
                 <div class="card-body">
-                  <p class="text-body-secondary small">The breadcrumb navigation provides links back to each previous page the user navigated through and shows the current location in a website or an application. You don’t have to add separators, because they automatically added in CSS through <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::before"> <code>::before</code></a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/content"> <code>content</code></a>.</p>
-                  <div class="example">
-                    <ul class="nav nav-underline-border" role="tablist">
-                      <li class="nav-item"><a class="nav-link active" data-coreui-toggle="tab" href="#preview-1000" role="tab">
-                          <svg class="icon me-2">
-                            <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-media-play"></use>
-                          </svg>Preview</a></li>
-                      <li class="nav-item"><a class="nav-link" href="https://coreui.io/docs/components/breadcrumb/#example" target="_blank">
-                          <svg class="icon me-2">
-                            <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-code"></use>
-                          </svg>Code</a></li>
-                    </ul>
-                    <div class="tab-content rounded-bottom">
-                      <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1000">
-                        <nav aria-label="breadcrumb" role="navigation">
-                          <ol class="breadcrumb">
-                            <li class="breadcrumb-item active" aria-current="page">Home</li>
-                          </ol>
-                        </nav>
-                        <nav aria-label="breadcrumb" role="navigation">
-                          <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Library</li>
-                          </ol>
-                        </nav>
-                        <nav aria-label="breadcrumb" role="navigation">
-                          <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Library</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Data</li>
-                          </ol>
-                        </nav>
-                        <nav class="breadcrumb"><a class="breadcrumb-item" href="#">Home</a><a class="breadcrumb-item" href="#">Library</a><a class="breadcrumb-item" href="#">Data</a><span class="breadcrumb-item active">Bootstrap</span></nav>
-                      </div>
+                  <form class="row g-3 needs-validation" novalidate>
+                    <div class="input-group mb-3">          
+                      <input class="form-control" id="name" name="name" type="text" placeholder="Tên" required>
                     </div>
-                  </div>
+                    <div class="input-group mb-3">           
+                      <input class="form-control" id="code" name="code" type="text" placeholder="Mã" required>
+                    </div>
+                    <div class="input-group mb-3">                     
+                      <select class="form-select" id="category" name="category" placeholder="Loại" required>                
+                        <option value="DVXL">Đơn vị XL </option>
+                        <option value="BoPhan">Bô Phận </option>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">            
+                      <input class="form-control" id="note" name="note" type="text" placeholder="Ghi chú">
+                    </div>
+                    <button class="btn btn-block btn-success" type="submit">Update</button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-          <!-- /.row-->
         </div>
       </div>
       <footer class="footer px-4">
@@ -269,7 +238,25 @@
       });
       
     </script>
+    <script src="/js/spp.js"></script>
     <script> 
+       // Example starter JavaScript for disabling form submissions if there are invalid fields
+       (function () {
+           'use strict'
+           // Fetch all the forms we want to apply custom Bootstrap validation styles to
+           var forms = document.querySelectorAll('.needs-validation')
+           // Loop over them and prevent submission
+           Array.prototype.slice.call(forms).forEach(function (form) {
+               form.addEventListener('submit', function (event) {
+                   event.preventDefault()
+                   event.stopPropagation()
+                   if (!form.checkValidity()) {
+                   }
+                   form.classList.add('was-validated')
+                   processForm('POST', form, "menus");
+               }, false)
+           })
+       })()
     </script>
   </body>
 </html>

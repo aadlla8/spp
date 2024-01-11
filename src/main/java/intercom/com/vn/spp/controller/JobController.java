@@ -44,14 +44,14 @@ public class JobController {
     }
 
     @PostMapping("/jobs")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public Job create(@Valid @RequestBody Job job, @AuthenticationPrincipal UserInfoDetails uInfo) {
         job.setCreator(uInfo.getUsername());
         return jobRepository.save(job);
     }
 
     @PutMapping("/jobs/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public ResponseEntity<Job> update(@PathVariable(value = "id") Long jobId,
             @Valid @RequestBody Job jobDetail)
             throws ResourceNotFoundException {
@@ -78,7 +78,7 @@ public class JobController {
     }
 
     @DeleteMapping("/jobs/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public Map<String, Boolean> delete(@PathVariable(value = "id") Long jobId)
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)

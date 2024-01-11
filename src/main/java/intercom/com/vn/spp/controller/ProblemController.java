@@ -45,14 +45,14 @@ public class ProblemController {
     }
 
     @PostMapping("/problems")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public Problem create(@Valid @RequestBody Problem problem, @AuthenticationPrincipal UserInfoDetails uInfo) {
         problem.setCreator(uInfo.getUsername());
         return problemRepository.save(problem);
     }
 
     @PutMapping("/problems/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public ResponseEntity<Problem> update(@PathVariable(value = "id") Long problemId,
             @Valid @RequestBody Problem problemDetails)
             throws ResourceNotFoundException {
@@ -82,7 +82,7 @@ public class ProblemController {
     }
 
     @DeleteMapping("/problems/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public Map<String, Boolean> delete(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Problem problem = problemRepository.findById(id)

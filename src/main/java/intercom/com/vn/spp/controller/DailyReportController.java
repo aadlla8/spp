@@ -61,7 +61,7 @@ public class DailyReportController {
         return ResponseEntity.ok(true);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     @DeleteMapping("/dailyreports/{id}")
     public Map<String, Boolean> delete(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         Map<String, Boolean> response = new HashMap<>();
