@@ -18,6 +18,8 @@ public class DailyReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name="region")
+    private String region;
     @Column(name = "department", nullable = false)
     private String department;
     @Column(name = "employee_code", nullable = false)
@@ -33,12 +35,12 @@ public class DailyReport {
     @Column(name = "done_datetime")
     private LocalDateTime doneDatetime;
     @Column(name = "comebackoffice_datetime")
-    private String comebackofficeDatetime;
+    private LocalDateTime comebackofficeDatetime;
     @Column(name = "result_and_approach")
     private String resultAndApproach;
     private String note;
     @Column(name="work_process_datetime")
-    private LocalDateTime workProcessDateTime;
+    private String workProcessDateTime;
     private String status;
     @Transient
     private String functions;

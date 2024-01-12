@@ -21,7 +21,7 @@ var jobColums = [{
 }, {
   "data": "description",
   "render": function (data, type, row, meta) {
-    return '<textarea>' + data + '</textarea>';
+    return '<textarea style="width:400px">' + data + '</textarea>';
   }
 }, {
   "data": "jobOfNetworkAndTD"
@@ -31,11 +31,6 @@ var jobColums = [{
   "data": "doneHours",
   "render": function (data, type, row, meta) {
     if (row.doneMinutes > 0) return row.doneHours + ":" + row.doneMinutes;else return row.doneHours;
-  }
-}, {
-  "data": "functions",
-  "render": function (data, type, row, meta) {
-    return "<button class='btn btn-primary btn-sm'>more</button>";
   }
 }];
 var problemmColumns = [{
@@ -49,6 +44,8 @@ var problemmColumns = [{
 }, {
   "data": "unitProcess"
 }, {
+  "data": "technicalStart"
+}, {
   "data": "doneDate"
 }, {
   "data": "endDate"
@@ -57,7 +54,7 @@ var problemmColumns = [{
 }, {
   "data": "info",
   "render": function (data, type, row, meta) {
-    return '<textarea>' + data + '</textarea>';
+    return '<textarea style="width:400px">' + data + '</textarea>';
   }
 }, {
   "data": "customerCode"
@@ -76,8 +73,6 @@ var problemmColumns = [{
   "render": function (data, type, row, meta) {
     if (row.doneMinutes > 0) return row.doneHours + ":" + row.doneMinutes;else return row.doneHours;
   }
-}, {
-  "data": "functions"
 }];
 var employeeColums = [{
   "data": "code"
@@ -99,8 +94,6 @@ var employeeColums = [{
   "data": "department"
 }, {
   "data": "note"
-}, {
-  "data": "functions"
 }];
 var userColums = [{
   "data": "id"
@@ -114,7 +107,7 @@ var userColums = [{
   "data": "active"
 }];
 var dailyreportColumns = [{
-  "data": "id"
+  "data": "region"
 }, {
   "data": "department"
 }, {
@@ -136,11 +129,12 @@ var dailyreportColumns = [{
 }, {
   "data": "note"
 }, {
-  "data": "status"
+  "data": "workProcessDateTime"
 }, {
-  "data": "functions"
-}, {
-  "data": "dateCreate"
+  "data": "comebackofficeDatetime",
+  "render": function (data, type, row, meta) {
+    if (data) return 'YES';else return 'NO';
+  }
 }];
 var menuColumns = [{
   "data": "id"
@@ -286,12 +280,18 @@ function initTable(name, _entity) {
       columns = userColums;
       addLink = '/register.html';
       break;
-    case 'daily_reports':
+    case 'dailyreports':
       columns = dailyreportColumns;
       addLink = '/forms/add-job.html';
+      break;
+    case 'monthlyeports':
+      columns = dailyreportColumns;
+      addLink = '/forms/add-job.html';
+      break;
     case 'menus':
       columns = menuColumns;
       addLink = '/forms/add-menu.html';
+      break;
     default:
       break;
   }
@@ -303,7 +303,7 @@ function initTable(name, _entity) {
       "select": {
         "style": 'multi'
       },
-      "buttons": ['copy', 'excel', 'pdf', 'print', {
+      "buttons": ['copy', 'excel', 'pdf', 'print', 'pageLength', {
         text: 'reload',
         action: function (e, dt, node, config) {
           dt.ajax.reload();

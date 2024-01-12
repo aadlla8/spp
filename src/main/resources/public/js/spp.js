@@ -17,6 +17,7 @@ function processForm(action, form, entity) {
     if (form != null) {
       let fData = new FormData(form);
       if (entity == 'jobs') fData.set('employeeCode', employeeSl[0].selectize.getValue());
+      if (entity == 'problems') fData.set('unitProcess', unitProcSl[0].selectize.getValue());
       data = JSON.stringify(Object.fromEntries(fData));
     }
     let requestHeader = {

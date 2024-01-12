@@ -6,12 +6,15 @@ import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.model.DailyReport;
 import intercom.com.vn.spp.model.Employee;
 import intercom.com.vn.spp.model.Job;
+import intercom.com.vn.spp.model.Problem;
 import intercom.com.vn.spp.repository.DailyReportRepository;
 import intercom.com.vn.spp.repository.EmployeeRepository;
 import intercom.com.vn.spp.repository.JobRepository;
+import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +39,71 @@ public class DailyReportController {
     private JobRepository jobRepository;
     @Autowired
     private DailyReportRepository repo;
+    @Autowired
+    private EmployeeRepository emRepo;
+    @Autowired
+    private ProblemRepository probRepo;
 
     @GetMapping("/dailyreports")
     public List<DailyReport> getAllEmployees() {
+        List<DailyReport> reportDaily = new ArrayList<>();
+
         List<Job> dailyJobs = jobRepository.findAllJobDaily();
-        return repo.findAll();
+        for (Job j : dailyJobs) {
+            String[] employees = j.getEmployeeCode().split(",");
+            for (String emCode : employees) {
+                DailyReport dr = new DailyReport();
+                Employee em = emRepo.findOneByCode(emCode);
+                Problem prob = probRepo.findOneByScCode(j.getScCode());
+                dr.setRegion(j.getRegion());
+                dr.setEmployeeCode(emCode);
+                if (em != null)
+                    dr.setDepartment(em.getDepartment());
+                dr.setStartDateTime(j.getStartDate());
+                dr.setDeployment(j.getJobOfNetworkAndTD());
+                dr.setOtherWork(j.getNote());
+                dr.setProblem(j.getProblemInfo());
+                dr.setDoneDatetime(j.getDoneDate());
+                if (prob != null)
+                    dr.setResultAndApproach(prob.getResultAndSolution());
+                dr.setNote(j.getNote());
+                dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
+                dr.setComebackofficeDatetime(j.getComebackOfficeDate());
+                reportDaily.add(dr);
+            }
+
+        }
+        return reportDaily;
+    }
+    @GetMapping("/monthlyeports")
+    public List<DailyReport> monthlyReport() {
+        List<DailyReport> reportDaily = new ArrayList<>();
+
+        List<Job> dailyJobs = jobRepository.findAllJobMonth();
+        for (Job j : dailyJobs) {
+            String[] employees = j.getEmployeeCode().split(",");
+            for (String emCode : employees) {
+                DailyReport dr = new DailyReport();
+                Employee em = emRepo.findOneByCode(emCode);
+                Problem prob = probRepo.findOneByScCode(j.getScCode());
+                dr.setRegion(j.getRegion());
+                dr.setEmployeeCode(emCode);
+                if (em != null)
+                    dr.setDepartment(em.getDepartment());
+                dr.setStartDateTime(j.getStartDate());
+                dr.setDeployment(j.getJobOfNetworkAndTD());
+                dr.setOtherWork(j.getNote());
+                dr.setProblem(j.getProblemInfo());
+                dr.setDoneDatetime(j.getDoneDate());
+                if (prob != null)
+                    dr.setResultAndApproach(prob.getResultAndSolution());
+                dr.setNote(j.getNote());
+                dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
+                dr.setComebackofficeDatetime(j.getComebackOfficeDate());
+                reportDaily.add(dr);
+            }
+        }
+        return reportDaily;
     }
 
     @GetMapping("/dailyreports/{id}")

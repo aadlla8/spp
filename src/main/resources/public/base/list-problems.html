@@ -13,7 +13,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Cache-control" content="public">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, shrink-to-fit=no">
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
@@ -78,6 +78,7 @@
             <li class="nav-item"><a class="nav-link" href="forms/add-menu.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Thêm Danh mục</a></li>
             <li class="nav-item"><a class="nav-link" href="base/list-menu.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh mục</a></li>
             <li class="nav-item"><a class="nav-link" href="base/daily_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo ngày   </a></li>
+            <li class="nav-item"><a class="nav-link" href="base/monthly_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo tháng   </a></li>
             <li class="nav-item"><a class="nav-link" href="login.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Logout        </a></li>
           </ul>
         </li>
@@ -200,10 +201,11 @@
                     <th scope="col">STT</th>
                     <th scope="col">Vùng</th>
                     <th scope="col">Mã sự cố</th>
-                    <th scope="col">Thời gian bắt đầu SC</th>
+                    <th scope="col">Tg bắt đầu SC</th>
                     <th scope="col">Đơn vị XLSC</th>
-                    <th scope="col">Thời gian HT Kỹ thuật</th>
-                    <th scope="col">Thời gian kết thúc SC</th>
+                    <th scope="col">Tg KT xuất phát</th>
+                    <th scope="col">Tg HT Kỹ thuật</th>
+                    <th scope="col">Tg kết thúc SC</th>
                     <th scope="col">Trạng thái SC</th>
                     <th scope="col">Thông tin sự cố</th>
                     <th scope="col">Mã khách hàng</th>
@@ -212,8 +214,7 @@
                     <th scope="col">Nguyên nhân sự cố</th>
                     <th scope="col">Công việc của NOC và KT</th>
                     <th scope="col">Kết quả và giải pháp     </th>
-                    <th scope="col">Thời gian xử lý sự cố(giờ)</th>
-                    <th scope="col">Tính năng</th>
+                    <th scope="col">Tg xử lý sự cố(giờ:phút)            </th>
                   </tr>
                 </thead>
                 <tbody></tbody>

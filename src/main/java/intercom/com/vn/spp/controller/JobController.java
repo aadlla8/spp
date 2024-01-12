@@ -73,6 +73,7 @@ public class JobController {
         job.setRootCause(jobDetail.getRootCause());
         job.setRegion(jobDetail.getRegion());
         job.setProblemInfo(jobDetail.getProblemInfo());
+        job.setComebackOfficeDate(jobDetail.getComebackOfficeDate());
         jobRepository.save(job);
         return ResponseEntity.ok(job);
     }
