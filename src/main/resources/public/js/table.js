@@ -21,7 +21,8 @@ var jobColums = [{
 }, {
   "data": "description",
   "render": function (data, type, row, meta) {
-    return '<textarea style="width:400px">' + data + '</textarea>';
+    if (data) return '<textarea style="width:400px">' + data + '</textarea>';
+    return '';
   }
 }, {
   "data": "jobOfNetworkAndTD"
@@ -54,7 +55,7 @@ var problemmColumns = [{
 }, {
   "data": "info",
   "render": function (data, type, row, meta) {
-    return '<textarea style="width:400px">' + data + '</textarea>';
+    if (data) return '<textarea style="width:400px">' + data + '</textarea>';else return '';
   }
 }, {
   "data": "customerCode"
@@ -65,9 +66,15 @@ var problemmColumns = [{
 }, {
   "data": "rootCause"
 }, {
-  "data": "nocAndTechWorks"
+  "data": "nocAndTechWorks",
+  "render": function (data, type, row, meta) {
+    if (data) return '<textarea style="width:200px">' + data + '</textarea>';else return '';
+  }
 }, {
-  "data": "resultAndSolution"
+  "data": "resultAndSolution",
+  "render": function (data, type, row, meta) {
+    if (data) return '<textarea style="width:200px">' + data + '</textarea>';else return '';
+  }
 }, {
   "data": "doneHours",
   "render": function (data, type, row, meta) {
