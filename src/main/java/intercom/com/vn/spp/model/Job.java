@@ -72,10 +72,13 @@ public class Job {
     private String note;
     @Column(name = "employee_code")
     private String employeeCode;
+    /* thời gian băts đầu */
     @Column(name = "start_date")
     private LocalDateTime startDate;
+    /* thời gian hoàn thành xong */
     @Column(name = "done_date")
     private LocalDateTime doneDate;
+    /* thời gian trở về văn phòng */
     @Column(name = "come_back_office_date")
     private LocalDateTime comebackOfficeDate;
     @Nationalized
@@ -86,6 +89,9 @@ public class Job {
     private long doneHours;
     @Transient
     private long doneMinutes;
+    /* thời gian ngoài giờ */
+    @Transient
+    private String outTime;
 
     public long getDoneHours() {
         if (this.getStartDate() != null && this.getDoneDate() != null) {
@@ -105,6 +111,16 @@ public class Job {
             }
         }
         return 0;
+    }
+
+    public String getOutTime() {
+        if (this.getDoneDate() != null && this.getDoneDate().getHour() > 18) {
+
+            long outH = this.getDoneDate().getHour() - 18;
+            long outM = this.getDoneDate().getMinute();
+            return String.format("%s:%s", outH, outM);
+        } else
+            return "";
     }
 
     @Transient
