@@ -1,5 +1,6 @@
 package intercom.com.vn.spp.controller;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.jwtutils.UserInfoDetails;
+import intercom.com.vn.spp.model.Activity;
 import intercom.com.vn.spp.model.Job;
+import intercom.com.vn.spp.repository.ActivityRepository;
 import intercom.com.vn.spp.repository.JobRepository;
 import jakarta.validation.Valid;
 
@@ -29,6 +37,8 @@ import jakarta.validation.Valid;
 public class JobController {
     @Autowired
     private JobRepository jobRepository;
+    @Autowired
+    private ActivityRepository activityRepo;
 
     @GetMapping("/jobs")
     public List<Job> getAll() {
@@ -47,13 +57,15 @@ public class JobController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public Job create(@Valid @RequestBody Job job, @AuthenticationPrincipal UserInfoDetails uInfo) {
         job.setCreator(uInfo.getUsername());
-        return jobRepository.save(job);
+        jobRepository.save(job);
+        saveActivity(job, uInfo, "create_job","job");
+        return job;
     }
 
     @PutMapping("/jobs/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public ResponseEntity<Job> update(@PathVariable(value = "id") Long jobId,
-            @Valid @RequestBody Job jobDetail)
+            @Valid @RequestBody Job jobDetail, @AuthenticationPrincipal UserInfoDetails uInfo)
             throws ResourceNotFoundException {
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> new ResourceNotFoundException("Job not found for this id:: " + jobId));
@@ -74,8 +86,30 @@ public class JobController {
         job.setRegion(jobDetail.getRegion());
         job.setProblemInfo(jobDetail.getProblemInfo());
         job.setComebackOfficeDate(jobDetail.getComebackOfficeDate());
+        job.setCustomerContact(jobDetail.getCustomerContact());
         jobRepository.save(job);
+
+        saveActivity(jobDetail, uInfo, "update_job","job");
+
         return ResponseEntity.ok(job);
+    }
+
+    private void saveActivity(Job jobDetail, UserInfoDetails uInfo, String act, String type) {
+        try {
+            Activity at = new Activity();
+            at.setUsername(uInfo.getUsername());
+            at.setAction(act);
+            at.setObjectType(type);
+            var om = new ObjectMapper();
+            om.registerModule(new JavaTimeModule());
+            String json = om.writer().withDefaultPrettyPrinter().writeValueAsString(jobDetail);
+            at.setNewValue(json);
+            at.setActionDate(LocalDateTime.now());
+            activityRepo.save(at);
+
+        } catch (JsonProcessingException ex) {
+             
+        }
     }
 
     @DeleteMapping("/jobs/{id}")

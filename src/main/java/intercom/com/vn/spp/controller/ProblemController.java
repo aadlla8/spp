@@ -1,5 +1,6 @@
 package intercom.com.vn.spp.controller;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.jwtutils.UserInfoDetails;
+import intercom.com.vn.spp.model.Activity;
 import intercom.com.vn.spp.model.Problem;
+import intercom.com.vn.spp.repository.ActivityRepository;
 import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
 
@@ -30,6 +37,8 @@ import jakarta.validation.Valid;
 public class ProblemController {
     @Autowired
     private ProblemRepository problemRepository;
+    @Autowired
+    private ActivityRepository activityRepo;
 
     @GetMapping("/problems")
     public List<Problem> getAll() {
@@ -48,13 +57,15 @@ public class ProblemController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public Problem create(@Valid @RequestBody Problem problem, @AuthenticationPrincipal UserInfoDetails uInfo) {
         problem.setCreator(uInfo.getUsername());
-        return problemRepository.save(problem);
+        problemRepository.save(problem);
+        saveActivity(problem, uInfo,"create_sc","sc");
+        return problem;
     }
 
     @PutMapping("/problems/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
     public ResponseEntity<Problem> update(@PathVariable(value = "id") Long problemId,
-            @Valid @RequestBody Problem problemDetails)
+            @Valid @RequestBody Problem problemDetails, @AuthenticationPrincipal UserInfoDetails uInfo)
             throws ResourceNotFoundException {
         Problem problem = problemRepository.findById(problemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Sự cố not found for this id:: " + problemId));
@@ -78,7 +89,27 @@ public class ProblemController {
 
         problemRepository.save(problem);
 
+        saveActivity(problemDetails, uInfo,"update_sc","sc");
+
         return ResponseEntity.ok(problem);
+    }
+
+    private void saveActivity(Problem problemDetails, UserInfoDetails uInfo,String act, String type) {
+        try {
+            Activity at = new Activity();
+            at.setUsername(uInfo.getUsername());
+            at.setAction(act);
+            at.setObjectType(type);
+            var om = new ObjectMapper();
+            om.registerModule(new JavaTimeModule());
+            String json = om.writer().withDefaultPrettyPrinter().writeValueAsString(problemDetails);
+            at.setNewValue(json);
+            at.setActionDate(LocalDateTime.now());
+            activityRepo.save(at);
+
+        } catch (JsonProcessingException ex) {
+
+        }
     }
 
     @DeleteMapping("/problems/{id}")
