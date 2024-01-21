@@ -44,7 +44,10 @@ public class ProblemController {
     public List<Problem> getAll() {
         return problemRepository.findAll();
     }
-
+    @GetMapping("/problems/code/{code}")
+    public Problem findOneByCode(@PathVariable(value = "code") String code) {
+        return problemRepository.findOneByScCode(code);
+    }
     @GetMapping("/problems/{id}")
     public ResponseEntity<Problem> getById(@PathVariable(value = "id") Long problemId)
             throws ResourceNotFoundException {

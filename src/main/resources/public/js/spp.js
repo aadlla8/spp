@@ -85,4 +85,52 @@ function loadField(fieldId, array, value) {
 function logout() {
   localStorage.setItem("accesstoken", "");
 }
+function scCodeBlur(e) {
+  requestHeader = {
+    'crossorigin': true,
+    'Access-Control-Allow-Origin': '*',
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + localStorage.getItem("accesstoken")
+  };
+  let options = {
+    method: 'GET',
+    headers: requestHeader
+  };
+  fetch('/api/v1/problems/code/' + document.querySelector('#scCode').value, options).then(res => res.json()).then(res => {
+    console.log(res);
+    document.querySelector('#problemInfo').value = res.info;
+    document.querySelector('#problemStatus').value = res.status;
+    document.querySelector('#region').value = res.region;
+    document.querySelector('#informMethod').value = res.informMethod;
+    document.querySelector('#rootCause').value = res.rootCause;
+    document.querySelector('#customerContact').value = res.customerContact;
+    document.querySelector('#jobOfNetworkAndTD').value = res.nocAndTechWorks;
+    document.querySelector('#startDate').value = res.startDate;
+    document.querySelector('#doneDate').value = res.doneDate;
+    document.querySelector('#dateEnd').value = res.dateEnd;
+    document.querySelector('#serviceType').value = res.serviceType;
+  });
+}
+function dailyStatistic(e) {
+  requestHeader = {
+    'crossorigin': true,
+    'Access-Control-Allow-Origin': '*',
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + localStorage.getItem("accesstoken")
+  };
+  let options = {
+    method: 'GET',
+    headers: requestHeader
+  };
+  fetch('/api/v1/dailystatistic', options).then(res => res.json()).then(res => {
+    console.log(res);
+    let info = '<table class="table"><tr><td>';
+    info += "KT chưa giao việc: " + res.noJob + "<br/>";
+    info += "KT đã về  VP: " + res.backOffice + "<br/></td><td>";
+    info += "KT chưa về  VP: " + res.notyetBackOffice + "<br/>";
+    info += "KT nghỉ phép,nghỉ: " + res.notAtNoc + "<br/></td><td>";
+    info += "KT không về VP, về nhà: " + res.notBackOffice + "<br/></td></tr></table>";
+    document.querySelector("#dailystatistic").innerHTML = info;
+  });
+}
 //# sourceMappingURL=spp.js.map

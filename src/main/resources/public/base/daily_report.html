@@ -102,7 +102,8 @@
         <div class="container-fluid px-4">
           <div class="card mb-4">
             <div class="card-header"><strong>Tables</strong><span class="small ms-1">Báo cáo tiến độ CV theo ngày</span></div>
-            <div class="card-body"> 
+            <div class="card-body">
+              <div id="dailystatistic"> </div>
               <table class="table" id="example" style="width:100%;">
                 <thead>
                   <tr>
@@ -170,6 +171,7 @@
         })();   
       jQuery(document).ready(function() {
         initTable('example','dailyreports');
+        dailyStatistic();
       });
     </script>
   </body>

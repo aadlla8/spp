@@ -55,7 +55,25 @@ var problemmColumns = [{
 }, {
   "data": "endDate"
 }, {
-  "data": "status"
+  "data": "status",
+  "render": function (data, type, row, meta) {
+    if (type === 'sort') {
+      switch (data) {
+        case 'DOWN':
+          return 1;
+        case 'UP':
+          return 2;
+        case 'CHECK':
+          return 3;
+        case 'MOVE':
+          return 4;
+        default:
+          break;
+      }
+    } else {
+      return data;
+    }
+  }
 }, {
   "data": "info",
   "render": function (data, type, row, meta) {
@@ -277,6 +295,7 @@ function initTable(name, _entity) {
   let columns = [];
   let addLink = '';
   let clDef = [];
+  let order = [];
   switch (entity) {
     case 'jobs':
       columns = jobColums;
@@ -293,6 +312,7 @@ function initTable(name, _entity) {
         target: [0],
         visible: false
       }];
+      order = [[8, 'asc']];
       processForm('GET', null, "menus");
       break;
     case 'employees':
@@ -390,7 +410,8 @@ function initTable(name, _entity) {
           request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("accesstoken"));
         }
       },
-      "columns": columns
+      "columns": columns,
+      "order": order
     });
     $.fn.dataTable.ext.errMode = 'none';
     var table = $('#' + name).DataTable();

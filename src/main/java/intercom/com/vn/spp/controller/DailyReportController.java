@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.model.DailyReport;
+import intercom.com.vn.spp.model.DailySatistic;
 import intercom.com.vn.spp.model.Employee;
 import intercom.com.vn.spp.model.Job;
 import intercom.com.vn.spp.model.Problem;
@@ -43,6 +44,52 @@ public class DailyReportController {
     @Autowired
     private ProblemRepository probRepo;
 
+    @GetMapping("/dailystatistic")
+    public DailySatistic dailyStatistic() {
+        DailySatistic ds = new DailySatistic();
+        var allEm = emRepo.findAll();
+
+        List<DailyReport> reportDaily = new ArrayList<>();
+        List<Job> dailyJobs = jobRepository.findAllJobDaily();
+        for (Job j : dailyJobs) {
+            String[] employees = j.getEmployeeCode().split(",");
+            for (String emCode : employees) {
+                DailyReport dr = new DailyReport();
+                Employee em = emRepo.findOneByCode(emCode);
+                Problem prob = probRepo.findOneByScCode(j.getScCode());
+                dr.setRegion(j.getRegion());
+                dr.setEmployeeCode(emCode);
+                if (em != null)
+                    dr.setDepartment(em.getDepartment());
+                dr.setStartDateTime(j.getStartDate());
+                dr.setDeployment(j.getJobOfNetworkAndTD());
+                dr.setOtherWork(j.getNote());
+                dr.setProblem(j.getProblemInfo());
+                dr.setDoneDatetime(j.getDoneDate());
+                if (prob != null)
+                    dr.setResultAndApproach(prob.getResultAndSolution());
+                dr.setNote(j.getNote());
+                dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
+                dr.setComebackofficeDatetime(j.getComebackOfficeDate());
+                
+                if(dr.getComebackofficeDatetime() == null){
+                    ds.getNotBackOffice().add(emCode);
+                }else {
+                    ds.getBackOffice().add(emCode);
+                } 
+                reportDaily.add(dr);
+            }
+        }
+        for(DailyReport rd : reportDaily){
+           allEm.removeIf(s->s.getCode() == rd.getEmployeeCode());
+        }
+        for(Employee e: allEm){
+            ds.getNoJob().add(e.getCode());
+        }
+        return ds;
+
+    }
+
     @GetMapping("/dailyreports")
     public List<DailyReport> getAllEmployees() {
         List<DailyReport> reportDaily = new ArrayList<>();
@@ -74,6 +121,7 @@ public class DailyReportController {
         }
         return reportDaily;
     }
+
     @GetMapping("/monthlyeports")
     public List<DailyReport> monthlyReport() {
         List<DailyReport> reportDaily = new ArrayList<>();
