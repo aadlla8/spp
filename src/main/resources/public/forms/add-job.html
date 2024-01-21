@@ -79,6 +79,7 @@
             <li class="nav-item"><a class="nav-link" href="base/list-menu.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh mục</a></li>
             <li class="nav-item"><a class="nav-link" href="base/daily_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo ngày   </a></li>
             <li class="nav-item"><a class="nav-link" href="base/monthly_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo tháng   </a></li>
+            <li class="nav-item"><a class="nav-link" href="base/list-activities.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Lịch sử  </a></li>
             <li class="nav-item"><a class="nav-link" href="login.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Logout        </a></li>
           </ul>
         </li>
@@ -113,7 +114,6 @@
                         <option>SC</option>
                         <option>Khac</option>
                       </select>
-                      <div class="invalid-feedback">Hãy chọn loại công việc</div>
                     </div>
                     <div class="col-md-3">
                       <label class="form-label" for="serviceType">Loại dịch vụ</label>
@@ -129,15 +129,13 @@
                       </select>
                     </div>
                     <div class="col-md-3">
-                      <label class="form-label" for="dateIssued">Ngày phát sinh</label>
+                      <label class="form-label" for="dateIssued">Thời gian phát sinh CV</label>
                       <input class="form-control" id="dateIssued" type="datetime-local" name="dateIssued" value="" required>
-                      <div class="invalid-feedback">Hãy nhập ngày phát sinh</div>
                     </div>
                     <div class="col-md-3">
-                      <label class="form-label" for="dateEnd">Ngày kết thúc</label>
+                      <label class="form-label" for="dateEnd">Thời gian kết thúc</label>
                       <div class="input-group has-validation">
                         <input class="form-control" id="dateEnd" type="datetime-local" name="dateEnd" aria-describedby="inputGroupPrepend">
-                        <div class="invalid-feedback">Hãy nhập ngày kết thúc </div>
                       </div>
                     </div>
                     <div class="col-md-3">
@@ -178,12 +176,10 @@
                     <div class="col-md-3">
                       <label class="form-label" for="scCode">Mã sự cố</label>
                       <input class="form-control" id="scCode" type="text" maxlength="20" name="scCode" value="">
-                      <div class="invalid-feedback">Hãy nhập mã sự cố </div>
                     </div>
                     <div class="col-md-12">
-                      <label class="form-label" for="description">Mô tả công việc</label>
+                      <label class="form-label" for="description">Thông tin công việc</label>
                       <textarea class="form-control" id="description" name="description" required></textarea>
-                      <div class="invalid-feedback">Hãy nhập Mô tả công việc</div>
                     </div>
                     <div class="col-md-12">
                       <label class="form-label" for="problemInfo">Thông tin sự cố</label>
@@ -203,25 +199,22 @@
                       <label class="form-label" for="startDate">Thời gian bắt đầu xử lý</label>
                       <div class="input-group has-validation">
                         <input class="form-control" id="startDate" name="startDate" type="datetime-local" aria-describedby="inputGroupPrepend">
-                        <div class="invalid-feedback">Hãy nhập ngày bắt đầu xử lý</div>
                       </div>
                     </div>
                     <div class="col-md-3">
                       <label class="form-label" for="doneDate">Thời gian hoàn thành xong </label>
                       <div class="input-group has-validation">
                         <input class="form-control" id="doneDate" name="doneDate" type="datetime-local" aria-describedby="inputGroupPrepend">
-                        <div class="invalid-feedback">Hãy nhập thời gian hoàn thành</div>
                       </div>
                     </div>
                     <div class="col-md-3">
                       <label class="form-label" for="comebackOfficeDate">Thời gian về văn phòng</label>
                       <div class="input-group has-validation">
                         <input class="form-control" id="comebackOfficeDate" name="comebackOfficeDate" type="datetime-local" aria-describedby="inputGroupPrepend">
-                        <div class="invalid-feedback">Hãy nhập ngày trở về văn phòng    </div>
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label class="form-label" for="rootCause">Nguyên nhân</label>
+                      <label class="form-label" for="rootCause">Nguyên nhân sự cố</label>
                       <div class="input-group has-validation">
                         <select class="form-select" id="rootCause" name="rootCause" type="text" aria-describedby="inputGroupPrepend">
                           <option selected disabled value>Chọn...</option>
@@ -246,22 +239,19 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label class="form-label" for="customerContact">Thông tin liên hệ khách hàng</label>
+                      <label class="form-label" for="customerContact">Đầu mối liên hệ khách hàng</label>
                       <textarea class="form-control" id="customerContact" name="customerContact"></textarea>
-                      <div class="invalid-feedback">Hãy nhập liên hệ khách hàng</div>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="jobOfNetworkAndTD">Mô tả công việc của Network và TD</label>
                       <div class="input-group has-validation">
                         <textarea class="form-control" id="jobOfNetworkAndTD" name="jobOfNetworkAndTD" aria-describedby="inputGroupPrepend"></textarea>
-                        <div class="invalid-feedback">Hãy nhập Mô tả công việc của Nw và TD     </div>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="note">Ghi chú</label>
                       <div class="input-group has-validation">
                         <textarea class="form-control" id="note" name="note" aria-describedby="inputGroupPrepend"></textarea>
-                        <div class="invalid-feedback">Hãy nhập ghi chú    </div>
                       </div>
                     </div>
                     <div class="col-12">

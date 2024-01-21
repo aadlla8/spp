@@ -1,6 +1,8 @@
 var baseUrl = "/api/v1/";
 var entity = '';
 var jobColums = [{
+  "data": "scCode"
+}, {
   "data": "jobType"
 }, {
   "data": "region"
@@ -33,6 +35,8 @@ var jobColums = [{
   "render": function (data, type, row, meta) {
     if (row.doneMinutes > 0) return row.doneHours + ":" + row.doneMinutes;else return row.doneHours;
   }
+}, {
+  "data": "outTime"
 }];
 var problemmColumns = [{
   "data": "id"
@@ -55,7 +59,7 @@ var problemmColumns = [{
 }, {
   "data": "info",
   "render": function (data, type, row, meta) {
-    if (data) return '<textarea style="width:400px">' + data + '</textarea>';else return '';
+    if (data) return '<textarea style="width:300px">' + data + '</textarea>';else return '';
   }
 }, {
   "data": "customerCode"
@@ -153,6 +157,19 @@ var menuColumns = [{
   "data": "category"
 }, {
   "data": "note"
+}];
+var activityColumns = [{
+  "data": "id"
+}, {
+  "data": "username"
+}, {
+  "data": "actionDate"
+}, {
+  "data": "objectType"
+}, {
+  "data": "action"
+}, {
+  "data": "newValue"
 }];
 var editModal = new coreui.Modal(document.getElementById('editModalXl'), {
   focus: true
@@ -265,8 +282,7 @@ function initTable(name, _entity) {
       columns = jobColums;
       addLink = '/forms/add-job.html';
       clDef = [{
-        target: [2, 4, 8, 10, 11],
-        visible: false
+        // target: [3, 5, 9, 11, 12], visible: false,
       }];
       processForm('GET', null, "employees");
       break;
@@ -298,6 +314,10 @@ function initTable(name, _entity) {
     case 'menus':
       columns = menuColumns;
       addLink = '/forms/add-menu.html';
+      break;
+    case 'activities':
+      columns = activityColumns;
+      addLink = '#';
       break;
     default:
       break;
