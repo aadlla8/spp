@@ -86,6 +86,7 @@ function logout() {
   localStorage.setItem("accesstoken", "");
 }
 function scCodeBlur(e) {
+  if (!document.querySelector('#scCode').value) return;
   requestHeader = {
     'crossorigin': true,
     'Access-Control-Allow-Origin': '*',
@@ -124,12 +125,11 @@ function dailyStatistic(e) {
   };
   fetch('/api/v1/dailystatistic', options).then(res => res.json()).then(res => {
     console.log(res);
-    let info = '<table class="table"><tr><td>';
-    info += "KT chưa giao việc: " + res.noJob + "<br/>";
-    info += "KT đã về  VP: " + res.backOffice + "<br/></td><td>";
-    info += "KT chưa về  VP: " + res.notyetBackOffice + "<br/>";
-    info += "KT nghỉ phép,nghỉ: " + res.notAtNoc + "<br/></td><td>";
-    info += "KT không về VP, về nhà: " + res.notBackOffice + "<br/></td></tr></table>";
+    let rows = '';
+    Object.entries(res.dic).forEach(o => {
+      rows += '<tr><td width="15%"><b>' + o[0] + '</b></td><td>' + o[1] + '</td></tr>';
+    });
+    let info = '<table class="table">' + rows + '<tr><td><b>KT không về văn phòng, về nhà luôn:</b></td><td></td></tr>' + '<tr><td><b>Nghỉ phép, Nghỉ trực NOC:</b></td><td></td></tr>' + '</table>';
     document.querySelector("#dailystatistic").innerHTML = info;
   });
 }

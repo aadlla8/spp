@@ -15,7 +15,9 @@ import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -47,9 +49,10 @@ public class DailyReportController {
     @GetMapping("/dailystatistic")
     public DailySatistic dailyStatistic() {
         DailySatistic ds = new DailySatistic();
-        var allEm = emRepo.findAll();
 
+        var rt = ds.getDic();
         List<DailyReport> reportDaily = new ArrayList<>();
+
         List<Job> dailyJobs = jobRepository.findAllJobDaily();
         for (Job j : dailyJobs) {
             String[] employees = j.getEmployeeCode().split(",");
@@ -71,20 +74,49 @@ public class DailyReportController {
                 dr.setNote(j.getNote());
                 dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
                 dr.setComebackofficeDatetime(j.getComebackOfficeDate());
-                
-                if(dr.getComebackofficeDatetime() == null){
+
+                if (dr.getComebackofficeDatetime() == null) {
                     ds.getNotBackOffice().add(emCode);
-                }else {
+
+                    if (rt.get("KT chưa về  VP: [" + em.getDepartment() + "]") != null) {
+                        rt.get("KT chưa về  VP: [" + em.getDepartment() + "]").add(emCode);
+                    } else {
+                        var arr = new ArrayList<String>();
+                        arr.add(emCode);
+                        rt.put("KT chưa về  VP: [" + em.getDepartment() + "]", arr);
+                    }
+                } else {
                     ds.getBackOffice().add(emCode);
-                } 
+
+                    if (rt.get("KT đã về  VP: [" + em.getDepartment() + "]") != null) {
+                        rt.get("KT đã về  VP: [" + em.getDepartment() + "]").add(emCode);
+                    } else {
+                        var arr = new ArrayList<String>();
+                        arr.add(emCode);
+                        rt.put("KT đã về  VP: [" + em.getDepartment() + "]", arr);
+                    }
+                }
+                if (j.getJobType().equals("khac")) {
+                    ds.getNotAtNoc().add(emCode);
+                }
                 reportDaily.add(dr);
             }
         }
-        for(DailyReport rd : reportDaily){
-           allEm.removeIf(s->s.getCode() == rd.getEmployeeCode());
+
+        var allEm = emRepo.findAll();
+        for (DailyReport rd : reportDaily) {
+            allEm.removeIf(s -> s.getCode().equals(rd.getEmployeeCode()));
         }
-        for(Employee e: allEm){
+        for (Employee e : allEm) {
             ds.getNoJob().add(e.getCode());
+
+            if (rt.get("KT chưa giao việc: [" + e.getDepartment() + "]") != null) {
+                rt.get("KT chưa giao việc: [" + e.getDepartment() + "]").add(e.getCode());
+            } else {
+                var arr = new ArrayList<String>();
+                arr.add(e.getCode());
+                rt.put("KT chưa giao việc: [" + e.getDepartment() + "]", arr);
+            }
         }
         return ds;
 
