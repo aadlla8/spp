@@ -63,7 +63,7 @@ function processForm(action, form, entity) {
             employeeSl = loadField('employeeCode', res, null);
             break;
           case 'menus':
-            unitProcSl = loadField('unitProcess', res.filter(i => i.categpry = 'DVXL'), null);
+            unitProcSl = loadField('unitProcess', res.filter(i => i.categpry == 'DVXL'), null);
             break;
           default:
             break;
