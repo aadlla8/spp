@@ -15,9 +15,7 @@ import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -76,15 +74,21 @@ public class DailyReportController {
                 dr.setComebackofficeDatetime(j.getComebackOfficeDate());
 
                 if (dr.getComebackofficeDatetime() == null) {
-                    ds.getNotBackOffice().add(emCode);
 
-                    if (rt.get("KT chưa về  VP: [" + em.getDepartment() + "]") != null) {
-                        rt.get("KT chưa về  VP: [" + em.getDepartment() + "]").add(emCode);
+                    if (j.getNoComeBackWhy()!=null &&
+                            (j.getNoComeBackWhy().equalsIgnoreCase("VeNhaLuon")
+                                    || j.getNoComeBackWhy().equalsIgnoreCase("Tiep"))) {
+                        ds.getNotBackOffice().add(emCode);
                     } else {
-                        var arr = new ArrayList<String>();
-                        arr.add(emCode);
-                        rt.put("KT chưa về  VP: [" + em.getDepartment() + "]", arr);
+                        if (rt.get("KT chưa về  VP: [" + em.getDepartment() + "]") != null) {
+                            rt.get("KT chưa về  VP: [" + em.getDepartment() + "]").add(emCode);
+                        } else {
+                            var arr = new ArrayList<String>();
+                            arr.add(emCode);
+                            rt.put("KT chưa về  VP: [" + em.getDepartment() + "]", arr);
+                        }
                     }
+
                 } else {
                     ds.getBackOffice().add(emCode);
 
@@ -96,7 +100,7 @@ public class DailyReportController {
                         rt.put("KT đã về  VP: [" + em.getDepartment() + "]", arr);
                     }
                 }
-                if (j.getJobType().equals("khac")) {
+                if (j.getJobType().equalsIgnoreCase("Nghi")) {
                     ds.getNotAtNoc().add(emCode);
                 }
                 reportDaily.add(dr);

@@ -129,7 +129,7 @@ function dailyStatistic(e) {
     Object.entries(res.dic).forEach(o => {
       rows += '<tr><td width="15%"><b>' + o[0] + '</b></td><td>' + o[1] + '</td></tr>';
     });
-    let info = '<table class="table">' + rows + '<tr><td><b>KT không về văn phòng, về nhà luôn:</b></td><td></td></tr>' + '<tr><td><b>Nghỉ phép, Nghỉ trực NOC:</b></td><td></td></tr>' + '</table>';
+    let info = '<table class="table">' + rows + '<tr><td><b>KT không về văn phòng, về nhà luôn:</b></td><td>' + res.notBackOffice + '</td></tr>' + '<tr><td><b>Nghỉ phép, Nghỉ trực NOC:</b></td><td>' + res.notAtNoc + '</td></tr>' + '</table>';
     document.querySelector("#dailystatistic").innerHTML = info;
   });
 }

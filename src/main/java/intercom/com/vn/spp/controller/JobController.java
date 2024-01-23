@@ -87,10 +87,9 @@ public class JobController {
         job.setProblemInfo(jobDetail.getProblemInfo());
         job.setComebackOfficeDate(jobDetail.getComebackOfficeDate());
         job.setCustomerContact(jobDetail.getCustomerContact());
+        job.setNoComeBackWhy(jobDetail.getNoComeBackWhy());
         jobRepository.save(job);
-
         saveActivity(jobDetail, uInfo, "update_job","job");
-
         return ResponseEntity.ok(job);
     }
 

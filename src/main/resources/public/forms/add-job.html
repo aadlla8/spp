@@ -112,6 +112,7 @@
                         <option selected disable value>Chọn...</option>
                         <option>TK</option>
                         <option>SC</option>
+                        <option>Nghi</option>
                         <option>Khac</option>
                       </select>
                     </div>
@@ -183,7 +184,7 @@
                     </div>
                     <div class="col-md-12">
                       <label class="form-label" for="problemInfo">Thông tin sự cố</label>
-                      <textarea class="form-control" id="problemInfo" name="problemInfo"> </textarea>
+                      <textarea class="form-control" id="problemInfo" name="problemInfo"></textarea>
                     </div>
                     <div class="col-md-3">
                       <label class="form-label" for="problemStatus">Trạng thái sự cố</label>
@@ -213,7 +214,17 @@
                         <input class="form-control" id="comebackOfficeDate" name="comebackOfficeDate" type="datetime-local" aria-describedby="inputGroupPrepend">
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3"> 
+                      <label class="form-label" for="">Lý do không về văn phòng</label>
+                      <div class="input-group has-validation">
+                        <select class="form-control" id="noComeBackWhy" name="noComeBackWhy">
+                          <option value="">Chọn</option>
+                          <option value="Tiep">Tiếp tục công việc khác</option>
+                          <option value="VeNhaLuon">Về nhà luôn     </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
                       <label class="form-label" for="rootCause">Nguyên nhân sự cố</label>
                       <div class="input-group has-validation">
                         <select class="form-select" id="rootCause" name="rootCause" type="text" aria-describedby="inputGroupPrepend">
@@ -240,7 +251,7 @@
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="customerContact">Đầu mối liên hệ khách hàng</label>
-                      <textarea class="form-control" id="customerContact" name="customerContact"></textarea>
+                      <textarea class="form-control" id="customerContact" name="customerContact">          </textarea>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="jobOfNetworkAndTD">Mô tả công việc của Network và TD</label>

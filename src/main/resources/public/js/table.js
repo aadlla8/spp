@@ -214,6 +214,7 @@ function fillData(data) {
       document.getElementById("jobOfNetworkAndTD").value = data.jobOfNetworkAndTD;
       document.getElementById("note").value = data.note;
       document.getElementById("region").value = data.region;
+      document.getElementById("noComeBackWhy").value = data.noComeBackWhy;
       setTimeout(function () {
         if (data.employeeCode) {
           let items = [];

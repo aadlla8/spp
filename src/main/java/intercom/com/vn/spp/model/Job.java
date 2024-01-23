@@ -81,6 +81,9 @@ public class Job {
     /* thời gian trở về văn phòng */
     @Column(name = "come_back_office_date")
     private LocalDateTime comebackOfficeDate;
+    /*Ly do khong ve van phong */
+    @Column(name="no_comeback_why")
+    private String noComeBackWhy;
     @Nationalized
     @Column(name = "job_of_network_and_td", columnDefinition = "TEXT")
     /* Mo ta cong viec cua network va TD */
