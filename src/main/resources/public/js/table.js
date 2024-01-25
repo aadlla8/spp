@@ -328,10 +328,12 @@ function initTable(name, _entity) {
     case 'dailyreports':
       columns = dailyreportColumns;
       addLink = '/forms/add-job.html';
+      order = [[2, 'asc']];
       break;
     case 'monthlyeports':
       columns = dailyreportColumns;
       addLink = '/forms/add-job.html';
+      order = [[2, 'asc']];
       break;
     case 'menus':
       columns = menuColumns;

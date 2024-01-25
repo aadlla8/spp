@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,19 +70,15 @@ public class DailyReportController {
                 dr.setEmployeeCode(emCode);
                 if (em != null)
                     dr.setDepartment(em.getDepartment());
-                dr.setStartDateTime(j.getStartDate());
                 dr.setDeployment(j.getJobOfNetworkAndTD());
                 dr.setOtherWork(j.getNote());
                 dr.setProblem(j.getProblemInfo());
-                dr.setDoneDatetime(j.getDoneDate());
                 if (prob != null)
                     dr.setResultAndApproach(prob.getResultAndSolution());
                 dr.setNote(j.getNote());
                 dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
-                dr.setComebackofficeDatetime(j.getComebackOfficeDate());
 
                 if (dr.getComebackofficeDatetime() == null) {
-
                     if (j.getNoComeBackWhy() != null &&
                             (j.getNoComeBackWhy().equalsIgnoreCase("VeNhaLuon")
                                     || j.getNoComeBackWhy().equalsIgnoreCase("Tiep"))) {
@@ -137,6 +134,8 @@ public class DailyReportController {
     public List<DailyReport> getAllEmployees(@RequestParam Optional<Date> date) {
         List<DailyReport> reportDaily = new ArrayList<>();
         List<Job> dailyJobs = null;
+        List<String> empCodes = new ArrayList<>();
+
         if (!date.isEmpty()) {
             dailyJobs = jobRepository.findAllJobDaily(date.get());
         } else
@@ -144,27 +143,56 @@ public class DailyReportController {
         for (Job j : dailyJobs) {
             String[] employees = j.getEmployeeCode().split(",");
             for (String emCode : employees) {
-                DailyReport dr = new DailyReport();
-                Employee em = emRepo.findOneByCode(emCode);
-                Problem prob = probRepo.findOneByScCode(j.getScCode());
-                dr.setRegion(j.getRegion());
-                dr.setEmployeeCode(emCode);
-                if (em != null)
-                    dr.setDepartment(em.getDepartment());
-                dr.setStartDateTime(j.getStartDate());
-                dr.setDeployment(j.getJobOfNetworkAndTD());
-                dr.setOtherWork(j.getNote());
-                dr.setProblem(j.getProblemInfo());
-                dr.setDoneDatetime(j.getDoneDate());
-                if (prob != null)
-                    dr.setResultAndApproach(prob.getResultAndSolution());
-                dr.setNote(j.getNote());
-                dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
-                dr.setComebackofficeDatetime(j.getComebackOfficeDate());
-                reportDaily.add(dr);
-            }
+                if (empCodes.contains(emCode)) {
+                    reportDaily.forEach(dr -> {
 
+                        if (dr.getEmployeeCode().equalsIgnoreCase(emCode)) {
+                            if (j.getStartDate() != null)
+                                dr.setStartDateTime(dr.getStartDateTime()+"<br>--------<br>"+j.getStartDate().getHour() + ":" + j.getStartDate().getMinute());
+                            dr.setDeployment(dr.getDeployment()+"<br>--------<br>"+j.getJobOfNetworkAndTD());
+                            dr.setOtherWork(dr.getOtherWork()+"<br>--------<br>"+j.getNote());
+                            dr.setProblem(dr.getProblem()+"<br>--------<br>"+j.getProblemInfo());
+                            if (j.getDoneDate() != null)
+                                dr.setDoneDatetime(dr.getDoneDatetime()+"<br>--------<br>"+j.getDoneDate().getHour() + ":" + j.getDoneDate().getMinute());
+                            Problem prob = probRepo.findOneByScCode(j.getScCode());
+                            if (prob != null)
+                                dr.setResultAndApproach(dr.getResultAndApproach()+"<br>--------<br>"+prob.getResultAndSolution());
+                            dr.setNote(dr.getNote()+"<br>--------<br>"+j.getNote());
+                            dr.setWorkProcessDateTime(dr.getWorkProcessDateTime()+"<br>--------<br>"+j.getDoneHours() + ":" + j.getDoneMinutes());
+                            if (j.getComebackOfficeDate() != null)
+                                dr.setComebackofficeDatetime(dr.getComebackofficeDatetime()+"<br>--------<br>"+
+                                        j.getComebackOfficeDate().getHour() + ":"
+                                                + j.getComebackOfficeDate().getMinute());
+                        }
+                    });
+                } else {
+                    empCodes.add(emCode);
+                    DailyReport dr = new DailyReport();
+                    Employee em = emRepo.findOneByCode(emCode);
+                    Problem prob = probRepo.findOneByScCode(j.getScCode());
+                    dr.setRegion(j.getRegion());
+                    dr.setEmployeeCode(emCode);
+                    if (em != null)
+                        dr.setDepartment(em.getDepartment());
+                    if (j.getStartDate() != null)
+                        dr.setStartDateTime(j.getStartDate().getHour() + ":" + j.getStartDate().getMinute());
+                    dr.setDeployment(j.getJobOfNetworkAndTD());
+                    dr.setOtherWork(j.getNote());
+                    dr.setProblem(j.getProblemInfo());
+                    if (j.getDoneDate() != null)
+                        dr.setDoneDatetime(j.getDoneDate().getHour() + ":" + j.getDoneDate().getMinute());
+                    if (prob != null)
+                        dr.setResultAndApproach(prob.getResultAndSolution());
+                    dr.setNote(j.getNote());
+                    dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
+                    if (j.getComebackOfficeDate() != null)
+                        dr.setComebackofficeDatetime(
+                                j.getComebackOfficeDate().getHour() + ":" + j.getComebackOfficeDate().getMinute());
+                    reportDaily.add(dr);
+                }
+            }
         }
+
         return reportDaily;
     }
 
@@ -183,16 +211,21 @@ public class DailyReportController {
                 dr.setEmployeeCode(emCode);
                 if (em != null)
                     dr.setDepartment(em.getDepartment());
-                dr.setStartDateTime(j.getStartDate());
+                if (j.getStartDate() != null)
+                    dr.setStartDateTime(j.getStartDate().getHour() + ":" + j.getStartDate().getMinute());
                 dr.setDeployment(j.getJobOfNetworkAndTD());
                 dr.setOtherWork(j.getNote());
                 dr.setProblem(j.getProblemInfo());
-                dr.setDoneDatetime(j.getDoneDate());
+                if (j.getDoneDate() != null)
+                    dr.setDoneDatetime(j.getDoneDate().getHour() + ":" + j.getDoneDate().getMinute());
                 if (prob != null)
                     dr.setResultAndApproach(prob.getResultAndSolution());
                 dr.setNote(j.getNote());
                 dr.setWorkProcessDateTime(j.getDoneHours() + ":" + j.getDoneMinutes());
-                dr.setComebackofficeDatetime(j.getComebackOfficeDate());
+
+                if (j.getComebackOfficeDate() != null)
+                    dr.setComebackofficeDatetime(
+                            j.getComebackOfficeDate().getHour() + ":" + j.getComebackOfficeDate().getMinute());
                 reportDaily.add(dr);
             }
         }

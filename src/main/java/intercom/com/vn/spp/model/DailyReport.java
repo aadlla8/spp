@@ -25,7 +25,7 @@ public class DailyReport {
     @Column(name = "employee_code", nullable = false)
     private String employeeCode;
     @Column(name = "start_dateTime", nullable = false)
-    private LocalDateTime startDateTime;
+    private String startDateTime;
     @Column(name = "deployment", nullable = false)
     private String deployment;
     @Column(name = "other_work")
@@ -33,14 +33,15 @@ public class DailyReport {
     @Column(name = "problem")
     private String problem;
     @Column(name = "done_datetime")
-    private LocalDateTime doneDatetime;
+    private String doneDatetime;
     @Column(name = "comebackoffice_datetime")
-    private LocalDateTime comebackofficeDatetime;
+    private String comebackofficeDatetime;
     @Column(name = "result_and_approach")
     private String resultAndApproach;
     private String note;
     @Column(name="work_process_datetime")
     private String workProcessDateTime;
+    
     private String status;
     @Transient
     private String functions;

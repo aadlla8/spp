@@ -135,9 +135,9 @@ function dailyStatistic(e) {
     console.log(res);
     let rows = [];
     Object.entries(res.dic).forEach(o => {
-      rows.push('<tr><td width="15%"><b>' + o[0] + '</b></td><td>' + o[1] + '</td></tr>');
+      rows.push('<tr><td width="15%"><b>' + o[0] + '</b></td><td>' + o[1].filter((value, index, array) => array.indexOf(value) === index) + '</td></tr>');
     });
-    rows.push('<tr><td><b>KT không về văn phòng, về nhà luôn:</b></td><td>' + res.notBackOffice + '</td></tr>');
+    rows.push('<tr><td><b>KT không về văn phòng, về nhà luôn:</b></td><td>' + res.notBackOffice.filter(el => !res.notAtNoc.includes(el)) + '</td></tr>');
     rows.push('<tr><td><b>Nghỉ phép, Nghỉ trực NOC:</b></td><td>' + res.notAtNoc + '</td></tr>');
     let info = '<table class="table">';
     rows.sort();
