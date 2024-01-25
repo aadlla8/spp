@@ -277,10 +277,9 @@ public class DailyReportController {
                 for (String emCode : j.getEmployeeCode().split(",")) {
                     if (j.getJobType() != null
                             && !j.getJobType().equals("Nghi")) {
-                        Employee em = emRepo.findOneByCode(emCode);
+
                         if (empCodes.contains(emCode)) {
                             reports.forEach(ea -> {
-
                                 if (ea.getEmCode() != null && ea.getEmCode().equals(emCode)) {
                                     try {
                                         ea.setTotalTime(addTime(ea.getTotalTime(), j.getDoneTime()));
@@ -311,11 +310,12 @@ public class DailyReportController {
                             });
                         } else {
                             try {
-
                                 empCodes.add(emCode);
                                 EmployeeAggregate ea = new EmployeeAggregate();
                                 ea.setEmCode(emCode);
-                                ea.setDepartment(em.getDepartment());
+                                Employee em = emRepo.findOneByCode(emCode);
+                                if (em != null)
+                                    ea.setDepartment(em.getDepartment());
                                 ea.setTotalTime(j.getDoneTime());
                                 ea.setTotalProccessInTime(j.getInTime());
                                 ea.setTotalProccessOutTime(j.getOutTime());
