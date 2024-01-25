@@ -81,8 +81,8 @@ public class Job {
     /* thời gian trở về văn phòng */
     @Column(name = "come_back_office_date")
     private LocalDateTime comebackOfficeDate;
-    /*Ly do khong ve van phong */
-    @Column(name="no_comeback_why")
+    /* Ly do khong ve van phong */
+    @Column(name = "no_comeback_why")
     private String noComeBackWhy;
     @Nationalized
     @Column(name = "job_of_network_and_td", columnDefinition = "TEXT")
@@ -116,12 +116,39 @@ public class Job {
         return 0;
     }
 
+    public String getDoneTime() {
+        return this.getDoneHours() + ":" + this.getDoneMinutes();
+    }
+
     public String getOutTime() {
         if (this.getDoneDate() != null && this.getDoneDate().getHour() > 18) {
-
             long outH = this.getDoneDate().getHour() - 18;
             long outM = this.getDoneDate().getMinute();
             return String.format("%s:%s", outH, outM);
+        } else
+            return "";
+    }
+
+    public String getInTime() {
+        if (this.getOutTime().equals("")) {
+            return this.getDoneTime();
+        }
+        if (this.getStartDate() != null && this.getDoneDate() != null) {
+            LocalDateTime t = null;
+            long outH = this.getDoneDate().getHour() - 18;
+            long outM = this.getDoneDate().getMinute();
+            if (outH > 0) {
+                t = this.getDoneDate().minusHours(outH);
+            } else {
+                t = this.getDoneDate().minusMinutes(outM);
+            }
+            long totalMinutes = (Duration.between(this.getStartDate(), t).toMinutes());
+            if (totalMinutes > 0) {
+                var h = (Math.floorDiv(totalMinutes, 60));
+                var m = (Math.floorMod(totalMinutes, 60));
+                return String.format("%s:%s", h, m);
+            } else
+                return "";
         } else
             return "";
     }

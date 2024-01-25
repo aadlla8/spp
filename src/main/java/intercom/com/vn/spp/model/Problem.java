@@ -46,6 +46,7 @@ public class Problem {
     private LocalDateTime technicalDone;
     /* Trạng thái */
     private String status;
+    private String problemType;
     /* Thông tin sự cố */
     @Nationalized
     @Column(columnDefinition = "TEXT")

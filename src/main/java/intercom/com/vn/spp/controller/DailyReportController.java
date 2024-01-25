@@ -6,6 +6,7 @@ import intercom.com.vn.spp.exception.ResourceNotFoundException;
 import intercom.com.vn.spp.model.DailyReport;
 import intercom.com.vn.spp.model.DailySatistic;
 import intercom.com.vn.spp.model.Employee;
+import intercom.com.vn.spp.model.EmployeeAggregate;
 import intercom.com.vn.spp.model.Job;
 import intercom.com.vn.spp.model.Problem;
 import intercom.com.vn.spp.repository.DailyReportRepository;
@@ -144,26 +145,30 @@ public class DailyReportController {
             for (String emCode : employees) {
                 if (empCodes.contains(emCode)) {
                     reportDaily.forEach(dr -> {
-
                         if (dr.getEmployeeCode().equalsIgnoreCase(emCode)) {
                             if (j.getStartDate() != null)
-                                dr.setStartDateTime(dr.getStartDateTime()+"<br>--------<br>"+j.getStartDate().getHour() + ":" + j.getStartDate().getMinute());
-                            dr.setDeployment(dr.getDeployment()+"<br>--------<br>"+j.getJobOfNetworkAndTD());
-                            dr.setOtherWork(dr.getOtherWork()+"<br>--------<br>"+j.getNote());
-                            dr.setProblem(dr.getProblem()+"<br>--------<br>"+j.getProblemInfo());
+                                dr.setStartDateTime(dr.getStartDateTime() + "<br>--------<br>"
+                                        + j.getStartDate().getHour() + ":" + j.getStartDate().getMinute());
+                            dr.setDeployment(dr.getDeployment() + "<br>--------<br>" + j.getJobOfNetworkAndTD());
+                            dr.setOtherWork(dr.getOtherWork() + "<br>--------<br>" + j.getNote());
+                            dr.setProblem(dr.getProblem() + "<br>--------<br>" + j.getProblemInfo());
                             if (j.getDoneDate() != null)
-                                dr.setDoneDatetime(dr.getDoneDatetime()+"<br>--------<br>"+j.getDoneDate().getHour() + ":" + j.getDoneDate().getMinute());
+                                dr.setDoneDatetime(dr.getDoneDatetime() + "<br>--------<br>" + j.getDoneDate().getHour()
+                                        + ":" + j.getDoneDate().getMinute());
                             Problem prob = probRepo.findOneByScCode(j.getScCode());
                             if (prob != null)
-                                dr.setResultAndApproach(dr.getResultAndApproach()+"<br>--------<br>"+prob.getResultAndSolution());
-                            dr.setNote(dr.getNote()+"<br>--------<br>"+j.getNote());
-                            dr.setWorkProcessDateTime(dr.getWorkProcessDateTime()+"<br>--------<br>"+j.getDoneHours() + ":" + j.getDoneMinutes());
+                                dr.setResultAndApproach(
+                                        dr.getResultAndApproach() + "<br>--------<br>" + prob.getResultAndSolution());
+                            dr.setNote(dr.getNote() + "<br>--------<br>" + j.getNote());
+                            dr.setWorkProcessDateTime(dr.getWorkProcessDateTime() + "<br>--------<br>"
+                                    + j.getDoneHours() + ":" + j.getDoneMinutes());
                             if (j.getComebackOfficeDate() != null)
-                                dr.setComebackofficeDatetime(dr.getComebackofficeDatetime()+"<br>--------<br>"+
+                                dr.setComebackofficeDatetime(dr.getComebackofficeDatetime() + "<br>--------<br>" +
                                         j.getComebackOfficeDate().getHour() + ":"
-                                                + j.getComebackOfficeDate().getMinute());
+                                        + j.getComebackOfficeDate().getMinute());
                             else {
-                                dr.setComebackofficeDatetime(dr.getComebackofficeDatetime()+"<br>--------<br>"+ j.getNoComeBackWhy());
+                                dr.setComebackofficeDatetime(
+                                        dr.getComebackofficeDatetime() + "<br>--------<br>" + j.getNoComeBackWhy());
                             }
                         }
                     });
@@ -204,14 +209,13 @@ public class DailyReportController {
     @GetMapping("/monthlyeports")
     public List<DailyReport> monthlyReport(@RequestParam Optional<Date> date) {
         List<DailyReport> reportDaily = new ArrayList<>();
-        List<Job> dailyJobs =null;
-        if(date.isEmpty()){
+        List<Job> dailyJobs = null;
+        if (date.isEmpty()) {
             dailyJobs = jobRepository.findAllJobMonth();
-        }
-        else {
+        } else {
             dailyJobs = jobRepository.findAllJobMonth(date.get());
         }
-        
+
         for (Job j : dailyJobs) {
             String[] employees = j.getEmployeeCode().split(",");
             for (String emCode : employees) {
@@ -246,29 +250,70 @@ public class DailyReportController {
         return reportDaily;
     }
 
-    @GetMapping("/dailyreports/{id}")
-    public ResponseEntity<DailyReport> getEmployeeById(@PathVariable(value = "id") Long id)
-            throws ResourceNotFoundException {
-        DailyReport report = repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id:: " + id));
-        return ResponseEntity.ok().body(report);
+    private String addTime(String cur, String add) {
+        var h = Integer.parseInt(cur.split(":")[0]);
+        var m = Integer.parseInt(cur.split(":")[1]);
+        var h2 = Integer.parseInt(add.split(":")[0]);
+        var m2 = Integer.parseInt(add.split(":")[1]);
+        h += h2;
+        h += Math.floorDiv(m + m2, 60);
+        m = Math.floorMod(m + m2, 60);
+        return h + ":" + m;
     }
 
-    @PostMapping("/dailyreports")
-    public Boolean createEmployee(@Valid @RequestBody DailyReport report) {
-        return true;
+    @GetMapping("/employee-aggregate")
+    public void getMethodName(@RequestParam String date1, @RequestParam String date2) {
+        List<EmployeeAggregate> reports = new ArrayList<>();
+
+        List<String> empCodes = new ArrayList<>();
+        for (var j : jobRepository.findAllJobFromTo(date1, date2)) {
+            for (String emCode : j.getEmployeeCode().split(",")) {
+                if (!j.getJobType().equals("Nghi")) {
+                    Employee em = emRepo.findOneByCode(emCode);
+                    if (empCodes.contains(emCode)) {
+                        reports.forEach(ea -> {
+                            if (ea.getEmCode().equals(emCode)) {
+                                ea.setTotalTime(addTime(ea.getTotalTime(), j.getDoneTime()));
+                                ea.setTotalProccessInTime(addTime(ea.getTotalProccessInTime(), j.getInTime()));
+                                ea.setTotalProccessOutTime(addTime(ea.getTotalProccessOutTime(), j.getOutTime()));
+                                if (j.getJobType().equals("TK"))
+                                    ea.setSoLanTrienKhai(ea.getSoLanTrienKhai()+1);
+                                if (j.getJobType().equals("SC")) {
+                                    Problem prob = probRepo.findOneByScCode(j.getScCode());
+                                    if (prob.getProblemType().equals("Le"))
+                                        ea.setSolanSuCoLe(ea.getSolanSuCoLe()+1);
+                                    else
+                                        ea.setSoLanSuCoChum(ea.getSoLanSuCoChum()+1);
+                                }
+                                if (j.getJobType().equals("Khac"))
+                                    ea.setSolanCvKhac(ea.getSolanCvKhac()+1);
+                            }
+                        });
+                    } else {
+                        EmployeeAggregate ea = new EmployeeAggregate();
+                        ea.setEmCode(emCode);
+                        ea.setDepartment(em.getDepartment());
+                        ea.setTotalTime(j.getDoneTime());
+                        ea.setTotalProccessInTime(j.getInTime());
+                        ea.setTotalProccessOutTime(j.getOutTime());
+                        if (j.getJobType().equals("TK"))
+                            ea.setSoLanTrienKhai(1);
+                        if (j.getJobType().equals("SC")) {
+                            Problem prob = probRepo.findOneByScCode(j.getScCode());
+                            if (prob.getProblemType().equals("Le"))
+                                ea.setSolanSuCoLe(1);
+                            else
+                                ea.setSoLanSuCoChum(1);
+                        }
+                        if (j.getJobType().equals("Khac"))
+                            ea.setSolanCvKhac(1);
+
+                        reports.add(ea);
+                    }
+                }
+            }
+        }
+
     }
 
-    @PutMapping("/dailyreports/{id}")
-    public ResponseEntity<Boolean> updateEmploye(@PathVariable(value = "id") Long id) {
-        return ResponseEntity.ok(true);
-    }
-
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER2')")
-    @DeleteMapping("/dailyreports/{id}")
-    public Map<String, Boolean> delete(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
 }
