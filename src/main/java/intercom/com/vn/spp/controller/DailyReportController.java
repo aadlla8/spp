@@ -315,7 +315,7 @@ public class DailyReportController {
                             if (j.getJobType() != null) {
                                 if (j.getJobType().equals("TK"))
                                     ea.setSoLanTrienKhai(1);
-                                if (j.getJobType().equals("SC")) {
+                                if (j.getJobType().equals("SC") && j.getScCode() != null) {
                                     Problem prob = probRepo.findOneByScCode(j.getScCode());
                                     if (prob != null && prob.getProblemType() != null
                                             && !prob.getProblemType().isEmpty()
