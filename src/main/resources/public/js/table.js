@@ -17,7 +17,12 @@ var jobColums = [{
 }, {
   "data": "doneDate"
 }, {
-  "data": "comebackOfficeDate"
+  "data": "comebackOfficeDate",
+  "render": function (data, type, row, meta) {
+    if (data) return data;else {
+      return row.noComeBackWhy;
+    }
+  }
 }, {
   "data": "problemStatus"
 }, {
@@ -409,7 +414,7 @@ function initTable(name, _entity) {
           return json;
         },
         "beforeSend": function (request, settings) {
-          if (entity == 'dailyreports' && document.querySelector('#chooseDate').value) {
+          if ((entity == 'dailyreports' || entity === 'monthlyeports') && document.querySelector('#chooseDate').value) {
             settings.url += '&date=' + document.querySelector('#chooseDate').value;
           }
           request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("accesstoken"));

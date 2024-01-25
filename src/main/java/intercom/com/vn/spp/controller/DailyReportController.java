@@ -95,7 +95,6 @@ public class DailyReportController {
 
                 } else {
                     ds.getBackOffice().add(emCode);
-
                     if (rt.get("KT đã về  VP: [" + em.getDepartment() + "]") != null) {
                         rt.get("KT đã về  VP: [" + em.getDepartment() + "]").add(emCode);
                     } else {
@@ -104,6 +103,7 @@ public class DailyReportController {
                         rt.put("KT đã về  VP: [" + em.getDepartment() + "]", arr);
                     }
                 }
+                // kt nghi thi add vao danh sach nay
                 if (j.getJobType().equalsIgnoreCase("Nghi")) {
                     ds.getNotAtNoc().add(emCode);
                 }
@@ -117,7 +117,6 @@ public class DailyReportController {
         }
         for (Employee e : allEm) {
             ds.getNoJob().add(e.getCode());
-
             if (rt.get("KT chưa giao việc: [" + e.getDepartment() + "]") != null) {
                 rt.get("KT chưa giao việc: [" + e.getDepartment() + "]").add(e.getCode());
             } else {
@@ -163,6 +162,9 @@ public class DailyReportController {
                                 dr.setComebackofficeDatetime(dr.getComebackofficeDatetime()+"<br>--------<br>"+
                                         j.getComebackOfficeDate().getHour() + ":"
                                                 + j.getComebackOfficeDate().getMinute());
+                            else {
+                                dr.setComebackofficeDatetime(dr.getComebackofficeDatetime()+"<br>--------<br>"+ j.getNoComeBackWhy());
+                            }
                         }
                     });
                 } else {
@@ -188,6 +190,9 @@ public class DailyReportController {
                     if (j.getComebackOfficeDate() != null)
                         dr.setComebackofficeDatetime(
                                 j.getComebackOfficeDate().getHour() + ":" + j.getComebackOfficeDate().getMinute());
+                    else {
+                        dr.setComebackofficeDatetime(j.getNoComeBackWhy());
+                    }
                     reportDaily.add(dr);
                 }
             }
@@ -197,10 +202,16 @@ public class DailyReportController {
     }
 
     @GetMapping("/monthlyeports")
-    public List<DailyReport> monthlyReport() {
+    public List<DailyReport> monthlyReport(@RequestParam Optional<Date> date) {
         List<DailyReport> reportDaily = new ArrayList<>();
-
-        List<Job> dailyJobs = jobRepository.findAllJobMonth();
+        List<Job> dailyJobs =null;
+        if(date.isEmpty()){
+            dailyJobs = jobRepository.findAllJobMonth();
+        }
+        else {
+            dailyJobs = jobRepository.findAllJobMonth(date.get());
+        }
+        
         for (Job j : dailyJobs) {
             String[] employees = j.getEmployeeCode().split(",");
             for (String emCode : employees) {
@@ -226,6 +237,9 @@ public class DailyReportController {
                 if (j.getComebackOfficeDate() != null)
                     dr.setComebackofficeDatetime(
                             j.getComebackOfficeDate().getHour() + ":" + j.getComebackOfficeDate().getMinute());
+                else {
+                    dr.setComebackofficeDatetime(j.getNoComeBackWhy());
+                }
                 reportDaily.add(dr);
             }
         }

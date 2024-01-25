@@ -15,4 +15,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findAllJobDaily(Date date);
     @Query(value = "select * from jobs b where date_format(b.date_create,'%Y%m') = date_format(curdate(),'%Y%m') order by date_create", nativeQuery = true)
     List<Job> findAllJobMonth();
+    @Query(value = "select * from jobs b where date_format(b.date_create,'%Y%m') = date_format(:date,'%Y%m') order by date_create", nativeQuery = true)
+    List<Job> findAllJobMonth(Date date);
 }
