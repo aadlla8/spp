@@ -79,6 +79,8 @@
             <li class="nav-item"><a class="nav-link" href="base/list-menu.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Danh mục</a></li>
             <li class="nav-item"><a class="nav-link" href="base/daily_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo ngày   </a></li>
             <li class="nav-item"><a class="nav-link" href="base/monthly_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo tháng   </a></li>
+            <li class="nav-item"><a class="nav-link" href="base/employee-aggregate.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Bảng tổng hợp nhân sự</a></li>
+            <li class="nav-item"><a class="nav-link" href="base/monthly_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Bảng ngoài giờ</a></li>
             <li class="nav-item"><a class="nav-link" href="base/list-activities.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Lịch sử  </a></li>
             <li class="nav-item"><a class="nav-link" href="login.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Logout        </a></li>
           </ul>
@@ -109,7 +111,13 @@
                     <div class="col-md-3">
                       <label class="form-label" for="scCode">Mã sự cố</label>
                       <input class="form-control" id="scCode" name="scCode" type="text" maxlength="20" value="" required>
-                      <div class="invalid-feedback">Hãy nhập mã sự cố    </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label" for="unitProcess">Đơn vị xl sự cố</label>
+                      <select class="form-select" id="problemType" name="problemType" required>       
+                        <option>Le</option>
+                        <option>Chum        </option>
+                      </select>
                     </div>
                     <div class="col-md-3">
                       <label class="form-label" for="unitProcess">Đơn vị xl sự cố</label>
@@ -121,7 +129,6 @@
                     <div class="col-md-3">
                       <label class="form-label" for="startDate">Thời gian bắt đầu sự cố</label>
                       <input class="form-control" id="startDate" name="startDate" type="datetime-local" value="" required>
-                      <div class="invalid-feedback">Hãy nhập  Ngày bắt đầu</div>
                     </div>
                     <div class="col-md-3">
                       <label class="form-label" for="endDate">Thời gian kết thúc sự cố</label>
@@ -158,7 +165,7 @@
                     </div>
                     <div class="col-md-12">
                       <label class="form-label" for="info">Mô tả thông tin sự cố</label>
-                      <textarea class="form-control" id="info" name="info" required>             </textarea>
+                      <textarea class="form-control" id="info" name="info" required></textarea>
                     </div>
                     <div class="col-md-3">
                       <label class="form-label" for="status">Trạng thái sự cố</label>

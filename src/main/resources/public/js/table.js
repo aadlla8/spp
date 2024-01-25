@@ -194,6 +194,31 @@ var activityColumns = [{
 }, {
   "data": "newValue"
 }];
+var employeeaggregateColumns = [{
+  "data": "department"
+}, {
+  "data": "emCode"
+}, {
+  "data": "totalTime"
+}, {
+  "data": "totalProccessInTime"
+}, {
+  "data": "totalProccessOutTime"
+}, {
+  "data": "soLanTrienKhai"
+}, {
+  "data": "solanSuCoLe"
+}, {
+  "data": "soLanSuCoChum"
+}, {
+  "data": "solanCvKhac"
+}, {
+  "data": "tgtbXlScLe"
+}, {
+  "data": "tyTrongTg"
+}, {
+  "data": "tyTrongThucHien"
+}];
 var editModal = new coreui.Modal(document.getElementById('editModalXl'), {
   focus: true
 });
@@ -252,6 +277,7 @@ function fillData(data) {
       document.getElementById("nocAndTechWorks").value = data.nocAndTechWorks;
       document.getElementById("resultAndSolution").value = data.resultAndSolution;
       document.getElementById("region").value = data.region;
+      document.getElementById("problemType").value = data.problemType;
       setTimeout(function () {
         if (data.unitProcess) {
           let items = [];
@@ -340,6 +366,10 @@ function initTable(name, _entity) {
       addLink = '/forms/add-job.html';
       order = [[2, 'asc']];
       break;
+    case 'employee-aggregate':
+      columns = employeeaggregateColumns;
+      addLink = '/forms/add-job.html';
+      break;
     case 'menus':
       columns = menuColumns;
       addLink = '/forms/add-menu.html';
@@ -414,8 +444,10 @@ function initTable(name, _entity) {
           return json;
         },
         "beforeSend": function (request, settings) {
-          if ((entity == 'dailyreports' || entity === 'monthlyeports') && document.querySelector('#chooseDate').value) {
-            settings.url += '&date=' + document.querySelector('#chooseDate').value;
+          if (entity == 'dailyreports' || entity === 'monthlyeports' || entity === 'employee-aggregate') {
+            if (document.querySelector('#chooseDate') && document.querySelector('#chooseDate').value) settings.url += '&date=' + document.querySelector('#chooseDate').value;
+            if (document.querySelector('#chooseDate1') && document.querySelector('#chooseDate1').value) settings.url += '&date1=' + document.querySelector('#chooseDate1').value;
+            if (document.querySelector('#chooseDate2') && document.querySelector('#chooseDate2').value) settings.url += '&date2=' + document.querySelector('#chooseDate2').value;
           }
           request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("accesstoken"));
         },

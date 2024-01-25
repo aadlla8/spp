@@ -17,6 +17,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findAllJobMonth();
     @Query(value = "select * from jobs b where date_format(b.date_create,'%Y%m') = date_format(:date,'%Y%m') order by date_create", nativeQuery = true)
     List<Job> findAllJobMonth(Date date);
-    @Query(value = "select * from jobs b where date_format(b.date_create,'%Y%m') between date_format(:date1,'%Y%m') and date_format(:date2,'%Y%m') order by date_create", nativeQuery = true)
-    List<Job> findAllJobFromTo(String date1, String date2);
+    @Query(value = "select * from jobs b where b.date_create between :date1 and adddate(:date2,1) order by date_create", nativeQuery = true)
+    List<Job> findAllJobFromTo(Date date1, Date date2);
 }

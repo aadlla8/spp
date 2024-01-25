@@ -121,36 +121,38 @@ public class Job {
     }
 
     public String getOutTime() {
-        if (this.getDoneDate() != null && this.getDoneDate().getHour() > 18) {
-            long outH = this.getDoneDate().getHour() - 18;
-            long outM = this.getDoneDate().getMinute();
-            return String.format("%s:%s", outH, outM);
+        if (this.getDoneDate() != null && this.getStartDate() != null && this.getDoneDate().getHour() > 18) {
+            if (this.getStartDate().getHour() <= 18) {
+                long outH = this.getDoneDate().getHour() - 18;
+                long outM = this.getDoneDate().getMinute();
+                return String.format("%s:%s", outH, outM);
+            } else {
+                long totalMinutes = (Duration.between(this.getStartDate(), this.getDoneDate()).toMinutes());
+                return String.format("%s:%s", Math.floorDiv(totalMinutes, 60), Math.floorMod(totalMinutes, 60));
+            }
         } else
-            return "";
+            return "0:0";
     }
 
     public String getInTime() {
-        if (this.getOutTime().equals("")) {
+        if (this.getOutTime().equals("0:0")) {
             return this.getDoneTime();
         }
         if (this.getStartDate() != null && this.getDoneDate() != null) {
             LocalDateTime t = null;
             long outH = this.getDoneDate().getHour() - 18;
             long outM = this.getDoneDate().getMinute();
-            if (outH > 0) {
-                t = this.getDoneDate().minusHours(outH);
-            } else {
-                t = this.getDoneDate().minusMinutes(outM);
-            }
+            t = this.getDoneDate().minusHours(outH);
+            t = t.minusMinutes(outM);
             long totalMinutes = (Duration.between(this.getStartDate(), t).toMinutes());
             if (totalMinutes > 0) {
                 var h = (Math.floorDiv(totalMinutes, 60));
                 var m = (Math.floorMod(totalMinutes, 60));
                 return String.format("%s:%s", h, m);
             } else
-                return "";
+                return "0:0";
         } else
-            return "";
+            return "0:0";
     }
 
     @Transient

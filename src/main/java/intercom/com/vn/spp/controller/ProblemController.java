@@ -89,6 +89,7 @@ public class ProblemController {
         problem.setRegion(problemDetails.getRegion());
         problem.setTechnicalStart(problemDetails.getTechnicalStart());
         problem.setTechnicalDone(problemDetails.getTechnicalDone());
+        problem.setProblemType(problemDetails.getProblemType());
 
         problemRepository.save(problem);
 

@@ -11,6 +11,7 @@ public class EmployeeAggregate {
     private String totalTime;
     private String totalProccessInTime;
     private String totalProccessOutTime;
+    private String totalSCLetProccessTime;
     private int soLanTrienKhai;
     private int solanSuCoLe;
     private int soLanSuCoChum;

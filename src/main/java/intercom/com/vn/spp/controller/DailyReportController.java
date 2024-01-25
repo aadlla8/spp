@@ -15,7 +15,9 @@ import intercom.com.vn.spp.repository.JobRepository;
 import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
 
+import java.nio.DoubleBuffer;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -262,58 +264,132 @@ public class DailyReportController {
     }
 
     @GetMapping("/employee-aggregate")
-    public void getMethodName(@RequestParam String date1, @RequestParam String date2) {
+    public List<EmployeeAggregate> getMethodName(@RequestParam Optional<Date> date,
+            @RequestParam Optional<Date> date1) {
+
         List<EmployeeAggregate> reports = new ArrayList<>();
-
+        if (date.isEmpty() || date1.isEmpty())
+            return reports;
         List<String> empCodes = new ArrayList<>();
-        for (var j : jobRepository.findAllJobFromTo(date1, date2)) {
-            for (String emCode : j.getEmployeeCode().split(",")) {
-                if (!j.getJobType().equals("Nghi")) {
-                    Employee em = emRepo.findOneByCode(emCode);
-                    if (empCodes.contains(emCode)) {
-                        reports.forEach(ea -> {
-                            if (ea.getEmCode().equals(emCode)) {
-                                ea.setTotalTime(addTime(ea.getTotalTime(), j.getDoneTime()));
-                                ea.setTotalProccessInTime(addTime(ea.getTotalProccessInTime(), j.getInTime()));
-                                ea.setTotalProccessOutTime(addTime(ea.getTotalProccessOutTime(), j.getOutTime()));
-                                if (j.getJobType().equals("TK"))
-                                    ea.setSoLanTrienKhai(ea.getSoLanTrienKhai()+1);
-                                if (j.getJobType().equals("SC")) {
-                                    Problem prob = probRepo.findOneByScCode(j.getScCode());
-                                    if (prob.getProblemType().equals("Le"))
-                                        ea.setSolanSuCoLe(ea.getSolanSuCoLe()+1);
-                                    else
-                                        ea.setSoLanSuCoChum(ea.getSoLanSuCoChum()+1);
-                                }
-                                if (j.getJobType().equals("Khac"))
-                                    ea.setSolanCvKhac(ea.getSolanCvKhac()+1);
-                            }
-                        });
-                    } else {
-                        EmployeeAggregate ea = new EmployeeAggregate();
-                        ea.setEmCode(emCode);
-                        ea.setDepartment(em.getDepartment());
-                        ea.setTotalTime(j.getDoneTime());
-                        ea.setTotalProccessInTime(j.getInTime());
-                        ea.setTotalProccessOutTime(j.getOutTime());
-                        if (j.getJobType().equals("TK"))
-                            ea.setSoLanTrienKhai(1);
-                        if (j.getJobType().equals("SC")) {
-                            Problem prob = probRepo.findOneByScCode(j.getScCode());
-                            if (prob.getProblemType().equals("Le"))
-                                ea.setSolanSuCoLe(1);
-                            else
-                                ea.setSoLanSuCoChum(1);
-                        }
-                        if (j.getJobType().equals("Khac"))
-                            ea.setSolanCvKhac(1);
 
-                        reports.add(ea);
+        for (var j : jobRepository.findAllJobFromTo(date.get(), date1.get())) {
+            if (!j.getEmployeeCode().isEmpty() && !j.getEmployeeCode().isBlank())
+                for (String emCode : j.getEmployeeCode().split(",")) {
+                    if (!j.getJobType().equals("Nghi")) {
+                        Employee em = emRepo.findOneByCode(emCode);
+                        if (empCodes.contains(emCode)) {
+                            reports.forEach(ea -> {
+                                if (ea.getEmCode().equals(emCode)) {
+                                    ea.setTotalTime(addTime(ea.getTotalTime(), j.getDoneTime()));
+                                    ea.setTotalProccessInTime(addTime(ea.getTotalProccessInTime(), j.getInTime()));
+                                    ea.setTotalProccessOutTime(addTime(ea.getTotalProccessOutTime(), j.getOutTime()));
+                                    if (j.getJobType().equals("TK"))
+                                        ea.setSoLanTrienKhai(ea.getSoLanTrienKhai() + 1);
+                                    if (j.getJobType().equals("SC")) {
+                                        Problem prob = probRepo.findOneByScCode(j.getScCode());
+                                        if (prob != null && prob.getProblemType() != null
+                                                && !prob.getProblemType().isEmpty()
+                                                && !prob.getProblemType().isBlank()) {
+                                            if (prob.getProblemType().equals("Le")) {
+                                                ea.setSolanSuCoLe(ea.getSolanSuCoLe() + 1);
+                                                ea.setTotalSCLetProccessTime(
+                                                        addTime(ea.getTotalSCLetProccessTime(), j.getDoneTime()));
+                                            }
+
+                                            else
+                                                ea.setSoLanSuCoChum(ea.getSoLanSuCoChum() + 1);
+                                        }
+                                    }
+                                    if (!j.getJobType().isEmpty() && j.getJobType().equals("Khac"))
+                                        ea.setSolanCvKhac(ea.getSolanCvKhac() + 1);
+                                }
+                            });
+                        } else {
+                            empCodes.add(emCode);
+                            EmployeeAggregate ea = new EmployeeAggregate();
+                            ea.setEmCode(emCode);
+                            ea.setDepartment(em.getDepartment());
+                            ea.setTotalTime(j.getDoneTime());
+                            ea.setTotalProccessInTime(j.getInTime());
+                            ea.setTotalProccessOutTime(j.getOutTime());
+                            if (j.getJobType().equals("TK"))
+                                ea.setSoLanTrienKhai(1);
+                            if (j.getJobType().equals("SC")) {
+                                Problem prob = probRepo.findOneByScCode(j.getScCode());
+                                if (prob != null && prob.getProblemType() != null && !prob.getProblemType().isEmpty()
+                                        && !prob.getProblemType().isBlank()) {
+                                    if (prob.getProblemType().equals("Le")) {
+                                        ea.setSolanSuCoLe(1);
+                                        ea.setTotalSCLetProccessTime(j.getDoneTime());
+                                    }
+
+                                    else
+                                        ea.setSoLanSuCoChum(1);
+                                }
+                            }
+                            if (!j.getJobType().isEmpty() && j.getJobType().equals("Khac"))
+                                ea.setSolanCvKhac(1);
+
+                            reports.add(ea);
+                        }
                     }
                 }
-            }
         }
 
+        int totalTime = 0;
+        int totalProccessInTime = 0;
+        int totalProccessOutTime = 0;
+        int tongSCLe = 0;
+        int tongSCchum = 0;
+        int tongSLTK = 0;
+        int tongCVKhac = 0;
+        for (var r : reports) {
+            tongSCLe += r.getSolanSuCoLe();
+            tongSCchum += r.getSoLanSuCoChum();
+            tongSLTK += r.getSoLanTrienKhai();
+            tongCVKhac += r.getSolanCvKhac();
+            totalTime += Integer.parseInt(r.getTotalTime().split(":")[0]) * 60
+                    + Integer.parseInt(r.getTotalTime().split(":")[1]);
+            totalProccessInTime += Integer.parseInt(r.getTotalProccessInTime().split(":")[0]) * 60
+                    + Integer.parseInt(r.getTotalProccessInTime().split(":")[1]);
+            totalProccessOutTime += Integer.parseInt(r.getTotalProccessOutTime().split(":")[0]) * 60
+                    + Integer.parseInt(r.getTotalProccessOutTime().split(":")[1]);
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        for (var r : reports) {
+            int rtotalTime = 0;
+            if (r.getTotalTime() != null)
+                rtotalTime = Integer.parseInt(r.getTotalTime().split(":")[0]) * 60
+                        + Integer.parseInt(r.getTotalTime().split(":")[1]);
+
+            int rtotalProccessInTime = 0;
+            if (r.getTotalProccessInTime() != null)
+                rtotalProccessInTime = Integer.parseInt(r.getTotalProccessInTime().split(":")[0]) * 60
+                        + Integer.parseInt(r.getTotalProccessInTime().split(":")[1]);
+
+            int rtotalProccessOutTime = 0;
+            if (r.getTotalProccessOutTime() != null)
+                rtotalProccessOutTime = Integer.parseInt(r.getTotalProccessOutTime().split(":")[0]) * 60
+                        + Integer.parseInt(r.getTotalProccessOutTime().split(":")[1]);
+
+            int rtotalSCLeProccessTime = 0;
+            if (r.getTotalSCLetProccessTime() != null)
+                rtotalSCLeProccessTime = Integer.parseInt(r.getTotalSCLetProccessTime().split(":")[0]) * 60
+                        + Integer.parseInt(r.getTotalSCLetProccessTime().split(":")[1]);
+
+            int rtotalSCLeProccessTimePerSCLe = 0;
+            if (r.getSolanSuCoLe() > 0)
+                rtotalSCLeProccessTimePerSCLe = (int) (Double.valueOf(rtotalSCLeProccessTime)
+                        / Double.valueOf(r.getSolanSuCoLe()));
+
+            r.setTyTrongTg(df.format((Double.valueOf(rtotalTime) * 100) / Double.valueOf(totalTime)) + "%");
+            r.setTgtbXlScLe(Math.floorDiv(rtotalSCLeProccessTimePerSCLe, 60) + ":"
+                    + Math.floorMod(rtotalSCLeProccessTimePerSCLe, 60));
+            r.setTyTrongThucHien(df.format(Double
+                    .valueOf(r.getSoLanSuCoChum() + r.getSoLanTrienKhai() + r.getSolanCvKhac() + r.getSolanSuCoLe())
+                    / Double.valueOf(tongSLTK + tongSCLe + tongSCchum + tongCVKhac) * 100) + "%");
+        }
+        return reports;
     }
 
 }
