@@ -275,17 +275,18 @@ public class DailyReportController {
         for (var j : jobRepository.findAllJobFromTo(date.get(), date1.get())) {
             if (!j.getEmployeeCode().isEmpty() && !j.getEmployeeCode().isBlank())
                 for (String emCode : j.getEmployeeCode().split(",")) {
-                    if (!j.getJobType().equals("Nghi")) {
+                    if (j.getJobType() != null
+                            && !j.getJobType().equals("Nghi")) {
                         Employee em = emRepo.findOneByCode(emCode);
                         if (empCodes.contains(emCode)) {
                             reports.forEach(ea -> {
-                                if (ea.getEmCode().equals(emCode)) {
+                                if (ea.getEmCode() != null && ea.getEmCode().equals(emCode)) {
                                     ea.setTotalTime(addTime(ea.getTotalTime(), j.getDoneTime()));
                                     ea.setTotalProccessInTime(addTime(ea.getTotalProccessInTime(), j.getInTime()));
                                     ea.setTotalProccessOutTime(addTime(ea.getTotalProccessOutTime(), j.getOutTime()));
                                     if (j.getJobType().equals("TK"))
                                         ea.setSoLanTrienKhai(ea.getSoLanTrienKhai() + 1);
-                                    if (j.getJobType().equals("SC")) {
+                                    if (j.getJobType().equals("SC") && j.getScCode() != null) {
                                         Problem prob = probRepo.findOneByScCode(j.getScCode());
                                         if (prob != null && prob.getProblemType() != null
                                                 && !prob.getProblemType().isEmpty()
@@ -295,7 +296,6 @@ public class DailyReportController {
                                                 ea.setTotalSCLetProccessTime(
                                                         addTime(ea.getTotalSCLetProccessTime(), j.getDoneTime()));
                                             }
-
                                             else
                                                 ea.setSoLanSuCoChum(ea.getSoLanSuCoChum() + 1);
                                         }
@@ -312,23 +312,25 @@ public class DailyReportController {
                             ea.setTotalTime(j.getDoneTime());
                             ea.setTotalProccessInTime(j.getInTime());
                             ea.setTotalProccessOutTime(j.getOutTime());
-                            if (j.getJobType().equals("TK"))
-                                ea.setSoLanTrienKhai(1);
-                            if (j.getJobType().equals("SC")) {
-                                Problem prob = probRepo.findOneByScCode(j.getScCode());
-                                if (prob != null && prob.getProblemType() != null && !prob.getProblemType().isEmpty()
-                                        && !prob.getProblemType().isBlank()) {
-                                    if (prob.getProblemType().equals("Le")) {
-                                        ea.setSolanSuCoLe(1);
-                                        ea.setTotalSCLetProccessTime(j.getDoneTime());
+                            if (j.getJobType() != null) {
+                                if (j.getJobType().equals("TK"))
+                                    ea.setSoLanTrienKhai(1);
+                                if (j.getJobType().equals("SC")) {
+                                    Problem prob = probRepo.findOneByScCode(j.getScCode());
+                                    if (prob != null && prob.getProblemType() != null
+                                            && !prob.getProblemType().isEmpty()
+                                            && !prob.getProblemType().isBlank()) {
+                                        if (prob.getProblemType().equals("Le")) {
+                                            ea.setSolanSuCoLe(1);
+                                            ea.setTotalSCLetProccessTime(j.getDoneTime());
+                                        }
+                                        else
+                                            ea.setSoLanSuCoChum(1);
                                     }
-
-                                    else
-                                        ea.setSoLanSuCoChum(1);
                                 }
+                                if (!j.getJobType().isEmpty() && j.getJobType().equals("Khac"))
+                                    ea.setSolanCvKhac(1);
                             }
-                            if (!j.getJobType().isEmpty() && j.getJobType().equals("Khac"))
-                                ea.setSolanCvKhac(1);
 
                             reports.add(ea);
                         }
