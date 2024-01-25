@@ -14,15 +14,18 @@ import intercom.com.vn.spp.repository.JobRepository;
 import intercom.com.vn.spp.repository.ProblemRepository;
 import jakarta.validation.Valid;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,13 +48,17 @@ public class DailyReportController {
     private ProblemRepository probRepo;
 
     @GetMapping("/dailystatistic")
-    public DailySatistic dailyStatistic() {
+    public DailySatistic dailyStatistic(@RequestParam Optional<Date> date) {
         DailySatistic ds = new DailySatistic();
 
         var rt = ds.getDic();
         List<DailyReport> reportDaily = new ArrayList<>();
 
-        List<Job> dailyJobs = jobRepository.findAllJobDaily();
+        List<Job> dailyJobs = null;
+        if (!date.isEmpty()) {
+            dailyJobs = jobRepository.findAllJobDaily(date.get());
+        } else
+            dailyJobs = jobRepository.findAllJobDaily();
         for (Job j : dailyJobs) {
             String[] employees = j.getEmployeeCode().split(",");
             for (String emCode : employees) {
@@ -75,7 +82,7 @@ public class DailyReportController {
 
                 if (dr.getComebackofficeDatetime() == null) {
 
-                    if (j.getNoComeBackWhy()!=null &&
+                    if (j.getNoComeBackWhy() != null &&
                             (j.getNoComeBackWhy().equalsIgnoreCase("VeNhaLuon")
                                     || j.getNoComeBackWhy().equalsIgnoreCase("Tiep"))) {
                         ds.getNotBackOffice().add(emCode);
@@ -127,10 +134,13 @@ public class DailyReportController {
     }
 
     @GetMapping("/dailyreports")
-    public List<DailyReport> getAllEmployees() {
+    public List<DailyReport> getAllEmployees(@RequestParam Optional<Date> date) {
         List<DailyReport> reportDaily = new ArrayList<>();
-
-        List<Job> dailyJobs = jobRepository.findAllJobDaily();
+        List<Job> dailyJobs = null;
+        if (!date.isEmpty()) {
+            dailyJobs = jobRepository.findAllJobDaily(date.get());
+        } else
+            dailyJobs = jobRepository.findAllJobDaily();
         for (Job j : dailyJobs) {
             String[] employees = j.getEmployeeCode().split(",");
             for (String emCode : employees) {

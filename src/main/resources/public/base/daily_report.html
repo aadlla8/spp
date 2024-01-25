@@ -101,7 +101,9 @@
       <div class="body flex-grow-1">
         <div class="container-fluid px-4">
           <div class="card mb-4">
-            <div class="card-header"><strong>Tables</strong><span class="small ms-1">Báo cáo tiến độ CV theo ngày</span></div>
+            <div class="card-header"><strong>Tables</strong><span class="small ms-1">Báo cáo tiến độ CV theo ngày</span>
+              <input class="form-control" id="chooseDate" name="chooseDate" type="date" style="width:200px">
+            </div>
             <div class="card-body">
               <div id="dailystatistic"> </div>
               <table class="table" id="example" style="width:100%;">
@@ -171,7 +173,7 @@
         })();   
       jQuery(document).ready(function() {
         initTable('example','dailyreports');
-        dailyStatistic();
+        
       });
     </script>
   </body>

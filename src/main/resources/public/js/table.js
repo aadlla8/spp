@@ -51,7 +51,7 @@ var problemmColumns = [{
 }, {
   "data": "technicalStart"
 }, {
-  "data": "doneDate"
+  "data": "technicalDone"
 }, {
   "data": "endDate"
 }, {
@@ -304,6 +304,7 @@ function initTable(name, _entity) {
       clDef = [{
         // target: [3, 5, 9, 11, 12], visible: false,
       }];
+      order = [[3, 'desc']];
       processForm('GET', null, "employees");
       break;
     case 'problems':
@@ -399,16 +400,20 @@ function initTable(name, _entity) {
           location.href = addLink;
         }
       }],
-      //"responsive": true,
       "ajax": {
         "url": baseUrl + entity,
         "type": "GET",
         "dataSrc": function (json) {
-          //console.log(json);
           return json;
         },
-        "beforeSend": function (request) {
+        "beforeSend": function (request, settings) {
+          if (entity == 'dailyreports' && document.querySelector('#chooseDate').value) {
+            settings.url += '&date=' + document.querySelector('#chooseDate').value;
+          }
           request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("accesstoken"));
+        },
+        "complete": function (data) {
+          if (data && entity == 'dailyreports') dailyStatistic();
         }
       },
       "columns": columns,

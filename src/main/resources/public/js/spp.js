@@ -106,13 +106,21 @@ function scCodeBlur(e) {
     document.querySelector('#rootCause').value = res.rootCause;
     document.querySelector('#customerContact').value = res.customerContact;
     document.querySelector('#jobOfNetworkAndTD').value = res.nocAndTechWorks;
-    document.querySelector('#startDate').value = res.startDate;
+    // thoi gian bat dau KT
+    document.querySelector('#startDate').value = res.technicalStart;
+    // thoi gian hoan thanh KT
     document.querySelector('#doneDate').value = res.doneDate;
-    document.querySelector('#dateEnd').value = res.dateEnd;
+    // tg ky thuat ket thuc
+    document.querySelector('#dateEnd').value = res.technicalDone;
+    // loai dich vu
     document.querySelector('#serviceType').value = res.serviceType;
   });
 }
 function dailyStatistic(e) {
+  let qry = '';
+  if (document.querySelector('#chooseDate').value) {
+    qry = '?date=' + document.querySelector('#chooseDate').value;
+  }
   requestHeader = {
     'crossorigin': true,
     'Access-Control-Allow-Origin': '*',
@@ -123,13 +131,18 @@ function dailyStatistic(e) {
     method: 'GET',
     headers: requestHeader
   };
-  fetch('/api/v1/dailystatistic', options).then(res => res.json()).then(res => {
+  fetch('/api/v1/dailystatistic' + qry, options).then(res => res.json()).then(res => {
     console.log(res);
-    let rows = '';
+    let rows = [];
     Object.entries(res.dic).forEach(o => {
-      rows += '<tr><td width="15%"><b>' + o[0] + '</b></td><td>' + o[1] + '</td></tr>';
+      rows.push('<tr><td width="15%"><b>' + o[0] + '</b></td><td>' + o[1] + '</td></tr>');
     });
-    let info = '<table class="table">' + rows + '<tr><td><b>KT không về văn phòng, về nhà luôn:</b></td><td>' + res.notBackOffice + '</td></tr>' + '<tr><td><b>Nghỉ phép, Nghỉ trực NOC:</b></td><td>' + res.notAtNoc + '</td></tr>' + '</table>';
+    rows.push('<tr><td><b>KT không về văn phòng, về nhà luôn:</b></td><td>' + res.notBackOffice + '</td></tr>');
+    rows.push('<tr><td><b>Nghỉ phép, Nghỉ trực NOC:</b></td><td>' + res.notAtNoc + '</td></tr>');
+    let info = '<table class="table">';
+    rows.sort();
+    rows.forEach(i => info += i);
+    info += '</table>';
     document.querySelector("#dailystatistic").innerHTML = info;
   });
 }

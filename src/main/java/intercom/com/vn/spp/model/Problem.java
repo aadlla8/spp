@@ -28,19 +28,20 @@ public class Problem {
     private String scCode;
     @Column(name = "start_date")
     private LocalDateTime startDate;
-    /* Đơn vị xử lý */
+    /* Đơn vị xử lý sc*/
     @Column(name = "unit_proccess")
     @Nationalized
     private String unitProcess;
-    /* Ngày hoàn thành */
+    /* Thoi gian hoàn thành KT*/
     @Column(name = "done_date")
     private LocalDateTime doneDate;
-    /* Ngày kết thúc */
+    /* Thoi gian kết thúc sc */
     @Column(name = "end_date")
     private LocalDateTime endDate;
     /*tg ky thuat xuat phat */
     @Column(name = "technical_start")
     private LocalDateTime technicalStart;
+    /*thoi gian hoan thanh KT */
     @Column(name = "technical_done")
     private LocalDateTime technicalDone;
     /* Trạng thái */
@@ -56,10 +57,8 @@ public class Problem {
     @Nationalized
     @Column(name = "customer_contact")
     private String customerContact;
-
     @Column(name = "service_type")
     private String serviceType;
-
     @Nationalized
     @Column(name = "inform_method", columnDefinition = "TEXT")
     private String informMethod;
