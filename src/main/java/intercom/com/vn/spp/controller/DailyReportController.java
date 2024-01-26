@@ -8,6 +8,7 @@ import intercom.com.vn.spp.model.DailySatistic;
 import intercom.com.vn.spp.model.Employee;
 import intercom.com.vn.spp.model.EmployeeAggregate;
 import intercom.com.vn.spp.model.Job;
+import intercom.com.vn.spp.model.OutTimeAuto;
 import intercom.com.vn.spp.model.Problem;
 import intercom.com.vn.spp.repository.DailyReportRepository;
 import intercom.com.vn.spp.repository.EmployeeRepository;
@@ -403,4 +404,41 @@ public class DailyReportController {
         return reports;
     }
 
+    @GetMapping("/outtimeauto")
+    public List<OutTimeAuto> outtimeauto(@RequestParam Optional<Date> date) {
+        List<OutTimeAuto> outTimeReports = new ArrayList<>();
+        List<Job> dailyJobs = null;
+        if (date.isEmpty()) {
+            dailyJobs = jobRepository.findAllJobMonth();
+        } else {
+            dailyJobs = jobRepository.findAllJobMonth(date.get());
+        }
+
+        for (Job j : dailyJobs) {
+            String[] employees = j.getEmployeeCode().split(",");
+            for (String emCode : employees) {
+                if (!emCode.isBlank() && !emCode.isEmpty()) {
+                    OutTimeAuto ot = new OutTimeAuto();
+                    Problem prob = probRepo.findOneByScCode(j.getScCode());
+                    ot.setDate(j.getDateCreate());
+                    ot.setEmCode(j.getEmployeeCode());
+                    ot.setStartDateTime(j.getStartDate());
+                    ot.setDoneDatetime(j.getDoneDate());
+                    ot.setCombackOffice(j.getComebackOfficeDate());
+                    ot.setTrienkhai(j.getJobOfNetworkAndTD());
+                    ot.setOtherJob(j.getNote());
+                    ot.setProblem(j.getProblemInfo());
+                    ot.setStatus(j.getProblemStatus());
+                    if (prob != null)
+                        ot.setResult(prob.getResultAndSolution());
+                    ot.setNote(j.getNote());
+                    ot.setProcessTime(j.getDoneTime());
+                    ot.setOutTime(j.getOutTime());
+                    outTimeReports.add(ot);
+                }
+
+            }
+        }
+        return outTimeReports;
+    }
 }

@@ -44,10 +44,17 @@ public class ProblemController {
     public List<Problem> getAll() {
         return problemRepository.findAll();
     }
+
+    @GetMapping("/problems/newcode")
+    public Integer maxId() {
+        return problemRepository.getMaxId()+1;
+    }
+
     @GetMapping("/problems/code/{code}")
     public Problem findOneByCode(@PathVariable(value = "code") String code) {
         return problemRepository.findOneByScCode(code);
     }
+
     @GetMapping("/problems/{id}")
     public ResponseEntity<Problem> getById(@PathVariable(value = "id") Long problemId)
             throws ResourceNotFoundException {
@@ -61,7 +68,7 @@ public class ProblemController {
     public Problem create(@Valid @RequestBody Problem problem, @AuthenticationPrincipal UserInfoDetails uInfo) {
         problem.setCreator(uInfo.getUsername());
         problemRepository.save(problem);
-        saveActivity(problem, uInfo,"create_sc","sc");
+        saveActivity(problem, uInfo, "create_sc", "sc");
         return problem;
     }
 
@@ -93,12 +100,12 @@ public class ProblemController {
 
         problemRepository.save(problem);
 
-        saveActivity(problemDetails, uInfo,"update_sc","sc");
+        saveActivity(problemDetails, uInfo, "update_sc", "sc");
 
         return ResponseEntity.ok(problem);
     }
 
-    private void saveActivity(Problem problemDetails, UserInfoDetails uInfo,String act, String type) {
+    private void saveActivity(Problem problemDetails, UserInfoDetails uInfo, String act, String type) {
         try {
             Activity at = new Activity();
             at.setUsername(uInfo.getUsername());

@@ -80,7 +80,7 @@
             <li class="nav-item"><a class="nav-link" href="base/daily_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo ngày   </a></li>
             <li class="nav-item"><a class="nav-link" href="base/monthly_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Báo cáo tháng   </a></li>
             <li class="nav-item"><a class="nav-link" href="base/employee-aggregate.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Bảng tổng hợp nhân sự</a></li>
-            <li class="nav-item"><a class="nav-link" href="base/monthly_report.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Bảng ngoài giờ</a></li>
+            <li class="nav-item"><a class="nav-link" href="base/outtimeauto.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Bảng ngoài giờ tự động</a></li>
             <li class="nav-item"><a class="nav-link" href="base/list-activities.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Lịch sử  </a></li>
             <li class="nav-item"><a class="nav-link" href="login.html"><span class="nav-icon"><span class="nav-icon-bullet"></span></span> Logout        </a></li>
           </ul>
@@ -108,22 +108,43 @@
                 <div class="card-header"><strong>Nhật ký NOC </strong><span class="small ms-1">Thêm mới sự cố</span></div>
                 <div class="card-body">
                   <form class="row g-3 needs-validation" novalidate>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <label class="form-label" for="scCode">Mã sự cố</label>
                       <input class="form-control" id="scCode" name="scCode" type="text" maxlength="20" value="" required>
                     </div>
-                    <div class="col-md-3">
-                      <label class="form-label" for="unitProcess">Đơn vị xl sự cố</label>
-                      <select class="form-select" id="problemType" name="problemType" required>       
-                        <option>Le</option>
-                        <option>Chum        </option>
+                    <div class="col-md-2">
+                      <label class="form-label" for="region">Vùng</label>
+                      <select class="form-select" id="region" name="region" required>
+                        <option selected disable value>Chọn...</option>
+                        <option>HANOI</option>
+                        <option>TPHCM </option>
                       </select>
                     </div>
-                    <div class="col-md-3">
-                      <label class="form-label" for="unitProcess">Đơn vị xl sự cố</label>
+                    <div class="col-md-2">
+                      <label class="form-label" for="serviceType">Loại Dv</label>
+                      <select class="form-select" id="serviceType" name="serviceType" required>
+                        <option selected disabled value>Chọn...</option>
+                        <option>P2P</option>
+                        <option>Internet</option>
+                        <option>Metro</option>
+                        <option>KenhBacNam</option>
+                        <option>HonHop</option>
+                        <option>Khac</option>
+                        <div class="invalid-feedback">Hãy chọn loại dịch vụ</div>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="unitProcess">Đơn vị XLSC</label>
                       <select class="form-select" id="unitProcess" name="unitProcess">
                         <option selected disabled value>Chọn đơn vị XLSC         </option>
                         <div class="invalid-feedback">Hãy nhập mã nhân viên</div>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label" for="unitProcess">Loại Sc</label>
+                      <select class="form-select" id="problemType" name="problemType" required>       
+                        <option>Le</option>
+                        <option>Chum        </option>
                       </select>
                     </div>
                     <div class="col-md-3">
@@ -150,19 +171,6 @@
                       <label class="form-label" for="technicalDone">Thời gian kỹ thuật kết thúc</label>
                       <input class="form-control" id="technicalDone" name="technicalDone" type="datetime-local" value="">
                     </div>
-                    <div class="col-md-3">
-                      <label class="form-label" for="serviceType">Loại dịch vụ</label>
-                      <select class="form-select" id="serviceType" name="serviceType" required>
-                        <option selected disabled value>Chọn...</option>
-                        <option>P2P</option>
-                        <option>Internet</option>
-                        <option>Metro</option>
-                        <option>KenhBacNam</option>
-                        <option>HonHop</option>
-                        <option>Khac</option>
-                        <div class="invalid-feedback">Hãy chọn loại dịch vụ</div>
-                      </select>
-                    </div>
                     <div class="col-md-12">
                       <label class="form-label" for="info">Mô tả thông tin sự cố</label>
                       <textarea class="form-control" id="info" name="info" required></textarea>
@@ -175,14 +183,6 @@
                         <option>CHECK</option>
                         <option>UP</option>
                         <option>MOVE              </option>
-                      </select>
-                    </div>
-                    <div class="col-md-3">
-                      <label class="form-label" for="region">Vùng</label>
-                      <select class="form-select" id="region" name="region" required>
-                        <option selected disable value>Chọn...</option>
-                        <option>HANOI</option>
-                        <option>TPHCM              </option>
                       </select>
                     </div>
                     <div class="col-md-3">
@@ -282,6 +282,7 @@
            // Fetch all the forms we want to apply custom Bootstrap validation styles to
            var forms = document.querySelectorAll('.needs-validation')
            // Loop over them and prevent submission
+           document.querySelector('#region').addEventListener('blur', function(e){ getnewcode(); })
            Array.prototype.slice.call(forms).forEach(function (form) {
                form.addEventListener('submit', function (event) {
                    event.preventDefault()

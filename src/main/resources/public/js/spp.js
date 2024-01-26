@@ -85,6 +85,19 @@ function loadField(fieldId, array, value) {
 function logout() {
   localStorage.setItem("accesstoken", "");
 }
+function getnewcode() {
+  requestHeader = {
+    'crossorigin': true,
+    'Access-Control-Allow-Origin': '*',
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + localStorage.getItem("accesstoken")
+  };
+  let options = {
+    method: 'GET',
+    headers: requestHeader
+  };
+  fetch('/api/v1/problems/newcode', options).then(res => res.json()).then(res => document.querySelector('#scCode').value = document.querySelector('#region').value + 'SC' + (res + '').padStart(9, 0));
+}
 function scCodeBlur(e) {
   if (!document.querySelector('#scCode').value) return;
   requestHeader = {

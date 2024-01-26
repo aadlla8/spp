@@ -219,6 +219,39 @@ var employeeaggregateColumns = [{
 }, {
   "data": "tyTrongThucHien"
 }];
+var outtimeColumns = [{
+  "data": "date"
+}, {
+  "data": "emCode"
+}, {
+  "data": "startDateTime"
+}, {
+  "data": "doneDatetime"
+}, {
+  "data": "combackOffice"
+}, {
+  "data": "trienkhai"
+}, {
+  "data": "otherJob"
+}, {
+  "data": "problem"
+}, {
+  "data": "status"
+}, {
+  "data": "result"
+}, {
+  "data": "note"
+}, {
+  "data": "processTime"
+}, {
+  "data": "isOutTime"
+}, {
+  "data": "outTime"
+}, {
+  "data": "level"
+}, {
+  "data": "money"
+}];
 var editModal = new coreui.Modal(document.getElementById('editModalXl'), {
   focus: true
 });
@@ -378,6 +411,10 @@ function initTable(name, _entity) {
       columns = activityColumns;
       addLink = '#';
       break;
+    case 'outtimeauto':
+      columns = outtimeColumns;
+      addLink = '/forms/add-job.html';
+      break;
     default:
       break;
   }
@@ -444,7 +481,7 @@ function initTable(name, _entity) {
           return json;
         },
         "beforeSend": function (request, settings) {
-          if (entity == 'dailyreports' || entity === 'monthlyeports' || entity === 'employee-aggregate') {
+          if (entity == 'dailyreports' || entity === 'monthlyeports' || entity === 'employee-aggregate' || entity === 'outtimeauto') {
             if (document.querySelector('#chooseDate') && document.querySelector('#chooseDate').value) settings.url += '&date=' + document.querySelector('#chooseDate').value;
             if (document.querySelector('#chooseDate1') && document.querySelector('#chooseDate1').value) settings.url += '&date1=' + document.querySelector('#chooseDate1').value;
             if (document.querySelector('#chooseDate2') && document.querySelector('#chooseDate2').value) settings.url += '&date2=' + document.querySelector('#chooseDate2').value;
