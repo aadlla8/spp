@@ -421,7 +421,7 @@ public class DailyReportController {
                     OutTimeAuto ot = new OutTimeAuto();
                     Problem prob = probRepo.findOneByScCode(j.getScCode());
                     ot.setDate(j.getDateCreate());
-                    ot.setEmCode(j.getEmployeeCode());
+                    ot.setEmCode(emCode);
                     ot.setStartDateTime(j.getStartDate());
                     ot.setDoneDatetime(j.getDoneDate());
                     ot.setCombackOffice(j.getComebackOfficeDate());
