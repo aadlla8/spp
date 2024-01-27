@@ -426,9 +426,10 @@ function initTable(name, _entity) {
       "select": {
         "style": 'multi'
       },
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
       "buttons": ['copy', 'excel', 'pdf', 'print', 'pageLength', {
-        text: 'reload',
-        action: function (e, dt, node, config) {
+        'text': 'reload',
+        'action': function (e, dt, node, config) {
           dt.ajax.reload();
         }
       }, {
